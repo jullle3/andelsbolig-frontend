@@ -1,86 +1,65 @@
 /* styles.css */
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-}
+/* Existing styles here */
 
-.container {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-h1 {
+nav {
+    background-color: #333;
+    padding: 10px;
     text-align: center;
-    color: #333;
 }
 
-#searchBar {
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
 }
 
-.listings {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr; /* Mobile-first: single column */
-}
-
-.listing {
-    background-color: #fff;
-    border: 1px solid #ddd;
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
     border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
-.listing h2 {
-    font-size: 20px;
-    margin: 0 0 10px;
-}
-
-.listing p {
-    margin: 0 0 10px;
-    color: #666;
-}
-
-.listing .images {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.listing .images img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-/* Medium screens */
-@media (min-width: 600px) {
-    .listings {
-        grid-template-columns: repeat(2, 1fr); /* Two columns */
-    }
-}
-
-/* Large screens */
-@media (min-width: 900px) {
-    .listings {
-        grid-template-columns: repeat(3, 1fr); /* Three columns */
-    }
-}
-
-/* Extra-large screens */
-@media (min-width: 1200px) {
-    .listings {
-        grid-template-columns: repeat(4, 1fr); /* Four columns */
-    }
+form button:hover {
+    background-color: #555;
 }
