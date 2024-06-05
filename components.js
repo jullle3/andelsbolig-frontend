@@ -1,5 +1,3 @@
-// components.js
-
 const headerTemplate = `
 <header>
     <div class="logo">Andelsboliger Portal</div>

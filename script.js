@@ -1,4 +1,3 @@
-// script.js
 
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header and footer
