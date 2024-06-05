@@ -1,0 +1,33 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.ad-card {
+    margin-bottom: 20px;
+}
+
+.ad-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+.card-subtitle {
+    font-size: 1.1rem;
+    color: #007bff;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
