@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -28,9 +28,9 @@ h1 {
 }
 
 .listings {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 20px;
+    grid-template-columns: 1fr; /* Mobile-first: single column */
 }
 
 .listing {
@@ -38,7 +38,6 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
-    width: calc(33.333% - 20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -47,4 +46,41 @@ h1 {
     margin: 0 0 10px;
 }
 
-.listing p
+.listing p {
+    margin: 0 0 10px;
+    color: #666;
+}
+
+.listing .images {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.listing .images img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Medium screens */
+@media (min-width: 600px) {
+    .listings {
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+    }
+}
+
+/* Large screens */
+@media (min-width: 900px) {
+    .listings {
+        grid-template-columns: repeat(3, 1fr); /* Three columns */
+    }
+}
+
+/* Extra-large screens */
+@media (min-width: 1200px) {
+    .listings {
+        grid-template-columns: repeat(4, 1fr); /* Four columns */
+    }
+}
