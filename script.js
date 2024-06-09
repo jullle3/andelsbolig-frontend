@@ -2,8 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header and footer
-    insertHeader();
-    insertFooter();
+    // insertHeader();
+    // insertFooter();
 
     const searchBar = document.getElementById('searchBar');
     const listingsContainer = document.getElementById('listings');
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
             <p><strong>Square Meters:</strong> ${listing.square_meters} m²</p>
             <p><strong>Number of Rooms:</strong> ${listing.number_of_rooms}</p>
-            <p><strong>Date Posted:</strong> ${new Date(listing.date_posted * 1000).toLocaleDateString()}</p>
+            <p><strong>Date Posted:</strong> ${new Date(listing.created * 1000).toLocaleDateString()}</p>
             <p><strong>Contact Email:</strong> ${listing.contact_email.join(', ')}</p>
             <div class="images">
                 ${listing.images.map(img => `<img src="${img}" alt="Image of ${listing.title}" />`).join('')}
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             number_of_rooms: parseInt(formData.get('number_of_rooms')),
             contact_email: [formData.get('contact_email')],
             images: formData.get('images').split(',').map(img => img.trim()),
-            date_posted: Math.floor(Date.now() / 1000),
+            created: Math.floor(Date.now() / 1000),
             located_at_top: false,
             location: [0, 0], // Dummy location, replace with actual logic if needed
             views: 0,
