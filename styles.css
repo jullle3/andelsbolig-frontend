@@ -103,7 +103,7 @@ nav ul li a {
 
 /* Form styling */
 form {
-    max-width: 300px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -112,7 +112,8 @@ form label {
     margin: 10px 0 5px;
 }
 
-form input {
+form input,
+form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;

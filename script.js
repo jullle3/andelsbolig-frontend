@@ -1,3 +1,4 @@
+// script.js
 
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header and footer
@@ -7,12 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('searchBar');
     const listingsContainer = document.getElementById('listings');
     const backButton = document.getElementById('backButton');
+    const createForm = document.getElementById('createForm');
     let debounceTimeout;
 
     const views = {
         home: document.getElementById('home-view'),
         detail: document.getElementById('detail-view'),
-        login: document.getElementById('login-view')
+        login: document.getElementById('login-view'),
+        create: document.getElementById('create-view')
     };
 
     // Fetch listings from the backend with optional search text
@@ -89,6 +92,52 @@ document.addEventListener('DOMContentLoaded', () => {
         showView('detail');
     }
 
+    // Handle create listing form submission
+    async function handleCreateFormSubmit(event) {
+        event.preventDefault();
+        const formData = new FormData(createForm);
+        const newListing = {
+            title: formData.get('title'),
+            description: formData.get('description'),
+            price: parseInt(formData.get('price')),
+            monthly_fee: parseInt(formData.get('monthly_fee')),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            postal_code: formData.get('postal_code'),
+            square_meters: parseInt(formData.get('square_meters')),
+            number_of_rooms: parseInt(formData.get('number_of_rooms')),
+            contact_email: [formData.get('contact_email')],
+            images: formData.get('images').split(',').map(img => img.trim()),
+            date_posted: Math.floor(Date.now() / 1000),
+            located_at_top: false,
+            location: [0, 0], // Dummy location, replace with actual logic if needed
+            views: 0,
+            deleted: false
+        };
+
+        try {
+            const response = await fetch('http://localhost:8500/advertisement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newListing)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create listing');
+            }
+
+            alert('Listing created successfully!');
+            createForm.reset();
+            showView('home');
+            fetchListings(); // Refresh the listings
+        } catch (error) {
+            console.error('Error creating listing:', error);
+            alert('Failed to create listing');
+        }
+    }
+
     // Debounce function to delay the search
     function debounce(func, delay) {
         return function(...args) {
@@ -122,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', () => {
         showView('home');
     });
+
+    // Handle create form submission
+    createForm.addEventListener('submit', handleCreateFormSubmit);
 
     // Show the specified view
     function showView(view) {
