@@ -1,6 +1,3 @@
-// main.js
-
-// Insert header and footer
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header and footer
     document.body.insertAdjacentHTML('afterbegin', `
@@ -50,6 +47,95 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show home view by default
     showView('home');
+
+    const imageUrls = [];
+
+    // Handle image uploads
+    document.getElementById('images').addEventListener('change', async (event) => {
+        const files = event.target.files;
+        const imagePreview = document.getElementById('imagePreview');
+
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://localhost:8500/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    imageUrls.push(result.thumbnail_url);
+
+                    // Display thumbnail
+                    const imgElement = document.createElement('img');
+                    imgElement.src = result.thumbnail_url;
+                    imgElement.alt = file.name;
+                    imgElement.style.width = '100px';
+                    imgElement.style.height = '100px';
+                    imgElement.style.objectFit = 'cover';
+                    imgElement.style.margin = '5px';
+                    imagePreview.appendChild(imgElement);
+                } else {
+                    console.error('Failed to upload image:', file.name);
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        }
+    });
+
+    // Handle create listing form submission
+    document.getElementById('createForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const newListing = {
+            title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
+            description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
+            price: parseInt(formData.get('price')),
+            monthly_fee: parseInt(formData.get('monthly_fee')),
+            address: formData.get('address'),
+            city: "Auto-generated City",  // Auto-generate or leave blank for backend to handle
+            postal_code: "0000",  // Auto-generate or leave blank for backend to handle
+            square_meters: parseInt(formData.get('square_meters')),
+            number_of_rooms: parseInt(formData.get('number_of_rooms')),
+            contact_email: [formData.get('contact_email')],
+            images: imageUrls,
+            date_posted: Math.floor(Date.now() / 1000),
+            located_at_top: formData.get('located_at_top') ? true : false,
+            location: [0, 0], // Dummy location, replace with actual logic if needed
+            views: 0,
+            deleted: false
+        };
+
+        console.log("New Listing Data:", newListing); // Debugging
+
+        try {
+            const response = await fetch('http://localhost:8500/advertisement', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newListing)
+            });
+            console.log("Response:", response); // Debugging
+
+            if (!response.ok) {
+                throw new Error('Failed to create listing');
+            }
+
+            alert('Listing created successfully!');
+            // event.target.reset();
+            // showView('home');
+            fetchListings().then(data => displayListings(data.objects)); // Refresh the listings
+        } catch (error) {
+            console.error('Error creating listing:', error);
+            alert('Failed to create listing');
+        }
+    });
 
     // Fetch listings from the backend with optional search text
     async function fetchListings(searchText = '') {
@@ -117,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
             <p><strong>Square Meters:</strong> ${listing.square_meters} m²</p>
             <p><strong>Number of Rooms:</strong> ${listing.number_of_rooms}</p>
-            <p><strong>Date Posted:</strong> ${new Date(listing.created * 1000).toLocaleDateString()}</p>
+            <p><strong>Date Posted:</strong> ${new Date(listing.date_posted * 1000).toLocaleDateString()}</p>
             <p><strong>Contact Email:</strong> ${listing.contact_email.join(', ')}</p>
             <div class="images">
                 ${listing.images.map(img => `<img src="${img}" alt="Image of ${listing.title}" />`).join('')}
@@ -128,55 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('backButton').addEventListener('click', () => {
         showView('home');
-    });
-
-    // Handle create listing form submission
-    document.getElementById('createForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const newListing = {
-            title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
-            description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
-            price: parseInt(formData.get('price')),
-            monthly_fee: parseInt(formData.get('monthly_fee')),
-            address: formData.get('address'),
-            city: "Auto-generated City",  // Auto-generate or leave blank for backend to handle
-            postal_code: "0000",  // Auto-generate or leave blank for backend to handle
-            square_meters: parseInt(formData.get('square_meters')),
-            number_of_rooms: parseInt(formData.get('number_of_rooms')),
-            contact_email: [formData.get('contact_email')],
-            images: formData.get('images').split(',').map(img => img.trim()),
-            created: Math.floor(Date.now() / 1000),
-            // located_at_top: formData.get('located_at_top') ? true : false,
-            location: [0, 0], // Dummy location, replace with actual logic if needed
-            views: 0,
-            deleted: false
-        };
-
-        console.log("New Listing Data:", newListing); // Debugging
-
-        try {
-            const response = await fetch('http://localhost:8500/advertisement', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newListing)
-            });
-            console.log("Response:", response); // Debugging
-
-            if (!response.ok) {
-                throw new Error('Failed to create listing');
-            }
-
-            alert('Listing created successfully!');
-            event.target.reset();
-            showView('home');
-            fetchListings().then(data => displayListings(data.objects)); // Refresh the listings
-        } catch (error) {
-            console.error('Error creating listing:', error);
-            alert('Failed to create listing');
-        }
     });
 
     // Initial fetch of listings

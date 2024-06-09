@@ -38,6 +38,7 @@
         <div class="container">
             <h1>Create Listing</h1>
             <form id="createForm">
+                <!-- Other form fields -->
                 <label for="price">Price:</label>
                 <input type="number" id="price" name="price" required>
                 <label for="monthly_fee">Monthly Fee:</label>
@@ -50,12 +51,11 @@
                 <input type="number" id="number_of_rooms" name="number_of_rooms" required>
                 <label for="contact_email">Contact Email:</label>
                 <input type="email" id="contact_email" name="contact_email" required>
-                <label for="images">Images (comma separated URLs):</label>
-<!--                <label for="located_at_top">Located at Top:</label>-->
-<!--                <input type="checkbox" id="located_at_top" name="located_at_top">-->
                 <label for="images">Images:</label>
                 <input type="file" id="images" name="images" multiple>
-                <button type="submit">Create</button>
+                <div id="imagePreview"></div>
+                <label for="located_at_top">Located at Top:</label>
+                <input type="checkbox" id="located_at_top" name="located_at_top">
                 <button type="submit">Create</button>
             </form>
         </div>
