@@ -1,3 +1,26 @@
+/**
+ * A wrapper around the fetch function to automatically include JWT in the headers.
+ * @param {string} url The URL to fetch.
+ * @param {object} options Additional options for the fetch request.
+ * @returns {Promise<Response>} The fetch promise.
+ */
+function authFetch(url, options = {}) {
+    const jwt = localStorage.getItem('jwt');
+
+    // Ensure headers object exists
+    if (!options.headers) {
+        options.headers = {};
+    }
+
+    // Append the Authorization header with the JWT, if it exists
+    if (jwt) {
+        options.headers['Authorization'] = `Bearer ${jwt}`;
+    }
+
+    return fetch(url, options);
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header and footer
     document.body.insertAdjacentHTML('afterbegin', `
@@ -7,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <ul>
                     <li><a href="#" data-view="home">Home</a></li>
                     <li><a href="#" data-view="login">Login</a></li>
+                    <li><a href="#" data-view="register">Register</a></li>
                     <li><a href="#" data-view="create">Create Listing</a></li>
                 </ul>
                 <div class="burger-menu">
@@ -18,17 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
         </header>
     `);
 
-    document.body.insertAdjacentHTML('beforeend', `
-        <footer>
-            <p>&copy; 2024 Andelsboliger Portal. All rights reserved.</p>
-        </footer>
-    `);
+    // document.body.insertAdjacentHTML('beforeend', `
+    //     <footer>
+    //         <p>&copy; 2024 Andelsboliger Portal. All rights reserved.</p>
+    //     </footer>
+    // `);
 
     const views = {
         home: document.getElementById('home-view'),
         detail: document.getElementById('detail-view'),
         login: document.getElementById('login-view'),
-        create: document.getElementById('create-view')
+        create: document.getElementById('create-view'),
+        register: document.getElementById('register-view')
     };
 
     function showView(view) {
@@ -60,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('file', file);
 
             try {
-                const response = await fetch('http://localhost:8500/upload', {
+                const response = await authFetch('http://localhost:8500/upload', {
                     method: 'POST',
                     body: formData
                 });
@@ -103,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             square_meters: parseInt(formData.get('square_meters')),
             number_of_rooms: parseInt(formData.get('number_of_rooms')),
             contact_email: [formData.get('contact_email')],
-            images: imageUrls,
+            // images: imageUrls,
             date_posted: Math.floor(Date.now() / 1000),
             located_at_top: formData.get('located_at_top') ? true : false,
             location: [0, 0], // Dummy location, replace with actual logic if needed
@@ -114,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("New Listing Data:", newListing); // Debugging
 
         try {
-            const response = await fetch('http://localhost:8500/advertisement', {
+            const response = await authFetch('http://localhost:8500/advertisement', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -233,4 +258,43 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchTerm = e.target.value;
         fetchListings(searchTerm).then(data => displayListings(data.objects));
     }, 500));
+
+
+    const registerForm = document.getElementById('registerForm');
+
+    // Register user
+    registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(registerForm);
+        const userData = {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            full_name: formData.get('full_name') || null, // Handle optional fields
+            phone_number: formData.get('phone_number') || null
+        };
+
+        try {
+            const response = await authFetch('http://localhost:8500/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // Store the JWT in localStorage or sessionStorage
+                localStorage.setItem('jwt', result.jwt);
+                alert('User registered successfully');
+                registerForm.reset();
+                showView('home'); // Redirect user to home or other appropriate view
+            } else {
+                console.error('Failed to register user:', await response.text());
+            }
+                } catch (error) {
+                console.error('Error registering user:', error);
+        }
+    });
 });
