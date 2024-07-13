@@ -22,16 +22,23 @@ function authFetch(url, options = {}) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Insert header and footer
+    // Insert header
     document.body.insertAdjacentHTML('afterbegin', `
         <header>
             <div class="logo">Andelsboliger Portal</div>
             <nav>
                 <ul>
                     <li><a href="#" data-view="home">Home</a></li>
-                    <li><a href="#" data-view="login">Login</a></li>
-                    <li><a href="#" data-view="register">Register</a></li>
                     <li><a href="#" data-view="create">Create Listing</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn" id="nameDisplay">My Name</a>
+                        <div class="dropdown-content">
+                            <a href="#" data-view="profile">My Profile</a>
+                            <a href="#" data-view="logout">Log Out</a>
+                        </div>
+                    </li>
+<!--                    <li><a href="#" data-view="login">Login</a></li>-->
+                    <li><a href="#" data-view="register">Register</a></li>
                 </ul>
                 <div class="burger-menu">
                     <span></span>
@@ -41,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </nav>
         </header>
     `);
+
 
     // document.body.insertAdjacentHTML('beforeend', `
     //     <footer>
@@ -53,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         detail: document.getElementById('detail-view'),
         login: document.getElementById('login-view'),
         create: document.getElementById('create-view'),
-        register: document.getElementById('register-view')
+        register: document.getElementById('register-view'),
+        profile: document.getElementById('profile-view')
     };
 
     function showView(view) {
@@ -73,7 +82,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show home view by default
     showView('home');
 
-    const imageUrls = [];
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+        const payload = jwt.split('.')[1]; // Get the payload part of the JWT
+        const decodedPayload = atob(payload); // Base64 decode
+        const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
+        console.log(payloadObj)
+
+        if (payloadObj.username) {
+            document.getElementById('username-profile').textContent = payloadObj.username;
+        }
+        if (payloadObj.full_name) {
+            document.getElementById('nameDisplay').textContent = payloadObj.full_name;
+            document.getElementById('fullName-profile').textContent = payloadObj.full_name;
+        }
+        if (payloadObj.email) {
+            document.getElementById('email-profile').textContent = payloadObj.email;
+        }
+    }
 
     // Handle image uploads
     document.getElementById('images').addEventListener('change', async (event) => {
@@ -92,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    imageUrls.push(result.thumbnail_url);
 
                     // Display thumbnail
                     const imgElement = document.createElement('img');
@@ -128,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             square_meters: parseInt(formData.get('square_meters')),
             number_of_rooms: parseInt(formData.get('number_of_rooms')),
             contact_email: [formData.get('contact_email')],
-            // images: imageUrls,
             date_posted: Math.floor(Date.now() / 1000),
             located_at_top: formData.get('located_at_top') ? true : false,
             location: [0, 0], // Dummy location, replace with actual logic if needed

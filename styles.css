@@ -243,3 +243,133 @@ footer {
 #register-view button:hover {
     background-color: #0056b3;
 }
+/* General Header Styling Adjustments */
+header {
+    background-color: #34495e;  /* Dark header background */
+    color: white;  /* White text color for header */
+    padding: 10px 0;  /* Padding around the header */
+}
+
+header .logo, nav {
+    text-align: center;  /* Centering the logo and navigation */
+    margin: 0 auto;  /* Center aligning within the page */
+}
+
+/* Navigation Styling */
+nav {
+    display: flex;
+    justify-content: center;  /* Center navigation items */
+    align-items: center;
+    padding: 10px;  /* Padding inside the navigation bar */
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;  /* Space between menu items */
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;  /* Padding for clickable area */
+}
+
+/* Dropdown Menu Styling */
+.dropdown {
+    position: relative;  /* Needed for absolute positioning of dropdown content */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;  /* Minimum width of the dropdown */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);  /* Shadow for dropdown */
+    z-index: 1;  /* Ensure it sits on top of other content */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;  /* Makes the whole area clickable */
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;  /* Light grey background on hover */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;  /* Display dropdown when hovering */
+}
+
+/* Responsive Handling for Mobile Devices */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        display: none;  /* Hide by default, shown by burger menu */
+        background-color: #34495e;  /* Maintain header color */
+    }
+
+    .burger-menu {
+        display: block;  /* Show burger menu on small screens */
+    }
+}
+
+/* Enhancing Hover Effect */
+nav ul li a:hover, .dropdown:hover .dropbtn {
+    background-color: #555;  /* Darker grey for hover background */
+}
+
+
+#profile-view .container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#profile-view .form-group {
+    margin-bottom: 15px;
+}
+
+#profile-view .profile-data {
+    padding: 8px;
+    background-color: #f2f2f2; /* Light grey background to distinguish the area */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#profile-view label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        display: none; /* Controlled by burger menu */
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+}
