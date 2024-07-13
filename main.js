@@ -5,7 +5,6 @@ if (window.location.hostname === 'localhost') {
 } else {
     apiUrl = 'https://hidden-slice-416812.ew.r.appspot.com/';
 }
-console.log(apiUrl)
 
 /**
  * A wrapper around the fetch function to automatically include JWT in the headers.
@@ -26,7 +25,6 @@ function authFetch(url, options = {}) {
         options.headers['Authorization'] = `Bearer ${jwt}`;
     }
 
-    console.log(apiUrl + url)
     return fetch(apiUrl + url, options);
 }
 
@@ -170,8 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
             views: 0,
             deleted: false
         };
-
-        console.log("New Listing Data:", newListing); // Debugging
 
         try {
             const response = await authFetch('advertisement', {
