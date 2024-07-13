@@ -1,3 +1,12 @@
+let apiUrl;
+
+if (window.location.hostname === 'localhost') {
+    apiUrl = 'http://localhost:8500/';
+} else {
+    apiUrl = 'https://hidden-slice-416812.ew.r.appspot.com/';
+}
+console.log(apiUrl)
+
 /**
  * A wrapper around the fetch function to automatically include JWT in the headers.
  * @param {string} url The URL to fetch.
@@ -17,8 +26,10 @@ function authFetch(url, options = {}) {
         options.headers['Authorization'] = `Bearer ${jwt}`;
     }
 
-    return fetch(url, options);
+    console.log(apiUrl + url)
+    return fetch(apiUrl + url, options);
 }
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><a href="#" data-view="home">Home</a></li>
                     <li><a href="#" data-view="create">Create Listing</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropbtn" id="nameDisplay">My Name</a>
+                        <a href="#" data-view="profile" class="dropbtn" id="nameDisplay">My Name</a>
                         <div class="dropdown-content">
                             <a href="#" data-view="profile">My Profile</a>
-                            <a href="#" data-view="logout">Log Out</a>
+                            <a href="#" id="logoutLink">Log Out</a>
                         </div>
                     </li>
 <!--                    <li><a href="#" data-view="login">Login</a></li>-->
@@ -111,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('file', file);
 
             try {
-                const response = await authFetch('http://localhost:8500/upload', {
+                const response = await authFetch('upload', {
                     method: 'POST',
                     body: formData
                 });
@@ -163,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("New Listing Data:", newListing); // Debugging
 
         try {
-            const response = await authFetch('http://localhost:8500/advertisement', {
+            const response = await authFetch('advertisement', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -189,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch listings from the backend with optional search text
     async function fetchListings(searchText = '') {
         try {
-            const response = await fetch(`http://localhost:8500/advertisement?text=${encodeURIComponent(searchText)}`);
+            const response = await fetch(apiUrl + `advertisement?text=${encodeURIComponent(searchText)}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -230,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and display a single listing's details
     async function fetchListingDetail(id) {
         try {
-            const response = await fetch(`http://localhost:8500/advertisement/${id}`);
+            const response = await authFetch(`advertisement/${id}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -299,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await authFetch('http://localhost:8500/user', {
+            const response = await authFetch('user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -320,5 +331,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (error) {
                 console.error('Error registering user:', error);
         }
+    });
+
+
+    // LOGOUT
+    const logoutLink = document.getElementById("logoutLink");
+
+    logoutLink.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent the default link behavior
+        // Clear JWT from localStorage
+        localStorage.removeItem('jwt');
+        showView('home');
     });
 });
