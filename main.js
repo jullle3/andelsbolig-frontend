@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show home view by default
     showView('home');
 
+    // Populate profile view
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
         const payload = jwt.split('.')[1]; // Get the payload part of the JWT
@@ -220,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Price:</strong> ${listing.price} DKK</p>
                 <button class="view-detail" data-id="${listing._id}">View Details</button>
                 <div class="images">
-                    ${listing.images.map(img => `<img src="${img}" alt="Image of ${listing.title}" />`).join('')}
+                    ${listing.images.map(img => `<img src="${img.thumbnail_url}" alt="Image of an apartment" />`).join('')}
                 </div>
             `;
             listingsContainer.appendChild(listingElement);
