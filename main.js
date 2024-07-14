@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // Modify the fetchAndDisplayListings function to add click event listeners to the cards
     async function fetchAndDisplayListings(searchTerm = '') {
         const listingsContainer = document.getElementById('listings-container');
         listingsContainer.innerHTML = 'Loading...';
@@ -242,21 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Call fetchAndDisplayListings on page load
     fetchAndDisplayListings();
 
-    // Fetch and display a single listing's details
-    async function fetchListingDetail(id) {
-        try {
-            const response = await authFetch(`advertisement/${id}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching listing details:', error);
-            throw error;
-        }
-    }
-
-
     document.getElementById('backButton').addEventListener('click', () => {
         showView('home');
     });
@@ -327,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     });
-
 
     // LOGOUT
     const logoutLink = document.getElementById("logoutLink");
