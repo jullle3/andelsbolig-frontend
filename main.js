@@ -180,36 +180,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
+    // Modify the fetchAndDisplayListings function to add click event listeners to the cards
     async function fetchAndDisplayListings(searchTerm = '') {
-        // Fetch listings from the backend with optional search text
         const listingsContainer = document.getElementById('listings-container');
-        listingsContainer.innerHTML = 'Loading...'; // Show loading message
+        listingsContainer.innerHTML = 'Loading...';
 
         const response = await authFetch('advertisement?text=' + searchTerm);
         const data = await response.json();
-        listingsContainer.innerHTML = ''; // Clear loading message
+        listingsContainer.innerHTML = '';
 
         data.objects.forEach(listing => {
             const card = document.createElement('div');
             card.className = 'listing-card';
-            const imagesToShow = listing.images.slice(0, 4); // Limit to 4 images
+            const imagesToShow = listing.images.slice(0, 4);
             card.innerHTML = `
-        <div class="listing-image-container">
-            ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="Listing image" class="listing-image">`).join('')}
-        </div>
-        <div class="listing-info">
-            <h3 class="listing-title">${listing.title}</h3>
-            <p class="listing-description">${listing.description}</p>
-            <p><strong>Price:</strong> ${listing.price} DKK</p>
-            <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
-            <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
-            <p><strong>Area:</strong> ${listing.square_meters} m², ${listing.number_of_rooms} rooms</p>
-            <a href="mailto:${listing.contact_email.join(', ')}" class="contact-link">Contact</a>
-        </div>
-    `;
+            <div class="listing-image-container">
+                ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="Listing image" class="listing-image">`).join('')}
+            </div>
+            <div class="listing-info">
+                <h3 class="listing-title">${listing.title}</h3>
+                <p class="listing-description">${listing.description}</p>
+                <p><strong>Price:</strong> ${listing.price} DKK</p>
+                <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
+                <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
+                <p><strong>Area:</strong> ${listing.square_meters} m², ${listing.number_of_rooms} rooms</p>
+                <a href="mailto:${listing.contact_email.join(', ')}" class="contact-link">Contact</a>
+            </div>
+        `;
+            // Add click event listener to the card
+            card.addEventListener('click', () => displayListingDetail(listing));
             listingsContainer.appendChild(card);
         });
     }
+
+    function displayListingDetail(listing) {
+        const detailContainer = document.getElementById('detail');
+        detailContainer.innerHTML = `
+        <h2>${listing.title}</h2>
+        <p>${listing.description}</p>
+        <p><strong>Price:</strong> ${listing.price} DKK</p>
+        <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
+        <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
+        <p><strong>Square Meters:</strong> ${listing.square_meters} m²</p>
+        <p><strong>Number of Rooms:</strong> ${listing.number_of_rooms}</p>
+        <p><strong>Date Posted:</strong> ${new Date(listing.created).toLocaleDateString()}</p>
+        <p><strong>Contact Email:</strong> ${listing.contact_email.join(', ')}</p>
+        <div class="images">
+            ${listing.images.map(img => `<img src="${img.url}" alt="Image of an apartment" />`).join('')}
+        </div>
+    `;
+        showView('detail');
+    }
+
 
     // Call fetchAndDisplayListings on page load
     fetchAndDisplayListings();
@@ -228,25 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Display a single listing's details in the DOM
-    function displayListingDetail(listing) {
-        const detailContainer = document.getElementById('detail');
-        detailContainer.innerHTML = `
-            <h2>${listing.title}</h2>
-            <p>${listing.description}</p>
-            <p><strong>Price:</strong> ${listing.price} DKK</p>
-            <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
-            <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
-            <p><strong>Square Meters:</strong> ${listing.square_meters} m²</p>
-            <p><strong>Number of Rooms:</strong> ${listing.number_of_rooms}</p>
-            <p><strong>Date Posted:</strong> ${new Date(listing.created).toLocaleDateString()}</p>
-            <p><strong>Contact Email:</strong> ${listing.contact_email.join(', ')}</p>
-            <div class="images">
-                ${listing.images.map(img => `<img src="${img.url}" alt="Image of an apartment" />`).join('')}
-            </div>
-        `;
-        showView('detail');
-    }
 
     document.getElementById('backButton').addEventListener('click', () => {
         showView('home');
