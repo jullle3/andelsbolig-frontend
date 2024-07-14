@@ -4,7 +4,7 @@ export function displayAdvertisementDetail(advertisement) {
     const detailContainer = document.getElementById('detail');
     // Start of the carousel markup
     let carouselInnerHtml = advertisement.images.map((img, index) => `
-        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+        <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
             <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
         </div>
     `).join('');
@@ -26,11 +26,9 @@ export function displayAdvertisementDetail(advertisement) {
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
             </button>
         </div>
         `;

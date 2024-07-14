@@ -32,12 +32,7 @@ h1 {
 }
 
 
-/* Adjusting for large devices */
-@media (min-width: 992px) {
-    .navbar .dropdown:hover .dropdown-menu {
-        display: block;
-    }
-}
+/******* NAV BAR / HEADER *********/
 
 /* Enhancing Hover Effect for Navbar Links */
 .nav-link:hover, .dropdown:hover .dropbtn {
@@ -60,18 +55,11 @@ h1 {
 }
 
 
-.navbar {
-    background-color: #ffffff; /* Clean white background */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-}
 
 .navbar-brand img {
-    margin-right: 10px; /* Spacing between logo and brand name */
+    margin-right: 5px; /* Spacing between logo and brand name */
 }
 
-.nav-link {
-    color: #333; /* Dark grey for readability */
-}
 
 .nav-link:hover, .nav-item.active .nav-link {
     color: #0056b3; /* Highlight color for interactivity */
@@ -110,12 +98,9 @@ h1 {
 /* Bold Text Effect */
 .nav-link.active {
     font-weight: bold; /* Makes the active link bold */
-}
-
-/* Color Change Effect */
-.nav-link.active {
     color: #007bff; /* Changes color to a brighter or theme-specific tone */
 }
+
 
 /* Box Shadow Effect */
 .nav-link.active {
@@ -131,8 +116,6 @@ h1 {
 }
 
 /* You can uncomment the sections above to apply different styles or combine them as needed */
-
-
 nav {
     display: flex;
     justify-content: space-between;
@@ -156,43 +139,11 @@ nav ul li a {
     font-weight: bold;
 }
 
-.burger-menu {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
 
-.burger-menu span {
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    margin: 4px;
-    transition: 0.4s;
-}
 
-/* Mobile styling */
-@media (max-width: 768px) {
-    nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: #34495e;
-        position: absolute;
-        top: 50px;
-        left: 0;
-    }
 
-    nav ul li {
-        margin: 10px 0;
-        text-align: center;
-    }
 
-    .burger-menu {
-        display: flex;
-    }
-}
-
-/* View styling */
+/******* View styling *********/
 .view {
     display: none;
 }
@@ -249,7 +200,7 @@ footer {
 
 
 
-/************* LISTINGS **************/
+/************* ADVERTISEMENTS **************/
 
 /* Card Container */
 .grid-container {
@@ -336,7 +287,11 @@ footer {
     }
 }
 
-/**************** DETAIL ***************/
+/**************** ADVERTISEMENT DETAIL ***************/
+.advertisement-image {
+    object-fit: cover; /* Cover the area without distorting ratio */
+}
+
 .carousel-item img {
     border-radius: 10px; /* Adjust as needed */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
