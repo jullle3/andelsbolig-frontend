@@ -251,51 +251,92 @@ footer {
 
 /* LISTINGS */
 
+/* Card Container */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust minmax based on your design preference */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
+/* Listing Card */
+.listing-card {
+    background-color: #fff; /* Light background for the card */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures nothing spills out of the card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.listing-card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Enhanced shadow on hover for depth */
+}
+
+/* Listing Image Container */
 .listing-card .listing-image-container {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    justify-content: center; /* Center the images if they don't fill the entire width */
-    padding: 10px 0; /* Add some padding above and below the image container */
+    justify-content: center;
+    padding: 10px;
 }
 
 .listing-card .listing-image-container img {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 5px; /* Rounded corners for images */
 }
 
-.listing-card:hover {
-    transform: translateY(-5px);
-}
-
-.listing-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
+/* Listing Info */
 .listing-info {
-    flex: 1; /* Allows the info section to grow and push images to the bottom */
     padding: 15px;
 }
 
-.listing-image-container img {
-    max-height: 100px; /* Adjust based on your preference */
-    object-fit: cover;
+.listing-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.listing-title, .listing-description {
-    margin: 10px 0;
+.listing-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
 }
+
+/* Price and Details */
+.listing-card .price, .listing-card .details {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Contact Link */
+.listing-card .contact-link {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.listing-card .contact-link:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+
 
 
 #register-view .container {
