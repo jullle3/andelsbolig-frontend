@@ -173,8 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert('Listing created successfully!');
-            // event.target.reset();
-            // showView('home');
             fetchListings().then(data => displayListings(data.objects)); // Refresh the listings
         } catch (error) {
             console.error('Error creating listing:', error);
