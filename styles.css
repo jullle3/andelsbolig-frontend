@@ -249,7 +249,7 @@ footer {
 
 
 
-/* LISTINGS */
+/************* LISTINGS **************/
 
 /* Card Container */
 .grid-container {
@@ -336,6 +336,22 @@ footer {
     }
 }
 
+/**************** DETAIL ***************/
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    font-size: 30px; /* Increase arrow size */
+    color: black; /* Change arrow color */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+    border-radius: 50%; /* Circular shape */
+    width: 45px; /* Width of the arrow buttons */
+    align-items: center; /* Center the icons vertically */
+    justify-content: center; /* Center the icons horizontally */
+    padding: 10px; /* Padding around the icons */
+}
 
 
 

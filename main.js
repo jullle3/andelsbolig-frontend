@@ -68,18 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         views[view].style.display = 'block';
     }
 
-    // Navigation
-    // document.querySelectorAll('nav a').forEach(link => {
-    //     link.addEventListener('click', (e) => {
-    //         e.preventDefault();
-    //         const view = e.target.getAttribute('data-view');
-    //         showView(view);
-    //     });
-    // });
-
-    // Show home view by default
-    // showView('home');
-
     // Populate profile view
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -216,6 +204,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayListingDetail(listing) {
         const detailContainer = document.getElementById('detail');
+        // Start of the carousel markup
+        let carouselInnerHtml = listing.images.map((img, index) => `
+        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+            <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
+        </div>
+    `).join('');
+
+        // Complete carousel markup with indicators and controls
         detailContainer.innerHTML = `
         <h2>${listing.title}</h2>
         <p>${listing.description}</p>
@@ -226,13 +222,22 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Number of Rooms:</strong> ${listing.number_of_rooms}</p>
         <p><strong>Date Posted:</strong> ${new Date(listing.created).toLocaleDateString()}</p>
         <p><strong>Contact Email:</strong> ${listing.contact_email.join(', ')}</p>
-        <div class="images">
-            ${listing.images.map(img => `<img src="${img.url}" alt="Image of an apartment" />`).join('')}
+        <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                ${carouselInnerHtml}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-    `;
+        `;
         showView('detail');
     }
-
 
     // Call fetchAndDisplayListings on page load
     fetchAndDisplayListings();
