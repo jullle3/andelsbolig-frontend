@@ -5,7 +5,7 @@ import { authFetch } from './js/auth.js';
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header
     document.body.insertAdjacentHTML('afterbegin', `
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-shadow">
   <div class="container">
     <a class="navbar-brand" href="#" data-view="home">
       <img src="./favicon/android-chrome-512x512.png" alt="Logo" style="height: 80px;"> Andelsbolig Basen
