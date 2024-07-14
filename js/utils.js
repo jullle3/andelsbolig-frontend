@@ -3,7 +3,7 @@ let url;
 if (window.location.hostname === 'localhost') {
     url = '';
 } else {
-    url = 'andelsbolig-frontend';
+    url = 'andelsbolig-frontend/';
 }
 
 
