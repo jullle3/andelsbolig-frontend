@@ -13,7 +13,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.07) 0 1px 15px, rgba(0, 0, 0, 0.07) 0 1px 6px;
 }
 
-#app {
+#root {
     background-color: rgb(242, 243, 249);
     width: 100%;
     min-height: 100vh;
@@ -337,6 +337,11 @@ footer {
 }
 
 /**************** DETAIL ***************/
+.carousel-item img {
+    border-radius: 10px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     font-size: 30px; /* Increase arrow size */

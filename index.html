@@ -21,15 +21,22 @@
 
 
 <!-- VIEWS -->
-<div id="app">
+<div id="root">
     <div id="form-container">
         <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
     </div>
 
-
     <div id="home-view" class="view active">
-        <h1>Andelsboliger Listings</h1>
-        <input type="text" id="searchBar" placeholder="Søg boliger...">
+<!--        <h1>Andelsboliger Listings</h1>-->
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <input type="text" id="searchBar" class="form-control" placeholder="Søg boliger...">
+                </div>
+            </div>
+        </div>
+
         <div id="listings-container" class="grid-container"></div>
     </div>
     <div id="detail-view" class="view">

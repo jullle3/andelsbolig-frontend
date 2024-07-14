@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <nav class="navbar navbar-expand-lg navbar-shadow">
   <div class="container">
     <a class="navbar-brand" href="#" data-view="home">
-      <img src="./favicon/android-chrome-512x512.png" alt="Logo" style="height: 80px;"> Andelsbolig Basen
+      <img src="./favicon/android-chrome-512x512.png" alt="Logo" style="height: 60px;"> Andelsbolig Basen
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
