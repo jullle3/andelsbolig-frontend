@@ -1,7 +1,7 @@
 import {insertHeader} from "./js/utils.js";
 import {setupViews, showView} from "./js/views.js";
 import {setupProfileView} from "./js/views/profile.js";
-import {setupCreateListingView} from "./js/views/create_listing.js";
+import {setupCreateAdvertisementView} from "./js/views/create_listing.js";
 import {fetchAndDisplayAdvertisements, setupHomeView} from "./js/views/advertisements.js";
 import {setupRegisterView} from "./js/views/register.js";
 import {setupLogoutView} from "./js/views/logout.js";
@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupViews();
     setupProfileView();
     setupHomeView();
-    setupCreateListingView();
+    setupCreateAdvertisementView();
     setupRegisterView();
     setupLogoutView();
 
-    // Call fetchAndDisplayListings on page load
+    // Call on page load
     fetchAndDisplayAdvertisements();
 });

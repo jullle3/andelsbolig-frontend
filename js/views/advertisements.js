@@ -1,6 +1,6 @@
 import {authFetch} from "../auth.js";
 import {showView} from "../views.js";
-import {displayListingDetail} from "./advertisement_detail.js";
+import {displayAdvertisementDetail} from "./advertisement_detail.js";
 
 export function setupHomeView() {
     document.getElementById('backButton').addEventListener('click', () => {
@@ -51,7 +51,7 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             </div>
         `;
         // Add click event listener to the card
-        card.addEventListener('click', () => displayListingDetail(advertisement));
+        card.addEventListener('click', () => displayAdvertisementDetail(advertisement));
         listingsContainer.appendChild(card);
     });
 }

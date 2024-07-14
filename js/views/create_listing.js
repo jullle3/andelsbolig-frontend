@@ -1,8 +1,8 @@
 import {authFetch} from "../auth.js";
 
-export function setupCreateListingView() {
-    const createListingView = document.getElementById('create-view');
-    createListingView.style.display = 'none'; // Hide the view by default
+export function setupCreateAdvertisementView() {
+    const createAdvertisementView = document.getElementById('create-view');
+    createAdvertisementView.style.display = 'none'; // Hide the view by default
 
     // Handle image uploads
     document.getElementById('images').addEventListener('change', async (event) => {
@@ -45,7 +45,7 @@ export function setupCreateListingView() {
         event.preventDefault();
         const formData = new FormData(event.target);
 
-        const newListing = {
+        const newAdvertisement = {
             title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
             description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
             price: parseInt(formData.get('price')),
@@ -69,7 +69,7 @@ export function setupCreateListingView() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newListing)
+                body: JSON.stringify(newAdvertisement)
             });
             console.log("Response:", response); // Debugging
 
