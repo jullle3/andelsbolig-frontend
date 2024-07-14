@@ -173,53 +173,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert('Listing created successfully!');
-            fetchListings().then(data => displayListings(data.objects)); // Refresh the listings
+            fetchAndDisplayListings(); // Refresh the listings
         } catch (error) {
             console.error('Error creating listing:', error);
             alert('Failed to create listing');
         }
     });
 
-    // Fetch listings from the backend with optional search text
-    async function fetchListings(searchText = '') {
-        try {
-            const response = await authFetch(`advertisement?text=${encodeURIComponent(searchText)}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching listings:', error);
-            throw error;
-        }
-    }
+    async function fetchAndDisplayListings(searchTerm = '') {
+        // Fetch listings from the backend with optional search text
+        const listingsContainer = document.getElementById('listings-container');
+        listingsContainer.innerHTML = 'Loading...'; // Show loading message
 
-    // Display listings in the DOM
-    function displayListings(listings) {
-        const listingsContainer = document.getElementById('listings');
-        listingsContainer.innerHTML = '';
-        listings.forEach(listing => {
-            const listingElement = document.createElement('div');
-            listingElement.classList.add('listing');
-            listingElement.innerHTML = `
-                <h2>${listing.title}</h2>
-                <p>${listing.description}</p>
-                <p><strong>Price:</strong> ${listing.price} DKK</p>
-                <button class="view-detail" data-id="${listing._id}">View Details</button>
-                <div class="images">
-                    ${listing.images.map(img => `<img src="${img.thumbnail_url}" alt="Image of an apartment" />`).join('')}
-                </div>
-            `;
-            listingsContainer.appendChild(listingElement);
-        });
+        const response = await authFetch('advertisement?text=' + searchTerm);
+        const data = await response.json();
+        listingsContainer.innerHTML = ''; // Clear loading message
 
-        document.querySelectorAll('.view-detail').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const id = e.target.getAttribute('data-id');
-                fetchListingDetail(id).then(displayListingDetail);
-            });
+        data.objects.forEach(listing => {
+            const card = document.createElement('div');
+            card.className = 'listing-card';
+            const imagesToShow = listing.images.slice(0, 4); // Limit to 4 images
+            card.innerHTML = `
+        <div class="listing-image-container">
+            ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="Listing image" class="listing-image">`).join('')}
+        </div>
+        <div class="listing-info">
+            <h3 class="listing-title">${listing.title}</h3>
+            <p class="listing-description">${listing.description}</p>
+            <p><strong>Price:</strong> ${listing.price} DKK</p>
+            <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
+            <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
+            <p><strong>Area:</strong> ${listing.square_meters} m², ${listing.number_of_rooms} rooms</p>
+            <a href="mailto:${listing.contact_email.join(', ')}" class="contact-link">Contact</a>
+        </div>
+    `;
+            listingsContainer.appendChild(card);
         });
     }
+
+    // Call fetchAndDisplayListings on page load
+    fetchAndDisplayListings();
 
     // Fetch and display a single listing's details
     async function fetchListingDetail(id) {
@@ -259,9 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showView('home');
     });
 
-    // Initial fetch of listings
-    fetchListings().then(data => displayListings(data.objects));
-
     // Debounce function to delay the search
     function debounce(func, delay) {
         let debounceTimeout;
@@ -274,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add debounce to search input
     document.getElementById('searchBar').addEventListener('input', debounce((e) => {
         const searchTerm = e.target.value;
-        fetchListings(searchTerm).then(data => displayListings(data.objects));
+        fetchAndDisplayListings(searchTerm);
     }, 500));
 
 

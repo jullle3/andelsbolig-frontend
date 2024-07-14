@@ -247,61 +247,54 @@ footer {
     bottom: 0;
 }
 
-/* Listings and detail view styling */
-.listings {
+
+
+/* LISTINGS */
+
+.grid-container {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust minmax based on your design preference */
     gap: 20px;
-    grid-template-columns: 1fr;
-}
-
-.listing {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.listing h2 {
-    font-size: 20px;
-    margin: 0 0 10px;
-}
-
-.listing p {
-    margin: 0 0 10px;
-    color: #666;
-}
-
-.listing .images {
+.listing-card .listing-image-container {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    justify-content: center; /* Center the images if they don't fill the entire width */
+    padding: 10px 0; /* Add some padding above and below the image container */
 }
 
-.listing .images img {
+.listing-card .listing-image-container img {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 5px;
 }
 
-/* Responsive layout */
-@media (min-width: 600px) {
-    .listings {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.listing-card:hover {
+    transform: translateY(-5px);
 }
 
-@media (min-width: 900px) {
-    .listings {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.listing-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
-@media (min-width: 1200px) {
-    .listings {
-        grid-template-columns: repeat(4, 1fr);
-    }
+.listing-info {
+    flex: 1; /* Allows the info section to grow and push images to the bottom */
+    padding: 15px;
+}
+
+.listing-image-container img {
+    max-height: 100px; /* Adjust based on your preference */
+    object-fit: cover;
+}
+
+.listing-title, .listing-description {
+    margin: 10px 0;
 }
 
 
