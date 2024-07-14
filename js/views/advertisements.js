@@ -32,26 +32,26 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     const data = await response.json();
     listingsContainer.innerHTML = '';
 
-    data.objects.forEach(listing => {
+    data.objects.forEach(advertisement => {
         const card = document.createElement('div');
-        card.className = 'listing-card';
-        const imagesToShow = listing.images.slice(0, 4);
+        card.className = 'advertisement-card';
+        const imagesToShow = advertisement.images.slice(0, 4);
         card.innerHTML = `
-            <div class="listing-image-container">
-                ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="Listing image" class="listing-image">`).join('')}
+            <div class="advertisement-image-container">
+                ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="advertisement image" class="advertisement-image">`).join('')}
             </div>
-            <div class="listing-info">
-                <h3 class="listing-title">${listing.title}</h3>
-                <p class="listing-description">${listing.description}</p>
-                <p><strong>Price:</strong> ${listing.price} DKK</p>
-                <p><strong>Monthly Fee:</strong> ${listing.monthly_fee} DKK</p>
-                <p><strong>Address:</strong> ${listing.address}, ${listing.city} ${listing.postal_code}</p>
-                <p><strong>Area:</strong> ${listing.square_meters} m², ${listing.number_of_rooms} rooms</p>
-                <a href="mailto:${listing.contact_email.join(', ')}" class="contact-link">Contact</a>
+            <div class="advertisement-info">
+                <h3 class="advertisement-title">${advertisement.title}</h3>
+                <p class="advertisement-description">${advertisement.description}</p>
+                <p><strong>Price:</strong> ${advertisement.price} DKK</p>
+                <p><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
+                <p><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
+                <p><strong>Area:</strong> ${advertisement.square_meters} m², ${advertisement.number_of_rooms} rooms</p>
+                <a href="mailto:${advertisement.contact_email.join(', ')}" class="contact-link">Contact</a>
             </div>
         `;
         // Add click event listener to the card
-        card.addEventListener('click', () => displayListingDetail(listing));
+        card.addEventListener('click', () => displayListingDetail(advertisement));
         listingsContainer.appendChild(card);
     });
 }

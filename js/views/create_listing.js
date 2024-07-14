@@ -40,7 +40,7 @@ export function setupCreateListingView() {
         }
     });
 
-    // Handle create listing form submission
+    // Handle create advertisement form submission
     document.getElementById('createForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -74,14 +74,14 @@ export function setupCreateListingView() {
             console.log("Response:", response); // Debugging
 
             if (!response.ok) {
-                throw new Error('Failed to create listing');
+                throw new Error('Failed to create advertisement');
             }
 
-            alert('Listing created successfully!');
+            alert('advertisement created successfully!');
             fetchAndDisplayAdvertisements(); // Refresh the listings
         } catch (error) {
-            console.error('Error creating listing:', error);
-            alert('Failed to create listing');
+            console.error('Error creating advertisement:', error);
+            alert('Failed to create advertisement');
         }
     });
 }
