@@ -9,9 +9,6 @@ if (window.location.hostname === 'localhost') {
 
 /**
  * A wrapper around the fetch function to automatically include JWT in the headers.
- * @param {string} url The URL to fetch.
- * @param {object} options Additional options for the fetch request.
- * @returns {Promise<Response>} The fetch promise.
  */
 export function authFetch(url, options = {}) {
     const jwt = localStorage.getItem('jwt');

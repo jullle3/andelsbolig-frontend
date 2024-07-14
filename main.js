@@ -1,41 +1,58 @@
-import { authFetch } from './auth.js';
+import { authFetch } from './js/auth.js';
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
     // Insert header
     document.body.insertAdjacentHTML('afterbegin', `
-        <header>
-            <div class="logo">Andelsboliger Portal</div>
-            <nav>
-                <ul>
-                    <li><a href="#" data-view="home">Home</a></li>
-                    <li><a href="#" data-view="create">Create Listing</a></li>
-                    <li class="dropdown">
-                        <a href="#" data-view="profile" class="dropbtn" id="nameDisplay">My Name</a>
-                        <div class="dropdown-content">
-                            <a href="#" data-view="profile">My Profile</a>
-                            <a href="#" id="logoutLink">Log Out</a>
-                        </div>
-                    </li>
-<!--                    <li><a href="#" data-view="login">Login</a></li>-->
-                    <li><a href="#" data-view="register">Register</a></li>
-                </ul>
-                <div class="burger-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
-        </header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#" data-view="home">
+      <img src="/favicon/android-chrome-512x512.png" alt="Logo" style="height: 80px;"> Andelsbolig Basen
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-view="create">Opret Annonce</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-view="register">Opret Bruger</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbar-name" data-view="profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            My name
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbar-name">
+            <li><a class="dropdown-item" href="#" data-view="profile">My Profile</a></li>
+            <li><a class="dropdown-item" href="#" id="logoutLink">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
     `);
 
+    // Setup click events for all elements with a 'data-view' attribute
+    const clickableElements = document.querySelectorAll('[data-view]'); // This now includes the navbar brand
 
-    // document.body.insertAdjacentHTML('beforeend', `
-    //     <footer>
-    //         <p>&copy; 2024 Andelsboliger Portal. All rights reserved.</p>
-    //     </footer>
-    // `);
+    clickableElements.forEach(element => {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Remove 'active' class from all clickable elements
+            clickableElements.forEach(el => el.classList.remove('active'));
+            // Add 'active' class to the clicked element if it's not the logo (handled separately if needed)
+            if (this !== document.querySelector('.navbar-brand')) {
+                this.classList.add('active');
+            }
+            const viewName = this.getAttribute('data-view');
+            showView(viewName); // Call the function to update the view
+        });
+    });
 
     const views = {
         home: document.getElementById('home-view'),
@@ -52,16 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Navigation
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const view = e.target.getAttribute('data-view');
-            showView(view);
-        });
-    });
+    // document.querySelectorAll('nav a').forEach(link => {
+    //     link.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         const view = e.target.getAttribute('data-view');
+    //         showView(view);
+    //     });
+    // });
 
     // Show home view by default
-    showView('home');
+    // showView('home');
 
     // Populate profile view
     const jwt = localStorage.getItem('jwt');
@@ -69,13 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const payload = jwt.split('.')[1]; // Get the payload part of the JWT
         const decodedPayload = atob(payload); // Base64 decode
         const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
-        console.log(payloadObj)
 
         if (payloadObj.username) {
             document.getElementById('username-profile').textContent = payloadObj.username;
         }
         if (payloadObj.full_name) {
-            document.getElementById('nameDisplay').textContent = payloadObj.full_name;
+            document.getElementById('navbar-name').textContent = payloadObj.full_name;
             document.getElementById('fullName-profile').textContent = payloadObj.full_name;
         }
         if (payloadObj.email) {
@@ -278,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
             phone_number: formData.get('phone_number') || null
         };
 
-        try {
             const response = await authFetch('user', {
                 method: 'POST',
                 headers: {
@@ -289,17 +304,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const result = await response.json();
-                // Store the JWT in localStorage or sessionStorage
                 localStorage.setItem('jwt', result.jwt);
-                alert('User registered successfully');
+                alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
                 registerForm.reset();
-                showView('home'); // Redirect user to home or other appropriate view
-            } else {
-                console.error('Failed to register user:', await response.text());
+                showView('home');
             }
-                } catch (error) {
-                console.error('Error registering user:', error);
-        }
+            else {
+                const errorResponse = await response.json(); // Parse the error response
+                const errorMessage = errorResponse.detail || 'Failed to register user';
+                const errorElement = document.getElementById('error-message');
+                errorElement.textContent = errorMessage; // Set the error message
+                errorElement.classList.remove('d-none', 'fade-out'); // Make sure the error message is visible and reset fade-out
+
+                // Wait for 4 seconds before starting the fade out
+                setTimeout(() => {
+                    errorElement.classList.add('fade-out');
+
+                    // Wait for the fade-out transition to end before hiding the element
+                    errorElement.addEventListener('transitionend', () => {
+                        errorElement.classList.add('d-none'); // Hide the element after fade-out
+                        errorElement.classList.remove('fade-out'); // Reset for next time
+                    }, { once: true }); // Ensure the event listener is removed after it fires
+                }, 4000);
+            }
+
+
     });
 
 
