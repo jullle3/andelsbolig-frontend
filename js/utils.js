@@ -1,9 +1,18 @@
+// GitHub pages stores the images on a different path than when running locallu
+let url;
+if (window.location.hostname === 'localhost') {
+    url = '';
+} else {
+    url = 'andelsbolig-frontend';
+}
+
+
 export function insertHeader() {
     document.body.insertAdjacentHTML('afterbegin', `
 <nav class="navbar navbar-expand-lg navbar-shadow">
   <div class="container">
     <a class="navbar-brand" href="#" data-view="home">
-      <img src="../favicon/android-chrome-512x512.png" alt="Logo" style="height: 40px;"> Andelsbolig Basen
+      <img src="../${url}favicon/android-chrome-512x512.png" alt="Logo" style="height: 40px;"> Andelsbolig Basen
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
