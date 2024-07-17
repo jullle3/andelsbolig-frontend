@@ -1,5 +1,5 @@
 import {insertHeader} from "./js/utils.js";
-import {setupViews, showView} from "./js/views.js";
+import {setupViews} from "./js/views.js";
 import {setupProfileView} from "./js/views/profile.js";
 import {setupCreateAdvertisementView} from "./js/views/create_listing.js";
 import {fetchAndDisplayAdvertisements, setupHomeView} from "./js/views/advertisements.js";

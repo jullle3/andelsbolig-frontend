@@ -1,4 +1,5 @@
 import {authFetch} from "../auth.js";
+import {fetchAndDisplayAdvertisements} from "./advertisements.js";
 
 export function setupCreateAdvertisementView() {
     const createAdvertisementView = document.getElementById('create-view');
@@ -55,7 +56,6 @@ export function setupCreateAdvertisementView() {
             postal_code: "0000",  // Auto-generate or leave blank for backend to handle
             square_meters: parseInt(formData.get('square_meters')),
             number_of_rooms: parseInt(formData.get('number_of_rooms')),
-            contact_email: [formData.get('contact_email')],
             date_posted: Math.floor(Date.now() / 1000),
             located_at_top: formData.get('located_at_top') ? true : false,
             location: [0, 0], // Dummy location, replace with actual logic if needed
@@ -63,25 +63,19 @@ export function setupCreateAdvertisementView() {
             deleted: false
         };
 
-        try {
-            const response = await authFetch('advertisement', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newAdvertisement)
-            });
-            console.log("Response:", response); // Debugging
-
-            if (!response.ok) {
-                throw new Error('Failed to create advertisement');
-            }
-
-            alert('advertisement created successfully!');
-            fetchAndDisplayAdvertisements(); // Refresh the listings
-        } catch (error) {
-            console.error('Error creating advertisement:', error);
-            alert('Failed to create advertisement');
+        const response = await authFetch('advertisement', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newAdvertisement)
+        });
+        if (!response.ok) {
+            console.log(response)
+            throw new Error('Failed to create advertisement 1');
         }
+
+        alert('advertisement created successfully!');
+        fetchAndDisplayAdvertisements(); // Refresh the listings
     });
 }
