@@ -1,5 +1,7 @@
 import {authFetch} from "../auth.js";
 import {fetchAndDisplayAdvertisements} from "./advertisements.js";
+import {displayErrorMessage} from "../utils.js";
+
 
 export function setupCreateAdvertisementView() {
     const createAdvertisementView = document.getElementById('create-view');
@@ -14,29 +16,27 @@ export function setupCreateAdvertisementView() {
             const formData = new FormData();
             formData.append('file', file);
 
-            try {
-                const response = await authFetch('upload', {
-                    method: 'POST',
-                    body: formData
-                });
+            const response = await authFetch('upload', {
+                method: 'POST',
+                body: formData
+            });
 
-                if (response.ok) {
-                    const result = await response.json();
+            const result = await response.json();
+            console.log(result);
+            if (response.ok) {
 
-                    // Display thumbnail
-                    const imgElement = document.createElement('img');
-                    imgElement.src = result.thumbnail_url;
-                    imgElement.alt = file.name;
-                    imgElement.style.width = '100px';
-                    imgElement.style.height = '100px';
-                    imgElement.style.objectFit = 'cover';
-                    imgElement.style.margin = '5px';
-                    imagePreview.appendChild(imgElement);
-                } else {
-                    console.error('Failed to upload image:', file.name);
-                }
-            } catch (error) {
-                console.error('Error uploading image:', error);
+                // Display thumbnail
+                const imgElement = document.createElement('img');
+                imgElement.src = result.thumbnail_url;
+                imgElement.alt = file.name;
+                imgElement.style.width = '100px';
+                imgElement.style.height = '100px';
+                imgElement.style.objectFit = 'cover';
+                imgElement.style.margin = '5px';
+                imagePreview.appendChild(imgElement);
+            } else {
+                displayErrorMessage(result.detail);
+                console.error('Failed to upload image:', file.name);
             }
         }
     });
@@ -71,6 +71,7 @@ export function setupCreateAdvertisementView() {
             body: JSON.stringify(newAdvertisement)
         });
         if (!response.ok) {
+            displayErrorMessage(response.message);
             console.log(response)
             throw new Error('Failed to create advertisement 1');
         }

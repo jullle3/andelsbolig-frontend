@@ -37,9 +37,9 @@ function handleRouting() {
         view = 'home';
     }
 
-    console.log(url)
-    console.log(path)
-    console.log(viewParam)
-    console.log(view)
+    // console.log(url)
+    // console.log(path)
+    // console.log(viewParam)
+    // console.log(view)
     showView(view);
 }

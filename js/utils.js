@@ -42,3 +42,37 @@ export function insertHeader() {
     `);
 }
 
+// Create a function to display error messages
+export function displayErrorMessage(message) {
+    let errorContainer = document.getElementById('error-container');
+    if (!errorContainer) {
+        errorContainer = document.createElement('div');
+        errorContainer.id = 'error-container';
+        errorContainer.className = 'alert alert-danger alert-dismissible fade show';
+        errorContainer.role = 'alert';
+        errorContainer.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        document.body.appendChild(errorContainer);
+    } else {
+        errorContainer.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        errorContainer.classList.add('show');
+    }
+
+    // Automatically hide the error message after 5 seconds
+    setTimeout(() => {
+        if (errorContainer) {
+            errorContainer.classList.remove('show');
+            setTimeout(() => {
+                if (errorContainer) {
+                    errorContainer.remove();
+                }
+            }, 500); // Wait for the fade-out transition to complete
+        }
+    }, 5000);
+}
+
