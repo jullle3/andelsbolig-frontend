@@ -30,9 +30,10 @@ export function insertHeader() {
           <a class="nav-link dropdown-toggle" href="#" id="navbar-name" data-view="profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             My name
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbar-name">
+          <ul class="dropdown-menu dropdown-content" aria-labelledby="navbar-name">
             <li><a class="dropdown-item" href="#" data-view="profile">My Profile</a></li>
             <li><a class="dropdown-item" href="#" id="logoutLink">Logout</a></li>
+            <li><a class="dropdown-item" href="#" data-view="login">Login</a></li>
           </ul>
         </li>
       </ul>
