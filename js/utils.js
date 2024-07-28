@@ -74,6 +74,6 @@ export function displayErrorMessage(message) {
                 }
             }, 500); // Wait for the fade-out transition to complete
         }
-    }, 5000);
+    }, 6000);
 }
 

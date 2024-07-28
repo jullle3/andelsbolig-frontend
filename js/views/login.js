@@ -2,21 +2,18 @@ import {authFetch} from "../auth.js";
 import {showView} from "../views.js";
 import {displayErrorMessage} from "../utils.js";
 
-export function setupRegisterView() {
-    const registerForm = document.getElementById('registerForm');
+export function setupLoginView() {
+    const loginForm = document.getElementById('loginForm');
 
-    document.getElementById('registerForm').addEventListener('submit', async (event) => {
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault();
-        const formData = new FormData(registerForm);
+        const formData = new FormData(loginForm);
         const userData = {
-            username: formData.get('username'),
             email: formData.get('email'),
             password: formData.get('password'),
-            full_name: formData.get('full_name') || null, // Handle optional fields
-            phone_number: formData.get('phone_number') || null
         };
 
-        const response = await authFetch('user', {
+        const response = await authFetch('login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,13 +24,13 @@ export function setupRegisterView() {
         if (response.ok) {
             const result = await response.json();
             localStorage.setItem('jwt', result.jwt);
-            alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
-            registerForm.reset();
+            alert('User login success');
+            loginForm.reset();
             showView('home');
         }
         else {
             const errorResponse = await response.json(); // Parse the error response
-            const errorMessage = errorResponse.detail || 'Failed to register user';
+            const errorMessage = errorResponse.detail || 'Failed to login user';
             displayErrorMessage(errorMessage);
         }
     });

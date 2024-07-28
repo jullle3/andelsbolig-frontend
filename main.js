@@ -5,6 +5,7 @@ import {setupCreateAdvertisementView} from "./js/views/create_listing.js";
 import {fetchAndDisplayAdvertisements, setupHomeView} from "./js/views/advertisements.js";
 import {setupRegisterView} from "./js/views/register.js";
 import {setupLogoutView} from "./js/views/logout.js";
+import {setupLoginView} from "./js/views/login.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     insertHeader();
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupHomeView();
     setupCreateAdvertisementView();
     setupRegisterView();
+    setupLoginView();
     setupLogoutView();
 
     // Call on page load
