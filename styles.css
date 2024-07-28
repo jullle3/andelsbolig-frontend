@@ -516,3 +516,17 @@ nav ul li a:hover, .dropdown:hover .dropbtn {
     transition: opacity 2s ease-out;
     opacity: 0;
 }
+
+/*Sørger for at kr. er */
+.input-group-text {
+    /*align-self: center; !* Aligns the addon vertically center *!*/
+    /*margin-top: -10px; !* Nudge upward if it's slightly lower *!*/
+}
+
+
+/*Goal: Margin bottom 10, padding 10, border 0.8*/
+.form-control {
+    margin-bottom: 0;
+    padding: 10px;
+}
+

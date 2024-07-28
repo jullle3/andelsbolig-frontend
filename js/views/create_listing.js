@@ -1,11 +1,42 @@
 import {authFetch} from "../auth.js";
 import {fetchAndDisplayAdvertisements} from "./advertisements.js";
-import {displayErrorMessage} from "../utils.js";
+import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 
-export function setupCreateAdvertisementView() {
+export async function setupCreateAdvertisementView() {
     const createAdvertisementView = document.getElementById('create-view');
     createAdvertisementView.style.display = 'none'; // Hide the view by default
+
+    const jwt = localStorage.getItem('jwt');
+    const decodedJwt = decodeJwt(jwt);
+
+    // Fetch existing advertisement
+    const response = await authFetch('advertisement?created_by=' + decodedJwt.sub);
+    const data = await response.json();
+    const advertisement = data.objects[0]; // Assuming only one advertisement per user
+
+    // Populate form fields if advertisement exists
+    if (advertisement) {
+        document.getElementById('price').value = advertisement.price || '';
+        document.getElementById('monthly_fee').value = advertisement.monthly_fee || '';
+        document.getElementById('address').value = advertisement.address || '';
+        document.getElementById('square_meters').value = advertisement.square_meters || '';
+        document.getElementById('rooms').value = advertisement.rooms || '';
+        document.getElementById('located_at_top').checked = advertisement.located_at_top || false;
+
+        // Display existing images
+        const imagePreview = document.getElementById('imagePreview');
+        advertisement.images.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img.thumbnail_url;
+            imgElement.alt = 'advertisement image';
+            imgElement.style.width = '100px';
+            imgElement.style.height = '100px';
+            imgElement.style.objectFit = 'cover';
+            imgElement.style.margin = '5px';
+            imagePreview.appendChild(imgElement);
+        });
+    }
 
     // Handle image uploads
     document.getElementById('images').addEventListener('change', async (event) => {
@@ -22,9 +53,7 @@ export function setupCreateAdvertisementView() {
             });
 
             const result = await response.json();
-            console.log(result);
             if (response.ok) {
-
                 // Display thumbnail
                 const imgElement = document.createElement('img');
                 imgElement.src = result.thumbnail_url;
@@ -41,14 +70,12 @@ export function setupCreateAdvertisementView() {
         }
     });
 
-    // Handle create advertisement form submission
+    // Create advertisement form submission
     document.getElementById('createForm').addEventListener('submit', async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
 
         const newAdvertisement = {
-            // title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
-            // description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
             price: parseInt(formData.get('price')),
             monthly_fee: parseInt(formData.get('monthly_fee')),
             square_meters: parseInt(formData.get('square_meters')),
@@ -56,11 +83,6 @@ export function setupCreateAdvertisementView() {
             located_at_top: formData.get('located_at_top') ? true : false,
             address: formData.get('address'),
             city: "Auto-generated City",  // Auto-generate or leave blank for backend to handle
-            // postal_code: "0000",  // Auto-generate or leave blank for backend to handle
-            // date_posted: Math.floor(Date.now() / 1000),
-            // location: [0, 0], // Dummy location, replace with actual logic if needed
-            // views: 0,
-            // deleted: false
         };
 
         const response = await authFetch('advertisement', {
@@ -73,7 +95,7 @@ export function setupCreateAdvertisementView() {
         if (!response.ok) {
             displayErrorMessage(response.message);
             console.log(response)
-            throw new Error('Failed to create advertisement 1');
+            throw new Error('Failed to create advertisement');
         }
 
         alert('advertisement created successfully!');
