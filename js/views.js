@@ -6,7 +6,8 @@ const views = {
     login: document.getElementById('login-view'),
     create: document.getElementById('create-view'),
     register: document.getElementById('register-view'),
-    profile: document.getElementById('profile-view')
+    profile: document.getElementById('profile-view'),
+    '404': document.getElementById('404-view')
 };
 
 export function showView(view) {
