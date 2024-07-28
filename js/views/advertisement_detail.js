@@ -19,7 +19,8 @@ export function displayAdvertisementDetail(advertisement) {
         <p><strong>Square Meters:</strong> ${advertisement.square_meters} m²</p>
         <p><strong>Number of Rooms:</strong> ${advertisement.number_of_rooms}</p>
         <p><strong>Date Posted:</strong> ${new Date(advertisement.created).toLocaleDateString()}</p>
-        <p><strong>Contact Email:</strong> ${advertisement.emails.join(', ')}</p>
+        <p><strong>Contact Email:</strong> ${advertisement.emails ? advertisement.emails.join(', ') : 'undefined'}</p>
+
         <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 ${carouselInnerHtml}

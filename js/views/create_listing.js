@@ -47,20 +47,20 @@ export function setupCreateAdvertisementView() {
         const formData = new FormData(event.target);
 
         const newAdvertisement = {
-            title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
-            description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
+            // title: "Auto-generated Title",  // Auto-generate or leave blank for backend to handle
+            // description: "Auto-generated Description",  // Auto-generate or leave blank for backend to handle
             price: parseInt(formData.get('price')),
             monthly_fee: parseInt(formData.get('monthly_fee')),
+            square_meters: parseInt(formData.get('square_meters')),
+            rooms: parseInt(formData.get('rooms')),
+            located_at_top: formData.get('located_at_top') ? true : false,
             address: formData.get('address'),
             city: "Auto-generated City",  // Auto-generate or leave blank for backend to handle
-            postal_code: "0000",  // Auto-generate or leave blank for backend to handle
-            square_meters: parseInt(formData.get('square_meters')),
-            number_of_rooms: parseInt(formData.get('number_of_rooms')),
-            date_posted: Math.floor(Date.now() / 1000),
-            located_at_top: formData.get('located_at_top') ? true : false,
-            location: [0, 0], // Dummy location, replace with actual logic if needed
-            views: 0,
-            deleted: false
+            // postal_code: "0000",  // Auto-generate or leave blank for backend to handle
+            // date_posted: Math.floor(Date.now() / 1000),
+            // location: [0, 0], // Dummy location, replace with actual logic if needed
+            // views: 0,
+            // deleted: false
         };
 
         const response = await authFetch('advertisement', {

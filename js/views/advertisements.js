@@ -47,9 +47,11 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
                 <p><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
                 <p><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
                 <p><strong>Area:</strong> ${advertisement.square_meters} m², ${advertisement.number_of_rooms} rooms</p>
-                <a href="mailto:${advertisement.emails.join(', ')}" class="contact-link">Contact</a>
+                <a href="mailto:${advertisement.emails ? advertisement.emails.join(', ') : '#'}" class="contact-link">Contact</a>
             </div>
         `;
+
+
         // Add click event listener to the card
         card.addEventListener('click', () => displayAdvertisementDetail(advertisement));
         listingsContainer.appendChild(card);
