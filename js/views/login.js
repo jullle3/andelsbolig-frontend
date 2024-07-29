@@ -34,4 +34,29 @@ export function setupLoginView() {
             displayErrorMessage(errorMessage);
         }
     });
+
+
+    // Add event listener to toggle password visibility for all password
+    const passwordInputs = document.querySelectorAll('input[type="password"]');
+
+    passwordInputs.forEach(input => {
+        const toggleIcon = document.createElement('span');
+        toggleIcon.classList.add('input-group-text', 'toggle-password');
+        toggleIcon.innerHTML = '<i class="bi bi-eye-slash"></i>';
+
+        input.parentNode.insertBefore(toggleIcon, input.nextSibling);
+
+        toggleIcon.addEventListener('click', function() {
+            const passwordIcon = this.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                passwordIcon.classList.remove('bi-eye-slash');
+                passwordIcon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                passwordIcon.classList.remove('bi-eye');
+                passwordIcon.classList.add('bi-eye-slash');
+            }
+        });
+    });
 }
