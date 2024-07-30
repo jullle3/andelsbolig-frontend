@@ -100,3 +100,4 @@ export function decodeJwt() {
 export function setupUtils() {
     updateStripePaymentElements();
 }
+

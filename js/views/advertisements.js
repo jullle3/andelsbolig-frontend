@@ -26,11 +26,12 @@ export function setupHomeView() {
 
 export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     const listingsContainer = document.getElementById('listings-container');
-    listingsContainer.innerHTML = 'Loading...';
+    showSpinner()
 
     const response = await authFetch('advertisement?text=' + searchTerm);
     const data = await response.json();
     listingsContainer.innerHTML = '';
+    hideSpinner()
 
     data.objects.forEach(advertisement => {
         const card = document.createElement('div');
@@ -56,4 +57,13 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
         card.addEventListener('click', () => displayAdvertisementDetail(advertisement));
         listingsContainer.appendChild(card);
     });
+}
+
+
+function showSpinner() {
+    document.getElementById('loading-spinner').style.display = 'flex';
+}
+
+function hideSpinner() {
+    document.getElementById('loading-spinner').style.display = 'none';
 }
