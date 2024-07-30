@@ -7,8 +7,7 @@ export async function setupCreateAdvertisementView() {
     const createAdvertisementView = document.getElementById('create-view');
     createAdvertisementView.style.display = 'none'; // Hide the view by default
 
-    const jwt = localStorage.getItem('jwt');
-    const decodedJwt = decodeJwt(jwt);
+    const decodedJwt = decodeJwt();
 
     // Fetch existing advertisement
     const response = await authFetch('advertisement?created_by=' + decodedJwt.sub);

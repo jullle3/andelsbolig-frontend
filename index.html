@@ -157,7 +157,35 @@
     </div>
 
 
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+<!--    <div id="payment-view1" class="view">-->
+<!--        <div class="container">-->
+<!--            &lt;!&ndash; Stripe Buy Button &ndash;&gt;-->
+<!--            <stripe-buy-button-->
+<!--                    id="stripeBuyButton"-->
+<!--                    buy-button-id="buy_btn_1Phs9TRwMNhLL1Z9ExKDi9Cp"-->
+<!--                    publishable-key="pk_test_51PhrGIRwMNhLL1Z9dUFZqpxKIZrfZr64BTyUmHwWdEUjWjm3XulkLuozpbOuFT7dmkzKYAQ1ePD2cV2HLEnD1yMC00Q95j5SB1"-->
+<!--            >-->
+<!--            </stripe-buy-button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div id="payment-view2" class="view">
+        <div class="container">
+            <!-- Stripe Pricing Table -->
+            <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+
+
+            <stripe-pricing-table
+                    id="stripePricingTable"
+                    pricing-table-id="prctbl_1PiNk0RwMNhLL1Z9hHVKL1gs"
+                    publishable-key="pk_test_51PhrGIRwMNhLL1Z9dUFZqpxKIZrfZr64BTyUmHwWdEUjWjm3XulkLuozpbOuFT7dmkzKYAQ1ePD2cV2HLEnD1yMC00Q95j5SB1">
+            </stripe-pricing-table>
+        </div>
+    </div>
 </div>
+
 
 <script>
     function formatNumber(input, actualInputId) {
@@ -178,9 +206,14 @@
     }
 </script>
 
+
 <!--TODO Download disse og store lokalt? -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
 <script type="module" src="main.js"></script>
+
 </body>
 </html>

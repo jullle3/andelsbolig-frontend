@@ -1,6 +1,7 @@
 import {authFetch} from "../auth.js";
 import {showView} from "../views.js";
 import {displayErrorMessage} from "../utils.js";
+import {updateJWT} from "./login.js";
 
 export function setupRegisterView() {
     const registerForm = document.getElementById('registerForm');
@@ -26,7 +27,7 @@ export function setupRegisterView() {
 
         if (response.ok) {
             const result = await response.json();
-            localStorage.setItem('jwt', result.jwt);
+            updateJWT(result.jwt);
             alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
             registerForm.reset();
             showView('home');

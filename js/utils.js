@@ -1,4 +1,6 @@
 // GitHub pages stores the images on a different path than when running locallu
+import {updateStripePaymentElements} from "./views/login.js";
+
 let url;
 if (window.location.hostname === 'localhost') {
     url = '';
@@ -20,6 +22,9 @@ export function insertHeader() {
 
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-view="payment2">Abonnér</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#" data-view="create">Opret Annonce</a>
         </li>
@@ -77,12 +82,21 @@ export function displayErrorMessage(message) {
     }, 6000);
 }
 
-export function decodeJwt(token) {
-    const base64Url = token.split('.')[1];
+export function decodeJwt() {
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+        return null; // or handle the missing JWT case as needed
+    }
+    const base64Url = jwt.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
     return JSON.parse(jsonPayload);
+}
+
+
+export function setupUtils() {
+    updateStripePaymentElements();
 }

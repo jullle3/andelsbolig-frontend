@@ -1,6 +1,6 @@
 import {authFetch} from "../auth.js";
 import {showView} from "../views.js";
-import {displayErrorMessage} from "../utils.js";
+import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 export function setupLoginView() {
     const loginForm = document.getElementById('loginForm');
@@ -23,7 +23,7 @@ export function setupLoginView() {
 
         if (response.ok) {
             const result = await response.json();
-            localStorage.setItem('jwt', result.jwt);
+            updateJWT(result.jwt);
             alert('User login success');
             loginForm.reset();
             showView('home');
@@ -59,4 +59,19 @@ export function setupLoginView() {
             }
         });
     });
+}
+
+export function updateJWT(jwt) {
+    localStorage.setItem('jwt', jwt);
+    updateStripePaymentElements();
+    document.getElementById('stripeBuyButton').setAttribute('client-reference-id', jwt.sub);
+}
+
+export function updateStripePaymentElements() {
+    // Connect stripe HTML elements to the user's client reference id. This ensures that the user's payment is correctly associated with their account.
+    const decodedJwt = decodeJwt();
+    if (decodedJwt) {
+        // document.getElementById('stripeBuyButton').setAttribute('client-reference-id', decodedJwt.sub);
+        document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
+    }
 }
