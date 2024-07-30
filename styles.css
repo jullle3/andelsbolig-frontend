@@ -433,7 +433,6 @@ nav ul li a {
         flex-direction: column;
         width: 100%;
         display: none;  /* Hide by default, shown by burger menu */
-        background-color: #34495e;  /* Maintain header color */
     }
 
     .burger-menu {
