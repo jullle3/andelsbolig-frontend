@@ -20,7 +20,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-
-    showView('payment2');
 });
 
