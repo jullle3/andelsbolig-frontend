@@ -311,8 +311,10 @@ footer {
 }
 
 
+/**************** ADVERTISEMENT SPINNER ***************/
+
 .loader-container {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -338,9 +340,62 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
+/**************** ADVERTISEMENT SKELETON ***************/
+.skeleton-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
 
+.skeleton-card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    height: 300px;
+    animation: pulse 1.5s infinite;
+}
 
+.skeleton-image {
+    background-color: #e0e0e0;
+    height: 150px;
+}
 
+.skeleton-info {
+    padding: 15px;
+}
+
+.skeleton-title, .skeleton-text {
+    background-color: #e0e0e0;
+    height: 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.skeleton-title {
+    width: 60%;
+}
+
+.skeleton-text {
+    width: 80%;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #e0e0e0;
+    }
+    50% {
+        background-color: #f0f0f0;
+    }
+    100% {
+        background-color: #e0e0e0;
+    }
+}
 
 
 

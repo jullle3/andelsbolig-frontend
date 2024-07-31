@@ -26,12 +26,35 @@ export function setupHomeView() {
 
 export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     const listingsContainer = document.getElementById('listings-container');
-    showSpinner()
+
+    // Create skeleton screen
+    let skeletonScreen = document.createElement('div');
+    skeletonScreen.id = 'skeleton-screen';
+    skeletonScreen.className = 'skeleton-container';
+    skeletonScreen.innerHTML = `
+        <div class="skeleton-card">
+            <div class="skeleton-image"></div>
+            <div class="skeleton-info">
+                <div class="skeleton-title"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text"></div>
+            </div>
+        </div>
+        <!-- Repeat skeleton-card as needed -->
+    `;
+    listingsContainer.appendChild(skeletonScreen);
+
+    // showSpinner()
+    skeletonScreen.style.display = 'flex';
+    console.log(skeletonScreen)
 
     const response = await authFetch('advertisement?text=' + searchTerm);
     const data = await response.json();
     listingsContainer.innerHTML = '';
-    hideSpinner()
+    // hideSpinner()
+    skeletonScreen.style.display = 'none';
+
 
     data.objects.forEach(advertisement => {
         const card = document.createElement('div');
