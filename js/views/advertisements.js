@@ -31,8 +31,12 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     let skeletonScreen = document.createElement('div');
     skeletonScreen.id = 'skeleton-screen';
     skeletonScreen.className = 'skeleton-container';
-    skeletonScreen.innerHTML = `
-        <div class="skeleton-card">
+
+    // Add skeleton cards
+    for (let i = 0; i < 4; i++) {
+        const skeletonCard = document.createElement('div');
+        skeletonCard.className = 'skeleton-card';
+        skeletonCard.innerHTML = `
             <div class="skeleton-image"></div>
             <div class="skeleton-info">
                 <div class="skeleton-title"></div>
@@ -40,10 +44,9 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
                 <div class="skeleton-text"></div>
                 <div class="skeleton-text"></div>
             </div>
-        </div>
-        <!-- Repeat skeleton-card as needed -->
-    `;
-    listingsContainer.appendChild(skeletonScreen);
+        `;
+        listingsContainer.appendChild(skeletonCard);
+    }
 
     // showSpinner()
     skeletonScreen.style.display = 'flex';
