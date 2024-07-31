@@ -1,5 +1,6 @@
-// Setup click events for all views
+import {fetchAndDisplayAdvertisements} from "./views/advertisements.js";
 
+// Setup click events for all views
 const views = {
     home: document.getElementById('home-view'),
     detail: document.getElementById('detail-view'),
@@ -15,6 +16,11 @@ const views = {
 export function showView(view) {
     Object.values(views).forEach(v => v.style.display = 'none');
     views[view].style.display = 'block';
+
+    if (view === 'home') {
+        document.getElementById('home-search').value = '';
+        fetchAndDisplayAdvertisements();
+    }
 }
 
 export function setupViews() {

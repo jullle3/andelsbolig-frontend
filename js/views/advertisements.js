@@ -17,7 +17,7 @@ export function setupHomeView() {
     }
 
     // Add debounce to search input
-    document.getElementById('searchBar').addEventListener('input', debounce((e) => {
+    document.getElementById('home-search').addEventListener('input', debounce((e) => {
         const searchTerm = e.target.value;
         fetchAndDisplayAdvertisements(searchTerm);
     }, 500));
