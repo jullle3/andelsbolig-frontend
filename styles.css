@@ -70,6 +70,23 @@ h1 {
     animation: dropdownFadeIn 0.3s ease-in-out;
 }
 
+/* Define keyframes for the dropdown fade-out animation */
+@keyframes dropdownFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Apply the fade-out animation to the dropdown menu */
+.dropdown-menu.fade-out {
+    animation: dropdownFadeOut 0.3s ease-in-out;
+}
+
 /* Ensure the hover effects are not too dramatic but elegant */
 .nav-link, .dropdown-item {
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for hover effects */
@@ -224,6 +241,14 @@ footer {
 
 
 /************* ADVERTISEMENTS **************/
+
+
+
+/* Enhanced hover effects for buttons */
+button:hover {
+    background-color: #e9ecef;
+    transform: scale(1.05);
+}
 
 /* Card Container */
 .grid-container {
@@ -535,10 +560,6 @@ nav ul li a {
     background-color: #ddd;  /* Light grey background on hover */
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;  /* Display dropdown when hovering */
-}
-
 /* Responsive Handling for Mobile Devices */
 @media (max-width: 768px) {
     nav ul {
@@ -641,3 +662,45 @@ nav ul li a:hover, .dropdown:hover .dropbtn {
     padding: 10px;
 }
 
+
+
+/* View transition animations */
+.view {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.view.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Pretty button styling with icon */
+.pretty-button {
+    background-color: #2c3e50; /* Match the color of other buttons */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 16px; /* Larger font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    display: flex; /* Flexbox for icon and text alignment */
+    align-items: center; /* Center items vertically */
+}
+
+.pretty-button:hover {
+    background-color: #34495e; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly larger on hover */
+}
+
+.pretty-button:active {
+    background-color: #1c2833; /* Even darker shade on click */
+    transform: scale(0.95); /* Slightly smaller on click */
+}
+
+.pretty-button i {
+    margin-right: 8px; /* Space between icon and text */
+}
