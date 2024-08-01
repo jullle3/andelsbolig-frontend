@@ -334,7 +334,27 @@ button:hover {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
+.no-results-container {
+    display: none; /* Hide by default */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    padding: 20px; /* Padding for better spacing on mobile */
+}
 
+.no-results-container img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 15px; /* Rounded corners for the image */
+}
+
+@media (max-width: 768px) {
+    .no-results-container img {
+        max-width: 90%;
+        max-height: 90%;
+    }
+}
 
 /**************** ADVERTISEMENT SPINNER ***************/
 
@@ -704,3 +724,4 @@ nav ul li a:hover, .dropdown:hover .dropbtn {
 .pretty-button i {
     margin-right: 8px; /* Space between icon and text */
 }
+

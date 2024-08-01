@@ -52,6 +52,9 @@
             <div class="spinner"></div>
         </div>
 
+        <div id="no-results" class="no-results-container">
+            <div class="no-results"></div>
+        </div>
     </div>
 
     <div id="detail-view" class="view">
@@ -124,11 +127,11 @@
     <div id="register-view" class="view">
         <div class="container">
             <h1>Register</h1>
-            <form id="registerForm">
+            <form id="registerForm" novalidate>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required pattern=".*" >
 
                 <label for="password">Password:</label>
                 <div class="input-group">
