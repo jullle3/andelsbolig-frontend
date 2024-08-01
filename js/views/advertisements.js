@@ -68,11 +68,6 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     skeletonScreen.style.display = 'none';
 
     if (data.objects.length === 0) {
-        noResultsContainer.innerHTML = ''; // Clear any previous content
-        const noResultsImage = document.createElement('img');
-        noResultsImage.src = 'pics/noresults_smiling_man.webp';
-        noResultsImage.alt = 'No results found';
-        noResultsContainer.appendChild(noResultsImage);
         noResultsContainer.style.display = 'flex';
     } else {
         noResultsContainer.style.display = 'none';
