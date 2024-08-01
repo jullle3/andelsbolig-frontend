@@ -11,6 +11,8 @@ const views = {
     '404': document.getElementById('404-view')
 };
 
+let currentView = 'home'; // Track the current view
+
 export function showView(view) {
     Object.values(views).forEach(v => {
         v.classList.remove('active');
@@ -21,6 +23,7 @@ export function showView(view) {
         views[view].classList.add('active');
     }, 10); // Delay to ensure the display change is processed
     closeNavbar(); // Close the navbar when a new view is shown
+    currentView = view; // Update the current view
 }
 
 export function setupViews() {
@@ -36,7 +39,11 @@ export function setupViews() {
                 this.classList.add('active');
             }
             const viewName = this.getAttribute('data-view');
-            showView(viewName); // Call the function to update the view
+            if (viewName === 'home' && currentView === 'home') {
+                scrollDownToHideNavbar(); // Scroll down if already on the home view
+            } else {
+                showView(viewName); // Call the function to update the view
+            }
         });
     });
 }
@@ -46,4 +53,12 @@ function closeNavbar() {
     if (navbarCollapse.classList.contains('show')) {
         navbarCollapse.classList.remove('show');
     }
+}
+
+function scrollDownToHideNavbar() {
+    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+    window.scrollTo({
+        top: navbarHeight,
+        behavior: 'smooth'
+    });
 }
