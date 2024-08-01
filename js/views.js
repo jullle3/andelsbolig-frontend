@@ -14,13 +14,14 @@ const views = {
 };
 
 export function showView(view) {
-    Object.values(views).forEach(v => v.style.display = 'none');
+    Object.values(views).forEach(v => {
+        v.classList.remove('active');
+        v.style.display = 'none';
+    });
     views[view].style.display = 'block';
-
-    if (view === 'home') {
-        document.getElementById('home-search').value = '';
-        fetchAndDisplayAdvertisements();
-    }
+    setTimeout(() => {
+        views[view].classList.add('active');
+    }, 10); // Delay to ensure the display change is processed
 }
 
 export function setupViews() {
