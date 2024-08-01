@@ -2,6 +2,15 @@ import {authFetch} from "../auth.js";
 import {showView} from "../views.js";
 import {displayAdvertisementDetail} from "./advertisement_detail.js";
 
+function showSpinner() {
+    document.getElementById('loading-spinner').style.display = 'flex';
+}
+
+function hideSpinner() {
+    document.getElementById('loading-spinner').style.display = 'none';
+}
+
+
 export function setupHomeView() {
     document.getElementById('backButton').addEventListener('click', () => {
         showView('home');
@@ -26,6 +35,7 @@ export function setupHomeView() {
 
 export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     const listingsContainer = document.getElementById('listings-container');
+    const noResultsContainer = document.getElementById('no-results');
 
     // Create skeleton screen
     let skeletonScreen = document.createElement('div');
@@ -50,7 +60,6 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
 
     // showSpinner()
     skeletonScreen.style.display = 'flex';
-    console.log(skeletonScreen)
 
     const response = await authFetch('advertisement?text=' + searchTerm);
     const data = await response.json();
@@ -58,38 +67,38 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     // hideSpinner()
     skeletonScreen.style.display = 'none';
 
+    if (data.objects.length === 0) {
+        noResultsContainer.innerHTML = ''; // Clear any previous content
+        const noResultsImage = document.createElement('img');
+        noResultsImage.src = 'pics/noresults_smiling_man.webp';
+        noResultsImage.alt = 'No results found';
+        noResultsContainer.appendChild(noResultsImage);
+        noResultsContainer.style.display = 'flex';
+    } else {
+        noResultsContainer.style.display = 'none';
+        data.objects.forEach(advertisement => {
+            const card = document.createElement('div');
+            card.className = 'advertisement-card';
+            const imagesToShow = advertisement.images.slice(0, 4);
+            card.innerHTML = `
+                <div class="advertisement-image-container">
+                    ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="advertisement image" class="advertisement-image">`).join('')}
+                </div>
+                <div class="advertisement-info">
+                    <h3 class="advertisement-title">${advertisement.title}</h3>
+                    <p class="advertisement-description">${advertisement.description}</p>
+                    <p><strong>Price:</strong> ${advertisement.price} DKK</p>
+                    <p><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
+                    <p><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
+                    <p><strong>Area:</strong> ${advertisement.square_meters} m², ${advertisement.number_of_rooms} rooms</p>
+                    <a href="mailto:${advertisement.emails ? advertisement.emails.join(', ') : '#'}" class="contact-link">Contact</a>
+                </div>
+            `;
 
-    data.objects.forEach(advertisement => {
-        const card = document.createElement('div');
-        card.className = 'advertisement-card';
-        const imagesToShow = advertisement.images.slice(0, 4);
-        card.innerHTML = `
-            <div class="advertisement-image-container">
-                ${imagesToShow.map(img => `<img src="${img.thumbnail_url}" alt="advertisement image" class="advertisement-image">`).join('')}
-            </div>
-            <div class="advertisement-info">
-                <h3 class="advertisement-title">${advertisement.title}</h3>
-                <p class="advertisement-description">${advertisement.description}</p>
-                <p><strong>Price:</strong> ${advertisement.price} DKK</p>
-                <p><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
-                <p><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
-                <p><strong>Area:</strong> ${advertisement.square_meters} m², ${advertisement.number_of_rooms} rooms</p>
-                <a href="mailto:${advertisement.emails ? advertisement.emails.join(', ') : '#'}" class="contact-link">Contact</a>
-            </div>
-        `;
-
-
-        // Add click event listener to the card
-        card.addEventListener('click', () => displayAdvertisementDetail(advertisement));
-        listingsContainer.appendChild(card);
-    });
+            // Add click event listener to the card
+            card.addEventListener('click', () => displayAdvertisementDetail(advertisement));
+            listingsContainer.appendChild(card);
+        });
+    }
 }
 
-
-function showSpinner() {
-    document.getElementById('loading-spinner').style.display = 'flex';
-}
-
-function hideSpinner() {
-    document.getElementById('loading-spinner').style.display = 'none';
-}
