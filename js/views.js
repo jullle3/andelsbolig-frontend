@@ -1,5 +1,3 @@
-import {fetchAndDisplayAdvertisements} from "./views/advertisements.js";
-
 // Setup click events for all views
 const views = {
     home: document.getElementById('home-view'),
@@ -22,6 +20,7 @@ export function showView(view) {
     setTimeout(() => {
         views[view].classList.add('active');
     }, 10); // Delay to ensure the display change is processed
+    closeNavbar(); // Close the navbar when a new view is shown
 }
 
 export function setupViews() {
@@ -40,4 +39,11 @@ export function setupViews() {
             showView(viewName); // Call the function to update the view
         });
     });
+}
+
+function closeNavbar() {
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    if (navbarCollapse.classList.contains('show')) {
+        navbarCollapse.classList.remove('show');
+    }
 }
