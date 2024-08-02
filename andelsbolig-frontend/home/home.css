@@ -105,6 +105,7 @@ button:hover {
     max-height: 80%;
     object-fit: contain;
     border-radius: 15px; /* Rounded corners for the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to the image */
 }
 
 @media (max-width: 768px) {
