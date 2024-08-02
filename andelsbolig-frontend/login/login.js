@@ -1,5 +1,5 @@
-import {authFetch} from "../auth.js";
-import {showView} from "./viewManager.js";
+import {authFetch} from "../auth/auth.js";
+import {showView} from "../views/viewManager.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 export function setupLoginView() {

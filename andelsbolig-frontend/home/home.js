@@ -1,15 +1,6 @@
-import {authFetch} from "../auth.js";
-import {showView} from "./viewManager.js";
-import {displayAdvertisementDetail} from "./advertisement_detail.js";
-
-function showSpinner() {
-    document.getElementById('loading-spinner').style.display = 'flex';
-}
-
-function hideSpinner() {
-    document.getElementById('loading-spinner').style.display = 'none';
-}
-
+import {authFetch} from "../auth/auth.js";
+import {showView} from "../views/viewManager.js";
+import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 
 export function setupHomeView() {
     document.getElementById('backButton').addEventListener('click', () => {
@@ -58,13 +49,11 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
         listingsContainer.appendChild(skeletonCard);
     }
 
-    // showSpinner()
     skeletonScreen.style.display = 'flex';
 
     const response = await authFetch('advertisement?text=' + searchTerm);
     const data = await response.json();
     listingsContainer.innerHTML = '';
-    // hideSpinner()
     skeletonScreen.style.display = 'none';
 
     if (data.objects.length === 0) {

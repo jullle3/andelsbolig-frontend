@@ -78,7 +78,12 @@ footer {
 }
 
 
+/* Custom CSS for enhancing Bootstrap's form-control */
 .form-control {
-    margin-bottom: 0;
-    padding: 10px;
+    transition: box-shadow .3s ease-in-out, border-color .3s ease-in-out;
+}
+
+.form-control:hover, .form-control:focus {
+    border-color: #80bdff; /* Lighter blue for focus/hover */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle blue glow */
 }

@@ -1,5 +1,5 @@
-import {authFetch} from "../auth.js";
-import {fetchAndDisplayAdvertisements} from "./advertisements.js";
+import {authFetch} from "../auth/auth.js";
+import {fetchAndDisplayAdvertisements} from "../home/home.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 

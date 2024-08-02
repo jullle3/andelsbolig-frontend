@@ -1,4 +1,4 @@
-import {apiUrl} from "./config.js";
+import {apiUrl} from "../config/config.js";
 
 /**
  * A wrapper around the fetch function to automatically include JWT in the headers.

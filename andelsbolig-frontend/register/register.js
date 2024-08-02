@@ -1,7 +1,7 @@
-import {authFetch} from "../auth.js";
-import {showView} from "./viewManager.js";
+import {authFetch} from "../auth/auth.js";
+import {showView} from "../views/viewManager.js";
 import {displayErrorMessage} from "../utils.js";
-import {updateJWT} from "./login.js";
+import {updateJWT} from "../login/login.js";
 
 export function setupRegisterView() {
     const registerForm = document.getElementById('registerForm');

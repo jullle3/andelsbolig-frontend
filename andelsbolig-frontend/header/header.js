@@ -1,4 +1,4 @@
-import { basePath } from "../config.js";
+import { basePath } from "../config/config.js";
 
 export function insertHeader() {
     document.body.insertAdjacentHTML('afterbegin', `

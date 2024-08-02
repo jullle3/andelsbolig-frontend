@@ -1,4 +1,4 @@
-import {showView} from "./viewManager.js";
+import {showView} from "../views/viewManager.js";
 
 export function displayAdvertisementDetail(advertisement) {
     const detailContainer = document.getElementById('detail');

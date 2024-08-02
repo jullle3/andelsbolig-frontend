@@ -1,4 +1,4 @@
-import {updateStripePaymentElements} from "./views/login.js";
+import {updateStripePaymentElements} from "./login/login.js";
 
 
 export function displayErrorMessage(message) {

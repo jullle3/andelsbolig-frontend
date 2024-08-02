@@ -1,11 +1,11 @@
 import {setupUtils} from "./utils.js";
 import {setupViews} from "./views/viewManager.js";
-import {setupProfileView} from "./views/profile.js";
-import {setupCreateAdvertisementView} from "./views/create_listing.js";
-import {fetchAndDisplayAdvertisements, setupHomeView} from "./views/advertisements.js";
-import {setupRegisterView} from "./views/register.js";
-import {setupLogoutView} from "./views/logout.js";
-import {setupLoginView} from "./views/login.js";
+import {setupProfileView} from "./profile/profile.js";
+import {setupCreateAdvertisementView} from "./create/create.js";
+import {fetchAndDisplayAdvertisements, setupHomeView} from "./home/home.js";
+import {setupRegisterView} from "./register/register.js";
+import {setupLogoutView} from "./logout/logout.js";
+import {setupLoginView} from "./login/login.js";
 import {insertHeader} from "./header/header.js";
 
 document.addEventListener('DOMContentLoaded', () => {
