@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="andelsbolig-frontend/views/advertisement_detail.css">
     <link rel="stylesheet" href="andelsbolig-frontend/views/profile.css">
 
+    <!-- Import our custom JS -->
+    <script type="module" src="andelsbolig-frontend/utils.js"></script>
+
+
     <!--Stripe JS -->
     <!--TODO Download disse og store lokalt? -->
     <!--    <script async src="https://js.stripe.com/v3/buy-button.js"></script>-->
@@ -37,11 +41,13 @@
 <body>
 
 
-
 <!-- VIEWS -->
 <div id="root">
     <!-- Error Message Container -->
-    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert"></div>
+    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;">
+        <span id="error-message"></span>
+        <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
 
     <div id="home-view" class="view active">
         <div class="container">

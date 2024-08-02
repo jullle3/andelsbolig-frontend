@@ -1,23 +1,27 @@
 import {updateStripePaymentElements} from "./views/login.js";
 
+
 export function displayErrorMessage(message) {
     let errorContainer = document.getElementById('error-container');
-    console.log(errorContainer)
-    errorContainer.classList.add('show');
-    errorContainer.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        `;
+    let errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message;
 
-    // Automatically hide the error message after 5 seconds
-    setTimeout(() => {
-        if (errorContainer) {
-            errorContainer.classList.remove('show');
-            setTimeout(() => {
-            }, 500); // Wait for the fade-out transition to complete
-        }
-    }, 6000);
+    errorContainer.style.display = 'block';
+    errorContainer.classList.add('show');
+
+    setTimeout(() => hideErrorMessage(), 5000);
 }
+
+export function hideErrorMessage() {
+    let errorContainer = document.getElementById('error-container');
+    if (errorContainer) {
+        errorContainer.classList.remove('show');
+        setTimeout(() => {
+            errorContainer.style.display = 'none';
+        }, 500); // Delay to allow for fade transition
+    }
+}
+
 
 export function decodeJwt() {
     const jwt = localStorage.getItem('jwt');
@@ -26,7 +30,7 @@ export function decodeJwt() {
     }
     const base64Url = jwt.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
@@ -36,5 +40,6 @@ export function decodeJwt() {
 
 export function setupUtils() {
     updateStripePaymentElements();
+    document.getElementById('error-message-remove').addEventListener('click', hideErrorMessage);
 }
 
