@@ -1,10 +1,3 @@
-/* Enhancing Hover Effect for Navbar Links */
-/*.nav-link:hover, .dropdown:hover .dropbtn {*/
-/*    background-color: #dee2e6; !* Light gray background on hover for subtle effect *!*/
-/*    !*border-radius: 5px; !* Adds rounded corners to the hover effect *!*!*/
-/*    padding: 8px 12px; !* Slightly larger padding for a better touch area *!*/
-/*}*/
-
 /* Ensure the hover effects are not too dramatic but elegant */
 .nav-link, .dropdown-item {
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for hover effects */
