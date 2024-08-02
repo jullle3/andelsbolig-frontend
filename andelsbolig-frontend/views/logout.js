@@ -1,4 +1,4 @@
-import {showView} from "../views.js";
+import {showView} from "./viewManager.js";
 
 export function setupLogoutView() {
     document.getElementById("logoutLink").addEventListener('click', (event) => {

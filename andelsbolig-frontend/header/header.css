@@ -1,0 +1,145 @@
+/******* NAV BAR / HEADER *********/
+
+/* Enhancing Hover Effect for Navbar Links */
+.nav-link:hover, .dropdown:hover .dropbtn {
+    background-color: #dee2e6; /* Light gray background on hover for subtle effect */
+    border-radius: 5px; /* Adds rounded corners to the hover effect */
+    padding: 8px 12px; /* Slightly larger padding for a better touch area */
+}
+
+/* Active Link Styling */
+.nav-link.active, .dropdown-item.active {
+    font-weight: bold; /* Makes the active link bold */
+    background-color: #d1e0e0; /* A soft blue background for active state */
+    color: #0a58ca; /* Keeps the text color blue for consistency */
+}
+
+/* Ensure the hover effects are not too dramatic but elegant */
+.nav-link, .dropdown-item {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Define keyframes for the dropdown animation */
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to the dropdown menu */
+.dropdown-menu {
+    animation: dropdownFadeIn 0.3s ease-in-out;
+}
+
+/* Define keyframes for the dropdown fade-out animation */
+@keyframes dropdownFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Apply the fade-out animation to the dropdown menu */
+.dropdown-menu.fade-out {
+    animation: dropdownFadeOut 0.3s ease-in-out;
+}
+
+/* Ensure the hover effects are not too dramatic but elegant */
+.nav-link, .dropdown-item {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+
+
+.navbar-brand img {
+    margin-right: 5px; /* Spacing between logo and brand name */
+}
+
+
+.nav-link:hover, .nav-item.active .nav-link {
+    color: #0056b3; /* Highlight color for interactivity */
+}
+
+.navbar .dropdown-menu {
+    background-color: white; /* Example: set the background color */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.nav-link.active {
+    color: #007bff; /* Change to match your theme */
+    background-color: #e9ecef; /* Optional: background color for active state */
+}
+
+/* General Navbar Link Style */
+.nav-link {
+    position: relative;
+    color: #555; /* Default text color */
+    transition: color 0.3s, font-weight 0.3s; /* Smooth transition for color and font-weight */
+}
+
+/* Active Link Styles */
+/* Underline Effect */
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 2px;
+    width: 100%;
+    background-color: #007bff; /* Highlight color */
+    transition: background-color 0.3s; /* Smooth transition for the underline */
+}
+
+/* Bold Text Effect */
+.nav-link.active {
+    font-weight: bold; /* Makes the active link bold */
+    color: #007bff; /* Changes color to a brighter or theme-specific tone */
+}
+
+
+/* Box Shadow Effect */
+.nav-link.active {
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.5); /* Soft shadow under the active link */
+}
+
+/* Border Bottom Effect */
+.nav-link {
+    border-bottom: 3px solid transparent; /* Prepares a space for the border to avoid layout shift */
+}
+.nav-link.active {
+    border-bottom-color: #007bff; /* Adds a border bottom to the active link */
+}
+
+/* You can uncomment the sections above to apply different styles or combine them as needed */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+

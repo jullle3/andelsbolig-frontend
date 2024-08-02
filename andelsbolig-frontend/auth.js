@@ -1,11 +1,4 @@
-let apiUrl;
-
-if (window.location.hostname === 'localhost') {
-    apiUrl = 'http://localhost:8500/';
-} else {
-    apiUrl = 'https://hidden-slice-416812.ew.r.appspot.com/';
-}
-
+import {apiUrl} from "./config.js";
 
 /**
  * A wrapper around the fetch function to automatically include JWT in the headers.
