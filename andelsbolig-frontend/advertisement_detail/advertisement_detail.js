@@ -35,3 +35,5 @@ export function displayAdvertisementDetail(advertisement) {
         `;
     showView('detail');
 }
+
+window.displayAdvertisementDetail = displayAdvertisementDetail;

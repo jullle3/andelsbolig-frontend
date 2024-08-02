@@ -38,7 +38,7 @@ export async function setupCreateAdvertisementView() {
     }
 
     // Handle image uploads
-    document.getElementById('images').addEventListener('change', async (event) => {
+    document.getElementById('create-images').addEventListener('change', async (event) => {
         const files = event.target.files;
         const imagePreview = document.getElementById('imagePreview');
 

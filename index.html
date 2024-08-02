@@ -49,7 +49,7 @@
         <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
     </div>
 
-    <div id="home-view" class="view active">
+    <div id="home-view" class="view active p-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
@@ -57,7 +57,8 @@
                 </div>
             </div>
         </div>
-        <div id="listings-container" class="grid-container">
+        <!-- TODO Kan row delen rykkes til home.js?        -->
+        <div id="listings-container" class="row">
             <!-- Listings will be inserted here -->
         </div>
 
@@ -108,8 +109,8 @@
                 <input type="number" id="square_meters" name="square_meters" required>
                 <label for="rooms">Number of Rooms</label>
                 <input type="number" id="rooms" name="rooms" required>
-                <label for="images">Images</label>
-                <input type="file" id="images" name="images" multiple>
+                <label for="create-images">Images</label>
+                <input type="file" id="create-images" name="create-images" multiple>
                 <div id="imagePreview"></div>
                 <label for="located_at_top">Located at Top</label>
                 <input type="checkbox" id="located_at_top" name="located_at_top">
