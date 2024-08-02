@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andelsboliger Portal</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="andelsbolig-frontend/header/header.css">
 
-    <!--Import Bootstrap-->
+    <!--Bootstrap CSS -->
+    <!--TODO Download disse og store lokalt? -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <!-- Import our custom CSS -->
+    <link rel="stylesheet" href="andelsbolig-frontend/globalStyles.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/header/header.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/views/views.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/views/advertisement.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/views/advertisement_detail.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/views/profile.css">
+
+    <!--Stripe JS -->
+    <!--TODO Download disse og store lokalt? -->
+    <!--    <script async src="https://js.stripe.com/v3/buy-button.js"></script>-->
+    <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+
     <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!--Favicon-->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
@@ -23,19 +38,10 @@
 
 
 
-<div id="404-view" class="view">
-    <div class="container">
-        <h1>404 - Page Not Found</h1>
-        <p>The page you are looking for does not exist.</p>
-        <a href="/" class="btn btn-primary" data-view="home">Go to Home</a>
-    </div>
-</div>
-
 <!-- VIEWS -->
 <div id="root">
-    <div id="form-container">
-        <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
-    </div>
+    <!-- Error Message Container -->
+    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert"></div>
 
     <div id="home-view" class="view active">
         <div class="container">
@@ -173,7 +179,6 @@
     </div>
 
 
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
 
 <!--    <div id="payment-view1" class="view">-->
 <!--        <div class="container">-->
@@ -190,7 +195,6 @@
     <div id="payment-view2" class="view">
         <div class="container">
             <!-- Stripe Pricing Table -->
-            <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
 
 
             <stripe-pricing-table
@@ -223,13 +227,9 @@
 </script>
 
 
-<!--TODO Download disse og store lokalt? -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-
-<script type="module" src="main.js"></script>
+<!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script type="module" src="andelsbolig-frontend/main.js"></script>
 
 </body>
 </html>

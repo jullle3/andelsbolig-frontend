@@ -1,0 +1,25 @@
+#profile-view .container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#profile-view .form-group {
+    margin-bottom: 15px;
+}
+
+#profile-view .profile-data {
+    padding: 8px;
+    background-color: #f2f2f2; /* Light grey background to distinguish the area */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#profile-view label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+

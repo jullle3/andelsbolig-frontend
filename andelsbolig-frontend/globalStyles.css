@@ -1,0 +1,85 @@
+/* Base styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Light grey background */
+    color: #333;
+    overflow-y: scroll; /* Ensure body can scroll */
+}
+
+.custom-shadow {
+    /*box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);*/
+    box-shadow: rgba(0, 0, 0, 0.07) 0 1px 15px, rgba(0, 0, 0, 0.07) 0 1px 6px;
+}
+
+#root {
+    background-color: rgb(242, 243, 249);
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+
+/* Form styling */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    overflow-y: auto; /* Ensure form container is scrollable */
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #34495e;
+}
+
+/* Footer styling */
+footer {
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+.form-control {
+    margin-bottom: 0;
+    padding: 10px;
+}

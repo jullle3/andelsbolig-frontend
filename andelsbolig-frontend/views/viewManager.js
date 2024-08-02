@@ -8,7 +8,6 @@ const views = {
     profile: document.getElementById('profile-view'),
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment-view2'),
-    '404': document.getElementById('404-view')
 };
 
 let currentView = 'home'; // Track the current view
