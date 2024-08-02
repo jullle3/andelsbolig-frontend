@@ -46,7 +46,7 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             <div class="col-md-6 col-lg-4 col-xl-3 p-4">
                 <div class="card" onclick='displayAdvertisementDetail(${adJson})'>
 <!--                <div class="card " style="width: 18rem;">-->
-                    <img class="card-img-top bi-cursor" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
+                    <img class="card-img-top" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
                     <div class="card-body">
                         <h5 class="card-title">${advertisement.title}</h5>
                         <p class="card-text">${advertisement.description}</p>

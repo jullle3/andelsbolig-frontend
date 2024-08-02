@@ -1,11 +1,18 @@
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for transform and shadow */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Initial mild shadow */
+    cursor: default; /* Dont change cursor on card, since the card itself will be hovering */
 }
 
 .card:hover {
     transform: translateY(-5px) scale(1.03); /* Lift and slightly scale up the card */
     box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Deeper shadow for lifted effect */
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;  /* Redundant if using .img-fluid, shown here for clarity */
 }
 
 
