@@ -12,6 +12,7 @@ export function insertHeader() {
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav ms-auto">
+<!--        <li class="nav-item"><a class="nav-link" href="#" data-view="faq">FAQ</a></li>-->
         <li class="nav-item"><a class="nav-link" href="#" data-view="payment2">Abonnér</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="create">Opret Annonce</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="register">Opret Bruger</a></li>

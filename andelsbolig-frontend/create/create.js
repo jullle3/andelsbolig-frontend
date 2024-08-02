@@ -42,6 +42,7 @@ export async function setupCreateAdvertisementView() {
         const files = event.target.files;
         const imagePreview = document.getElementById('imagePreview');
 
+
         for (const file of files) {
             const formData = new FormData();
             formData.append('file', file);

@@ -43,10 +43,10 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             const imagesToShow = advertisement.images.slice(0, 4);
             listingsContainer.innerHTML += `
             <!-- 4 cols large screen, 3 cols medium, 1 col small (phone)            -->
-            <div class="col-md-4 col-xl-3 p-4">
-                <div class="card">
+            <div class="col-md-6 col-lg-4 col-xl-3 p-4">
+                <div class="card" onclick='displayAdvertisementDetail(${adJson})'>
 <!--                <div class="card " style="width: 18rem;">-->
-                    <img class="card-img-top" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" onclick='displayAdvertisementDetail(${adJson})' />
+                    <img class="card-img-top bi-cursor" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
                     <div class="card-body">
                         <h5 class="card-title">${advertisement.title}</h5>
                         <p class="card-text">${advertisement.description}</p>
