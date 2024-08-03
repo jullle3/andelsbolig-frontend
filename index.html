@@ -84,38 +84,64 @@
 
     <div id="create-view" class="view">
         <div class="container">
-            <h1>Create Advertisement</h1>
-            <form id="createForm">
 
-                <!-- Price Input -->
-                <label for="display_price">Price</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="display_price" name="display_price" required oninput="formatNumber(this, 'price');">
-                    <span class="input-group-text">kr.</span>
+            <div class="row justify-content-center">
+                <div class="" style="max-width: 500px">
+
+                    <h1>Opret Annonce</h1>
+                    <form id="createForm">
+                        <label class="text-secondary" for="display_price">Pris</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="display_price" name="display_price" required oninput="formatNumber(this, 'price');">
+                            <div class="input-group-text">kr</div>
+<!--                            <div class="input-group-text">.00</div>-->
+                            <input type="hidden" id="price" name="price">
+                        </div>
+
+                        <label class="text-secondary mt-2" for="display_monthly_fee" >Månedlig ydelse</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="display_monthly_fee" name="display_monthly_fee" required oninput="formatNumber(this, 'monthly_fee');">
+                            <span class="input-group-text">kr</span>
+<!--                            <div class="input-group-text">.00</div>-->
+                            <input type="hidden" id="monthly_fee" name="monthly_fee">
+                        </div>
+
+                        <label class="text-secondary mt-2" for="square_meters">Størrelse</label>
+                        <div class="input-group">
+                            <input class="form-control" id="square_meters" name="square_meters" required>
+                            <span class="input-group-text">m²</span>
+                        </div>
+
+                        <label class="text-secondary mt-2" for="rooms">Antal værelser</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" id="rooms" name="rooms" required min=1 max="10">
+                        </div>
+
+                        <label class="text-secondary mt-2" for="address" >Addresse</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="address" name="address" required>
+                        </div>
+
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
+                            <label class="text-secondary form-check-label" for="located_at_top">Øverste etage</label>
+                        </div>
+
+
+                        <div class="mt-3">
+                            <label class="form-label text-secondary" for="create-images">Billeder</label>
+                            <input class="form-control" type="file" id="create-images" multiple>
+                            <div  id="imagePreview"></div>
+                        </div>
+
+                        <div class="justify-content-center">
+                            <button class="mt-4 btn btn-lg w-75 text-white" style="background-color: #2c3e50" type="submit">Opret</button>
+                        </div>
+
+                    </form>
                 </div>
-                <input type="hidden" id="price" name="price">
+            </div>
 
-                <!-- Monthly Fee Input -->
-                <label for="display_monthly_fee">Monthly Fee</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="display_monthly_fee" name="display_monthly_fee" required oninput="formatNumber(this, 'monthly_fee');">
-                    <span class="input-group-text">kr.</span>
-                </div>
-                <input type="hidden" id="monthly_fee" name="monthly_fee">
-
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
-                <label for="square_meters">Square Meters m²</label>
-                <input type="number" id="square_meters" name="square_meters" required>
-                <label for="rooms">Number of Rooms</label>
-                <input type="number" id="rooms" name="rooms" required>
-                <label for="create-images">Images</label>
-                <input type="file" id="create-images" name="create-images" multiple>
-                <div id="imagePreview"></div>
-                <label for="located_at_top">Located at Top</label>
-                <input type="checkbox" id="located_at_top" name="located_at_top">
-                <button type="submit">Create</button>
-            </form>
         </div>
     </div>
 
@@ -258,27 +284,6 @@
 
 
 </div>
-
-
-<script>
-    function formatNumber(input, actualInputId) {
-        let cursorPosition = input.selectionStart;  // Save the cursor position
-        const originalLength = input.value.length;  // Save the original length of the string
-
-        let with_dots = input.value;
-        input.value = with_dots.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-        // Adjust cursor position after formatting
-        const newLength = input.value.length;
-        cursorPosition = cursorPosition - (originalLength - newLength);
-
-        input.setSelectionRange(cursorPosition, cursorPosition);
-
-        // Update the actual input value
-        document.getElementById(actualInputId).value = input.value.replace(/\./g, '');
-    }
-</script>
-
 
 <!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

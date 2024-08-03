@@ -1,5 +1,5 @@
 import {setupUtils} from "./utils.js";
-import {setupViews} from "./views/viewManager.js";
+import {setupViews, showView} from "./views/viewManager.js";
 import {setupProfileView} from "./profile/profile.js";
 import {setupCreateAdvertisementView} from "./create/create.js";
 import {fetchAndDisplayAdvertisements, setupHomeView} from "./home/home.js";
@@ -21,5 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     fetchAndDisplayAdvertisements();
+
+    // Skift view til debugging
+    showView('create');
+
 });
 

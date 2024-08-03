@@ -43,3 +43,21 @@ export function setupUtils() {
     document.getElementById('error-message-remove').addEventListener('click', hideErrorMessage);
 }
 
+function formatNumber(input, actualInputId) {
+    let cursorPosition = input.selectionStart;  // Save the cursor position
+    const originalLength = input.value.length;  // Save the original length of the string
+
+    let with_dots = input.value;
+    input.value = with_dots.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    // Adjust cursor position after formatting
+    const newLength = input.value.length;
+    cursorPosition = cursorPosition - (originalLength - newLength);
+
+    input.setSelectionRange(cursorPosition, cursorPosition);
+
+    // Update the actual input value
+    document.getElementById(actualInputId).value = input.value.replace(/\./g, '');
+}
+
+window.formatNumber = formatNumber;
