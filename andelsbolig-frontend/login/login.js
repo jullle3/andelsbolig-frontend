@@ -64,7 +64,7 @@ export function setupLoginView() {
 export function updateJWT(jwt) {
     localStorage.setItem('jwt', jwt);
     updateStripePaymentElements();
-    document.getElementById('stripeBuyButton').setAttribute('client-reference-id', jwt.sub);
+    // document.getElementById('stripeBuyButton').setAttribute('client-reference-id', jwt.sub);
 }
 
 export function updateStripePaymentElements() {
@@ -72,6 +72,6 @@ export function updateStripePaymentElements() {
     const decodedJwt = decodeJwt();
     if (decodedJwt) {
         // document.getElementById('stripeBuyButton').setAttribute('client-reference-id', decodedJwt.sub);
-        document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
+        // document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
     }
 }

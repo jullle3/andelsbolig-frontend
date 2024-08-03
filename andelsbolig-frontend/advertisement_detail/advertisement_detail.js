@@ -15,29 +15,15 @@ export async function displayAdvertisementDetail(advertisement_id) {
     // Start of the carousel markup
     let carouselInnerHtml = advertisement.images.map((img, index) => `
     <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
-        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">
+<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
+        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
     </div>
 `).join('');
 
 
     detail_view.innerHTML = `
 
-
-<!-- Modal for Viewing Full-Size Image -->
-<div class="modal fade" id="fullImageModal" tabindex="1" aria-labelledby="fullImageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-<!--                <h5 class="modal-title" id="fullImageModalLabel">Full Size Image</h5>-->
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="Full Size Image" class="w-100"> <!-- Image src will be dynamically set -->
-            </div>
-        </div>
-    </div>
-</div>
-
+    <!-- Images -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 p-0">
@@ -54,7 +40,25 @@ export async function displayAdvertisementDetail(advertisement_id) {
             </div>
         </div>
     </div>
+
+<!-- TODO: Modal tmp disabled -->
+<!-- Modal for Viewing Full-Size Image as a popup -->
+<!--<div class="modal fade" id="fullImageModal" tabindex="-1" aria-labelledby="fullImageModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-fullscreen">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <img src="" alt="Full Size Image" class="w-100"> &lt;!&ndash; Image src will be dynamically set &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
    
+    <!-- Details -->
     <div class="row p-4">
         <h2>${advertisement.title}</h2>
         <p>${advertisement.description}</p>

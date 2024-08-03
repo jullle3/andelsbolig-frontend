@@ -2,3 +2,16 @@
     max-height: 550px; /* Adjust the height as needed */
     object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
 }
+
+#fullImageModal .modal-content {
+    background: black;  /* Optional: for a different modal background */
+}
+
+#fullImageModal .modal-body {
+    padding: 0;  /* Removes padding around the image */
+}
+
+#fullImageModal img {
+    height: auto;  /* Ensures the image is not stretched vertically */
+    max-height: 100vh;  /* Ensures the image does not exceed the viewport height */
+}
