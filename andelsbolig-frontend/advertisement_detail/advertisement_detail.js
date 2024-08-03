@@ -1,6 +1,7 @@
 import {showView} from "../views/viewManager.js";
 
 export function displayAdvertisementDetail(advertisement) {
+    console.log(advertisement)
     const detailContainer = document.getElementById('detail');
     // Start of the carousel markup
     let carouselInnerHtml = advertisement.images.map((img, index) => `

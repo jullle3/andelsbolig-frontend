@@ -3,10 +3,6 @@ import {showView} from "../views/viewManager.js";
 import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 
 export function setupHomeView() {
-    document.getElementById('backButton').addEventListener('click', () => {
-        showView('home');
-    });
-
     // Debounce function to delay the search
     function debounce(func, delay) {
         let debounceTimeout;
@@ -42,12 +38,13 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             // Properly encode the advertisement object for insertion into an HTML attribute
             const adJson = JSON.stringify(advertisement).replace(/"/g, '&quot;');
             const imagesToShow = advertisement.images.slice(0, 4);
+            console.log(advertisement._id)
             listingsContainer.innerHTML += `
             <!-- Show 1 row on mobile -->
 <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
             <!-- Show 2 rows on mobile -->
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">
-                <div class="card"  onclick='displayAdvertisementDetail(${adJson})'>
+                <div class="card"  onclick='displayAdvertisementDetail(${advertisement._id})'>
 <!--                <div class="card " style="width: 18rem;">-->
                     <img class="card-img-top" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
                     <div class="card-body">

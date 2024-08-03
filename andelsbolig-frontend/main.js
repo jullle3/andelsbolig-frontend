@@ -21,6 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-    showView('profile');
+    showView('home');
 });
 
