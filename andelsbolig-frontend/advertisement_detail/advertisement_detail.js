@@ -1,23 +1,42 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 
+function setFullImageSrc(src) {
+    const modalImage = document.querySelector('#fullImageModal .modal-body img');
+    modalImage.src = src; // Set the source of the modal image to the source of the clicked image
+}
+
 export async function displayAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
     const response = await authFetch(`advertisement/${advertisement_id}`)
     const advertisement = await response.json();
 
-    console.log(advertisement)
-
     const detail_view = document.getElementById('detail-view');
     // Start of the carousel markup
     let carouselInnerHtml = advertisement.images.map((img, index) => `
-        <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
-            <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
-        </div>
-    `).join('');
+    <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
+        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">
+    </div>
+`).join('');
+
 
     detail_view.innerHTML = `
 
+
+<!-- Modal for Viewing Full-Size Image -->
+<div class="modal fade" id="fullImageModal" tabindex="-1" aria-labelledby="fullImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullImageModalLabel">Full Size Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="Full Size Image" class="w-100"> <!-- Image src will be dynamically set -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="row">
@@ -26,12 +45,10 @@ export async function displayAdvertisementDetail(advertisement_id) {
                 <div class="carousel-inner">
                     ${carouselInnerHtml}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel"
-                        data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel"
-                        data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
             </div>
@@ -57,3 +74,5 @@ export async function displayAdvertisementDetail(advertisement_id) {
 }
 
 window.displayAdvertisementDetail = displayAdvertisementDetail;
+window.setFullImageSrc = setFullImageSrc;
+

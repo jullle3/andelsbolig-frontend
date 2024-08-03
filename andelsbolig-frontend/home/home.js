@@ -35,10 +35,6 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     } else {
         noResultsContainer.style.display = 'none';
         data.objects.forEach(advertisement => {
-            // Properly encode the advertisement object for insertion into an HTML attribute
-            const adJson = JSON.stringify(advertisement).replace(/"/g, '&quot;');
-            const imagesToShow = advertisement.images.slice(0, 4);
-            console.log(advertisement._id)
             listingsContainer.innerHTML += `
             <!-- Show 1 row on mobile -->
             <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
