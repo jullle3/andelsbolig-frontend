@@ -21,9 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-
-    // Skift view til debugging
-    showView('create');
-
+    showView('profile');
 });
 

@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="andelsbolig-frontend/views/views.css">
     <link rel="stylesheet" href="andelsbolig-frontend/home/home.css">
     <link rel="stylesheet" href="andelsbolig-frontend/advertisement_detail/advertisement_detail.css">
-    <link rel="stylesheet" href="andelsbolig-frontend/profile/profile.css">
 
     <!-- Import our custom JS -->
     <script type="module" src="andelsbolig-frontend/utils.js"></script>
@@ -125,14 +124,14 @@
                             <label class="form-check-label text-secondary " for="located_at_top">Øverste etage</label>
                         </div>
 
-                        <div class="mt-3">
+                        <div class="mt-2">
                             <label class="form-label text-secondary" for="create-images">Billeder</label>
                             <input class="form-control" type="file" id="create-images" multiple>
                             <div id="imagePreview"></div>
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="col-auto w-75">
+                            <div class="col-auto w-100">
                                 <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
                                         type="submit">Opret
                                 </button>
@@ -144,68 +143,103 @@
         </div>
     </div>
 
-
-    <div id="login-view" class="view">
-        <div class="container">
-            <h1>Login</h1>
-            <form id="loginForm">
-                <label for="email">Email:</label>
-                <input type="text" id="login-email" name="email" required>
-
-                <label for="password">Password:</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" id="login-password" name="password" required>
-                </div>
-
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
-
-
     <div id="register-view" class="view">
         <div class="container">
-            <h1>Register</h1>
-            <form id="registerForm" novalidate>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required pattern=".*">
+            <div class="row justify-content-center">
+                <div style="max-width: 500px">
+                    <h1>Opret Bruger</h1>
+                    <form id="registerForm" novalidate>
+                        <label class="text-secondary" for="username">Brugernavn</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
 
-                <label for="password">Password:</label>
-                <div class="input-group">
-                    <input type="password" id="password" name="password" required>
-                </div>
+                        <label class="text-secondary mt-2" for="email">Email</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email" name="email" required pattern=".*">
+                        </div>
 
-                <label for="full_name">Full Name (optional):</label>
-                <input type="text" id="full_name" name="full_name">
-                <label for="phone_number">Phone Number (optional):</label>
-                <input type="tel" id="phone_number" name="phone_number">
-                <button type="submit">Register</button>
-            </form>
-        </div>
-    </div>
+                        <label class="text-secondary mt-2" for="password">Adgangskode</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
 
-    <div id="profile-view" class="view">
-        <div class="container">
-            <h1>My Profile</h1>
-            <div class="profile-info">
-                <div class="form-group">
-                    <label>Brugernavn</label>
-                    <div id="username-profile" class="profile-data"></div>
-                </div>
-                <div class="form-group">
-                    <label>Fulde navn</label>
-                    <div id="fullName-profile" class="profile-data"></div>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <div id="email-profile" class="profile-data"></div>
+                        <label class="text-secondary mt-2" for="phone_number">Telefon</label>
+                        <div class="input-group">
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number">
+                        </div>
+
+                        <label class="text-secondary mt-2" for="full_name">Fulde navn (Ikke påkrævet)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="full_name" name="full_name">
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-auto w-100">
+                                <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
+                                        type="submit">Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="login-view" class="view">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div style="max-width: 500px">
+                    <h1>Login</h1>
+                    <form id="loginForm" novalidate>
+                        <label class="text-secondary" for="login-email">Email</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="login-email" name="email" required>
+                        </div>
+
+                        <label class="text-secondary mt-2" for="login-password">Adgangskode</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="login-password" name="password" required>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-auto w-100">
+                                <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="profile-view" class="view">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div style="max-width: 500px">
+                    <h1>My Profile</h1>
+                    <form id="profileForm" novalidate>
+                        <label class="text-secondary" for="username-profile">Brugernavn</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="username-profile" name="username" readonly>
+                        </div>
+
+                        <label class="text-secondary mt-2" for="fullName-profile">Fulde navn</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fullName-profile" name="full_name" readonly>
+                        </div>
+
+                        <label class="text-secondary mt-2" for="email-profile">Email</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email-profile" name="email" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--    <div id="payment-view1" class="view">-->
     <!--        <div class="container">-->

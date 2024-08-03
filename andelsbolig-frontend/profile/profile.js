@@ -6,15 +6,16 @@ export function setupProfileView() {
         const decodedPayload = atob(payload); // Base64 decode
         const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
 
+        console.log(payloadObj);
         if (payloadObj.username) {
-            document.getElementById('username-profile').textContent = payloadObj.username;
+            document.getElementById('username-profile').value = payloadObj.username;
         }
         if (payloadObj.full_name) {
             document.getElementById('navbar-name').textContent = payloadObj.full_name;
-            document.getElementById('fullName-profile').textContent = payloadObj.full_name;
+            document.getElementById('fullName-profile').value = payloadObj.full_name;
         }
         if (payloadObj.email) {
-            document.getElementById('email-profile').textContent = payloadObj.email;
+            document.getElementById('email-profile').value = payloadObj.email;
         }
     }
 }
