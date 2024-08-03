@@ -41,11 +41,10 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             console.log(advertisement._id)
             listingsContainer.innerHTML += `
             <!-- Show 1 row on mobile -->
-<!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
+            <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
             <!-- Show 2 rows on mobile -->
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">
-                <div class="card"  onclick='displayAdvertisementDetail(${advertisement._id})'>
-<!--                <div class="card " style="width: 18rem;">-->
+            <div class="card" onclick="displayAdvertisementDetail('${advertisement._id}')">
                     <img class="card-img-top" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
                     <div class="card-body">
                         <h5 class="card-title">${advertisement.title}</h5>

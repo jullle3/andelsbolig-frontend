@@ -6,7 +6,6 @@ export function setupProfileView() {
         const decodedPayload = atob(payload); // Base64 decode
         const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
 
-        console.log(payloadObj);
         if (payloadObj.username) {
             document.getElementById('username-profile').value = payloadObj.username;
         }

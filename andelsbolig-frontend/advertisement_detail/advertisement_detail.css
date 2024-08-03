@@ -1,6 +1,4 @@
-/**************** ADVERTISEMENT DETAIL ***************/
-.advertisement-image {
-    object-fit: cover; /* Cover the area without distorting ratio */
+.carousel-inner img {
+    max-height: 550px; /* Adjust the height as needed */
+    object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
 }
-
-

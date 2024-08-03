@@ -1,8 +1,14 @@
 import {showView} from "../views/viewManager.js";
+import {authFetch} from "../auth/auth.js";
 
-export function displayAdvertisementDetail(advertisement) {
+export async function displayAdvertisementDetail(advertisement_id) {
+    // Fetch the advertisement
+    const response = await authFetch(`advertisement/${advertisement_id}`)
+    const advertisement = await response.json();
+
     console.log(advertisement)
-    const detailContainer = document.getElementById('detail');
+
+    const detail_view = document.getElementById('detail-view');
     // Start of the carousel markup
     let carouselInnerHtml = advertisement.images.map((img, index) => `
         <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
@@ -10,8 +16,29 @@ export function displayAdvertisementDetail(advertisement) {
         </div>
     `).join('');
 
-    // Complete carousel markup with indicators and controls
-    detailContainer.innerHTML = `
+    detail_view.innerHTML = `
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 p-0">
+            <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    ${carouselInnerHtml}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row p-4">
         <h2>${advertisement.title}</h2>
         <p>${advertisement.description}</p>
         <p><strong>Price:</strong> ${advertisement.price} DKK</p>
@@ -21,18 +48,10 @@ export function displayAdvertisementDetail(advertisement) {
         <p><strong>Number of Rooms:</strong> ${advertisement.number_of_rooms}</p>
         <p><strong>Date Posted:</strong> ${new Date(advertisement.created).toLocaleDateString()}</p>
         <p><strong>Contact Email:</strong> ${advertisement.emails ? advertisement.emails.join(', ') : 'undefined'}</p>
-
-        <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                ${carouselInnerHtml}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </button>
-        </div>
+    </div>
+</div>
+    
+    
         `;
     showView('detail');
 }
