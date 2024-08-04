@@ -57,18 +57,64 @@ export async function displayAdvertisementDetail(advertisement_id) {
 <!--</div>-->
 
 
-   
     <!-- Details -->
     <div class="row p-4">
-        <h2>${advertisement.title}</h2>
-        <p>${advertisement.description}</p>
-        <p><strong>Price:</strong> ${advertisement.price} DKK</p>
-        <p><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
-        <p><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
-        <p><strong>Square Meters:</strong> ${advertisement.square_meters} m²</p>
-        <p><strong>Number of Rooms:</strong> ${advertisement.number_of_rooms}</p>
-        <p><strong>Date Posted:</strong> ${new Date(advertisement.created).toLocaleDateString()}</p>
-        <p><strong>Contact Email:</strong> ${advertisement.emails ? advertisement.emails.join(', ') : 'undefined'}</p>
+        <div class="col-lg-6">
+            <h2>${advertisement.title}</h2>
+            <p>${advertisement.description}</p>
+        </div>
+        
+        <div class="col-lg-6 vertical-line p-4">
+            <form>
+                <label class="text-secondary" for="display_price">Pris</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.price}" type="text"  id="display_price" name="display_price" required readonly
+                           oninput="formatNumber(this, 'price');">
+                    <div class="input-group-text">kr</div>
+                    <input type="hidden" id="price" name="price">
+                </div>
+
+                <label class="text-secondary mt-2" for="display_monthly_fee">Månedlig ydelse</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.monthly_fee}" type="text" id="display_monthly_fee" name="display_monthly_fee" readonly
+                           required oninput="formatNumber(this, 'monthly_fee');">
+                    <span class="input-group-text">kr</span>
+                    <input type="hidden" id="monthly_fee" name="monthly_fee">
+                </div>
+
+                <label class="text-secondary mt-2" for="square_meters">Størrelse</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.square_meters}" id="square_meters" name="square_meters" required readonly>
+                    <span class="input-group-text">m²</span>
+                </div>
+
+                <label class="text-secondary mt-2" for="rooms">Antal værelser</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.rooms}" type="number" id="rooms" name="rooms" required readonly min=1 max="10">
+                </div>
+
+                <label class="text-secondary mt-2" for="address">Addresse</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.address}" type="text" id="address" name="address" required readonly>
+                </div>
+
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top" disabled ${advertisement.located_at_top ? 'checked' : ''}>
+                    <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
+                </div>
+            </form>
+
+            <p class="mt-4">
+              <i class="bi bi-clock-history"></i> <strong>Tid på markedet</strong>
+              ${Math.floor((new Date() - new Date(advertisement.created * 1000)) / (1000 * 60 * 60 * 24))} dage
+            </p>
+            
+            <p class="mt-4">
+              <i class="bi bi-eye"></i> <strong>Visninger</strong>
+              ${advertisement.views}
+            </p>
+        
+        </div>
     </div>
 </div>
     
