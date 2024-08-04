@@ -13,9 +13,11 @@ export async function displayAdvertisementDetail(advertisement_id) {
 
     const detail_view = document.getElementById('detail-view');
     // Start of the carousel markup
+
+    // tmp disable
+    //<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
     let carouselInnerHtml = advertisement.images.map((img, index) => `
     <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
-<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
         <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
     </div>
 `).join('');
