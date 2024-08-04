@@ -7,7 +7,7 @@ const views = {
     register: document.getElementById('register-view'),
     profile: document.getElementById('profile-view'),
     // payment1: document.getElementById('payment-view1'),
-    // payment2: document.getElementById('payment-view2'),
+    payment2: document.getElementById('payment-view2'),
     faq: document.getElementById('faq-view'),
 };
 
