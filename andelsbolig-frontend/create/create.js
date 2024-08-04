@@ -16,6 +16,8 @@ export async function setupCreateAdvertisementView() {
 
     // Populate form fields if advertisement exists
     if (advertisement) {
+        document.getElementById('title').value = advertisement.title || '';
+        document.getElementById('description').value = advertisement.description || '';
         document.getElementById('price').value = advertisement.price || '';
         document.getElementById('monthly_fee').value = advertisement.monthly_fee || '';
         document.getElementById('address').value = advertisement.address || '';
@@ -75,7 +77,10 @@ export async function setupCreateAdvertisementView() {
         event.preventDefault();
         const formData = new FormData(event.target);
 
+        console.log(formData)
         const newAdvertisement = {
+            title: formData.get('title'),
+            description: formData.get('description'),
             price: parseInt(formData.get('price')),
             monthly_fee: parseInt(formData.get('monthly_fee')),
             square_meters: parseInt(formData.get('square_meters')),
