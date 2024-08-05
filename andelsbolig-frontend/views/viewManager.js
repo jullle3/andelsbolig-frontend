@@ -1,4 +1,6 @@
 // Setup click events for all views
+import {setupProfileView} from "../profile/profile.js";
+
 const views = {
     home: document.getElementById('home-view'),
     detail: document.getElementById('detail-view'),
@@ -43,6 +45,7 @@ export function setupViews() {
                 scrollDownToHideNavbar(); // Scroll down if already on the home view
             } else {
                 showView(viewName); // Call the function to update the view
+                setupProfileView();
             }
         });
     });

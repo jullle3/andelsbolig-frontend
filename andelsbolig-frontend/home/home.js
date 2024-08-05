@@ -45,11 +45,11 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
           <div class="card-body">
                         <h5 class="card-title">${advertisement.title}</h5>
-                        <p class="card-text">${advertisement.description}</p>
-                        <p class="card-text"><strong>Price:</strong> ${advertisement.price} DKK</p>
-                        <p class="card-text"><strong>Monthly Fee:</strong> ${advertisement.monthly_fee} DKK</p>
-                        <p class="card-text"><strong>Address:</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
-                        <p class="card-text"><strong>Area:</strong> ${advertisement.square_meters} m², ${advertisement.number_of_rooms} rooms</p>
+                        <p class="card-text">${advertisement.description.length > 50 ? advertisement.description.substring(0, 50) + '...' : advertisement.description}</p>
+                        <p class="card-text"><strong>Pris</strong> ${advertisement.price} DKK</p>
+                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee} DKK</p>
+                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
+                        <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
                     </div>
                 </div>
             </div>
