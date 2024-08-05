@@ -10,7 +10,6 @@ export async function displayAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
     const response = await authFetch(`advertisement/${advertisement_id}`)
     const advertisement = await response.json();
-
     const detail_view = document.getElementById('detail-view');
     // Start of the carousel markup
 

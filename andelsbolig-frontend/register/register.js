@@ -10,7 +10,6 @@ export function setupRegisterView() {
         event.preventDefault();
         const formData = new FormData(registerForm);
         const userData = {
-            username: formData.get('username'),
             email: formData.get('email'),
             password: formData.get('password'),
             full_name: formData.get('full_name') || null, // Handle optional fields

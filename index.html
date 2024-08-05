@@ -85,10 +85,10 @@
                     <form id="createForm">
 
                         <label class="text-secondary form-label" for="title">Titel</label>
-                        <textarea class="form-control" name="title" id="title" rows="1" placeholder="Din titel her"></textarea>
+                        <textarea class="form-control" name="title" id="title" rows="1"></textarea>
 
                         <label class="text-secondary mt-2" for="description">Beskrivelse</label>
-                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Din beskrivelse her"></textarea>
+                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
 
                         <label class="text-secondary mt-2" for="display_price">Pris</label>
                         <div class="input-group">
@@ -154,11 +154,6 @@
                 <div style="max-width: 500px">
                     <h1>Opret Bruger</h1>
                     <form id="registerForm" novalidate>
-                        <label class="text-secondary" for="username">Brugernavn</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-
                         <label class="text-secondary mt-2" for="email">Email</label>
                         <div class="input-group">
                             <input type="email" class="form-control" id="email" name="email" required pattern=".*">
@@ -229,11 +224,6 @@
                 <div style="max-width: 500px">
                     <h1>My Profile</h1>
                     <form id="profileForm" novalidate>
-                        <label class="text-secondary" for="username-profile">Brugernavn</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="username-profile" name="username" readonly>
-                        </div>
-
                         <label class="text-secondary mt-2" for="fullName-profile">Fulde navn</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="fullName-profile" name="full_name" readonly>
