@@ -24,7 +24,7 @@ export function setupLoginView() {
         if (response.ok) {
             const result = await response.json();
             updateJWT(result.jwt);
-            alert('User login success');
+            // alert('User login success');
             loginForm.reset();
             showView('home');
         }

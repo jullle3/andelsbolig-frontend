@@ -28,7 +28,7 @@ export function setupRegisterView() {
         if (response.ok) {
             const result = await response.json();
             updateJWT(result.jwt);
-            alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
+            // alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
             registerForm.reset();
             showView('home');
         }
