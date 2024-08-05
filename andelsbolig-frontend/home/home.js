@@ -39,10 +39,11 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             <!-- Show 1 row on mobile -->
             <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
             <!-- Show 2 rows on mobile -->
-            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3 ">
+<!--            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">-->
             <div class="card" onclick="displayAdvertisementDetail('${advertisement._id}')">
-                    <img class="card-img-top" src="${advertisement.images[0].thumbnail_url}" alt="advertisement image" />
-                    <div class="card-body">
+            <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
+          <div class="card-body">
                         <h5 class="card-title">${advertisement.title}</h5>
                         <p class="card-text">${advertisement.description}</p>
                         <p class="card-text"><strong>Price:</strong> ${advertisement.price} DKK</p>

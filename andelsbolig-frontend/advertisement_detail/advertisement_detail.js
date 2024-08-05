@@ -1,5 +1,6 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
+import {displayErrorMessage} from "../utils.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
@@ -8,7 +9,15 @@ function setFullImageSrc(src) {
 
 export async function displayAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
-    const response = await authFetch(`advertisement/${advertisement_id}`)
+    const response = await authFetch(`advertisement/${advertisement_id}`);
+    if (!response.ok) {
+        let body = await response.json()
+        displayErrorMessage(body.detail);
+        return;
+    }
+
+
+
     const advertisement = await response.json();
 
     const detail_view = document.getElementById('detail-view');
