@@ -3,11 +3,13 @@ import {fetchAndDisplayAdvertisements} from "../home/home.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 
-export async function setupCreateAdvertisementView() {
-    const createAdvertisementView = document.getElementById('create-view');
-    createAdvertisementView.style.display = 'none'; // Hide the view by default
-
+async function populateCreateForm() {
     const decodedJwt = decodeJwt();
+
+    if (!decodedJwt) {
+        // User's not logged in
+        return;
+    }
 
     // Fetch existing advertisement
     const response = await authFetch('advertisement?created_by=' + decodedJwt.sub);
@@ -38,6 +40,12 @@ export async function setupCreateAdvertisementView() {
             imagePreview.appendChild(imgElement);
         });
     }
+}
+
+
+export async function setupCreateAdvertisementView() {
+    const createAdvertisementView = document.getElementById('create-view');
+    createAdvertisementView.style.display = 'none'; // Hide the view by default
 
     // Handle image uploads
     document.getElementById('create-images').addEventListener('change', async (event) => {
@@ -106,4 +114,7 @@ export async function setupCreateAdvertisementView() {
         alert('advertisement created successfully!');
         fetchAndDisplayAdvertisements(); // Refresh the listings
     });
+
+    populateCreateForm()
 }
+
