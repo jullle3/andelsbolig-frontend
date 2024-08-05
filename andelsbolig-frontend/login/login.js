@@ -64,14 +64,13 @@ export function setupLoginView() {
 export function updateJWT(jwt) {
     localStorage.setItem('jwt', jwt);
     updateStripePaymentElements();
-    // document.getElementById('stripeBuyButton').setAttribute('client-reference-id', jwt.sub);
 }
 
 export function updateStripePaymentElements() {
     // Connect stripe HTML elements to the user's client reference id. This ensures that the user's payment is correctly associated with their account.
     const decodedJwt = decodeJwt();
     if (decodedJwt) {
-        // document.getElementById('stripeBuyButton').setAttribute('client-reference-id', decodedJwt.sub);
-        // document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
+        document.getElementById('stripeBuyButton').setAttribute('client-reference-id', decodedJwt.sub);
+        document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
     }
 }
