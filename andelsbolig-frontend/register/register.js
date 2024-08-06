@@ -12,8 +12,8 @@ export function setupRegisterView() {
         const userData = {
             email: formData.get('email'),
             password: formData.get('password'),
-            full_name: formData.get('full_name') || null,
-            phone_number: formData.get('phone_number') || null
+            full_name: formData.get('full_name'),
+            phone_number: formData.get('phone_number')
         };
 
         const response = await authFetch('user', {
@@ -33,8 +33,8 @@ export function setupRegisterView() {
         }
         else {
             const errorResponse = await response.json(); // Parse the error response
-            const errorMessage = errorResponse.detail || 'Failed to register user';
-            displayErrorMessage(errorMessage);
+            const errorMessages = errorResponse.detail.map(error => error.msg.replace('Value error, ', '')).join('\n');
+            displayErrorMessage(errorMessages, 8000);
         }
     });
 }

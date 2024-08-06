@@ -85,12 +85,24 @@ export async function setupCreateAdvertisementView() {
         event.preventDefault();
         const formData = new FormData(event.target);
 
-        console.log(formData)
+        // Format the price and monthly_fee fields
+        const priceInput = document.getElementById('display_price');
+        const monthlyFeeInput = document.getElementById('display_monthly_fee');
+
+        const formatNumber = (input) => {
+            let with_dots = input.value;
+            input.value = with_dots.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return input.value.replace(/\./g, '');
+        };
+
+        const formattedPrice = formatNumber(priceInput);
+        const formattedMonthlyFee = formatNumber(monthlyFeeInput);
+
         const newAdvertisement = {
             title: formData.get('title'),
             description: formData.get('description'),
-            price: parseInt(formData.get('price')),
-            monthly_fee: parseInt(formData.get('monthly_fee')),
+            price: parseInt(formattedPrice),
+            monthly_fee: parseInt(formattedMonthlyFee),
             square_meters: parseInt(formData.get('square_meters')),
             rooms: parseInt(formData.get('rooms')),
             located_at_top: formData.get('located_at_top') ? true : false,
@@ -110,11 +122,7 @@ export async function setupCreateAdvertisementView() {
             console.log(response)
             throw new Error('Failed to create advertisement');
         }
-
-        alert('advertisement created successfully!');
-        fetchAndDisplayAdvertisements(); // Refresh the listings
+        populateCreateForm();
     });
 
-    populateCreateForm()
 }
-

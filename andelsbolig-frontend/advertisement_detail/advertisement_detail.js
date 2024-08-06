@@ -79,7 +79,7 @@ export async function displayAdvertisementDetail(advertisement_id) {
             <form>
                 <label class="text-secondary" for="display_price">Pris</label>
                 <div class="input-group">
-                    <input class="form-control" value="${advertisement.price}" type="text"  id="display_price" name="display_price" required readonly
+                    <input class="form-control" value="${advertisement.price.toLocaleString('da-DK')}" type="text"  id="display_price" name="display_price" required readonly
                            oninput="formatNumber(this, 'price');">
                     <div class="input-group-text">kr</div>
                     <input type="hidden" id="price" name="price">
@@ -87,7 +87,7 @@ export async function displayAdvertisementDetail(advertisement_id) {
 
                 <label class="text-secondary mt-2" for="display_monthly_fee">Månedlig ydelse</label>
                 <div class="input-group">
-                    <input class="form-control" value="${advertisement.monthly_fee}" type="text" id="display_monthly_fee" name="display_monthly_fee" readonly
+                    <input class="form-control" value="${advertisement.monthly_fee.toLocaleString('da-DK')}" type="text" id="display_monthly_fee" name="display_monthly_fee" readonly
                            required oninput="formatNumber(this, 'monthly_fee');">
                     <span class="input-group-text">kr</span>
                     <input type="hidden" id="monthly_fee" name="monthly_fee">

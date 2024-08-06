@@ -1,6 +1,7 @@
 import {authFetch} from "../auth/auth.js";
 import {showView} from "../views/viewManager.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
+import {setupProfileView} from "../profile/profile.js";
 
 export function setupLoginView() {
     const loginForm = document.getElementById('loginForm');
@@ -27,6 +28,9 @@ export function setupLoginView() {
             // alert('User login success');
             loginForm.reset();
             showView('home');
+            // To update the website with the user's information
+            setupProfileView();
+
         }
         else {
             const errorResponse = await response.json(); // Parse the error response

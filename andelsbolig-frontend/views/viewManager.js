@@ -45,7 +45,6 @@ export function setupViews() {
                 scrollDownToHideNavbar(); // Scroll down if already on the home view
             } else {
                 showView(viewName); // Call the function to update the view
-                setupProfileView();
             }
         });
     });

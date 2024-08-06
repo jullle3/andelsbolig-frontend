@@ -6,12 +6,8 @@ export function setupProfileView() {
         const decodedPayload = atob(payload); // Base64 decode
         const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
 
-        if (payloadObj.full_name) {
-            document.getElementById('navbar-name').textContent = payloadObj.full_name;
-            document.getElementById('fullName-profile').value = payloadObj.full_name;
-        }
-        if (payloadObj.email) {
-            document.getElementById('email-profile').value = payloadObj.email;
-        }
+        document.getElementById('navbar-name').textContent = payloadObj.full_name;
+        document.getElementById('fullName-profile').value = payloadObj.full_name;
+        document.getElementById('email-profile').value = payloadObj.email;
     }
 }

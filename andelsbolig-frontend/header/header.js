@@ -17,7 +17,7 @@ export function insertHeader() {
         <li class="nav-item"><a class="nav-link" href="#" data-view="create">Opret Annonce</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="register">Opret Bruger</a></li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">My name</a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil</a>
           <ul class="dropdown-menu dropdown-content" aria-labelledby="navbar-name">
             <li><a class="dropdown-item" href="#" data-view="profile">My Profile</a></li>
             <li><a class="dropdown-item" href="#" id="logoutLink">Logout</a></li>

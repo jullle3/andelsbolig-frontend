@@ -1,16 +1,23 @@
 import {updateStripePaymentElements} from "./login/login.js";
 
 
-export function displayErrorMessage(message) {
+export function displayErrorMessage(message, ms = 5000) {
     let errorContainer = document.getElementById('error-container');
     let errorMessage = document.getElementById('error-message');
-    errorMessage.textContent = message;
+    errorMessage.innerHTML = message.replace(/\n/g, '<br>');
 
     errorContainer.style.display = 'block';
     errorContainer.classList.add('show');
 
-    setTimeout(() => hideErrorMessage(), 5000);
+    // Clear any existing timeout to avoid multiple timeouts running simultaneously
+    if (errorContainer.timeoutId) {
+        clearTimeout(errorContainer.timeoutId);
+    }
+
+    // Set a new timeout to hide the error message after X seconds
+    errorContainer.timeoutId = setTimeout(() => hideErrorMessage(), ms);
 }
+
 
 export function hideErrorMessage() {
     let errorContainer = document.getElementById('error-container');
@@ -43,7 +50,7 @@ export function setupUtils() {
     document.getElementById('error-message-remove').addEventListener('click', hideErrorMessage);
 }
 
-function formatNumber(input, actualInputId) {
+function formatNumber(input) {
     let cursorPosition = input.selectionStart;  // Save the cursor position
     const originalLength = input.value.length;  // Save the original length of the string
 
@@ -55,9 +62,6 @@ function formatNumber(input, actualInputId) {
     cursorPosition = cursorPosition - (originalLength - newLength);
 
     input.setSelectionRange(cursorPosition, cursorPosition);
-
-    // Update the actual input value
-    document.getElementById(actualInputId).value = input.value.replace(/\./g, '');
 }
 
 window.formatNumber = formatNumber;

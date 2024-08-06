@@ -44,11 +44,10 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             <div class="card" onclick="displayAdvertisementDetail('${advertisement._id}')">
             <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
           <div class="card-body">
-                        <h5 class="card-title">${advertisement.title}</h5>
+                        <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>
                         <p class="card-text">${advertisement.description.length > 50 ? advertisement.description.substring(0, 50) + '...' : advertisement.description}</p>
-                        <p class="card-text"><strong>Pris</strong> ${advertisement.price} DKK</p>
-                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee} DKK</p>
-                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
+                        <p class="card-text"><strong>Pris</strong> ${advertisement.price.toLocaleString('da-DK')} DKK</p>
+                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
                         <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
                     </div>
                 </div>
