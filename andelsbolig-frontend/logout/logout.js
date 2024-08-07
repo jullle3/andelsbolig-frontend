@@ -7,7 +7,7 @@ export function setupLogoutView() {
         localStorage.removeItem('jwt');
 
         // Clean the users information from the website
-        document.getElementById('navbar-name').textContent = 'Profil';
+        document.getElementById('navbar-name').textContent = 'Hej! Log ind her';
         document.getElementById('fullName-profile').value = '';
         document.getElementById('email-profile').value = '';
         showView('home');
