@@ -15,6 +15,7 @@ const views = {
 
 let currentView = 'home'; // Track the current view
 
+
 export function showView(view) {
     Object.values(views).forEach(v => {
         v.classList.remove('active');
@@ -26,7 +27,11 @@ export function showView(view) {
     }, 10); // Delay to ensure the display change is processed
     closeNavbar(); // Close the navbar when a new view is shown
     currentView = view; // Update the current view
+
+    // Push the new state to the history stack
+    history.pushState({ view: view }, '', `#${view}`);
 }
+
 
 export function setupViews() {
     const clickableElements = document.querySelectorAll('[data-view]');
@@ -64,3 +69,11 @@ function scrollDownToHideNavbar() {
         behavior: 'smooth'
     });
 }
+
+
+// Handle the popstate event to navigate back
+window.addEventListener('popstate', (event) => {
+    if (event.state && event.state.view) {
+        showView(event.state.view);
+    }
+});

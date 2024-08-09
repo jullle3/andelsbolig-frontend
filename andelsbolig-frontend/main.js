@@ -24,5 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAndDisplayAdvertisements();
     // showView('register');
     // displayAdvertisementDetail('66ad6718d8ed65fe7d1b5624')
+
+    // Check the initial URL and show the corresponding view
+    const initialView = window.location.hash.replace('#', '') || 'home';
+    showView(initialView);
 });
 
