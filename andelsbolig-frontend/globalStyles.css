@@ -45,3 +45,11 @@ button {
     width: 100%;
     z-index: 1000; /* Ensure it is above other elements */
 }
+
+.read-only-form .form-control,
+.read-only-form .form-check-input {
+    background-color: #e9ecef; /* Light grey background */
+    cursor: not-allowed; /* Change cursor to indicate non-editable */
+    pointer-events: none; /* Disable all pointer events */
+}
+

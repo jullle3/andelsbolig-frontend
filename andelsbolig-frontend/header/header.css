@@ -60,6 +60,11 @@
     border-bottom: 3px solid transparent; /* Prepares a space for the border to avoid layout shift */
 }
 
+/* Style for the active nav link */
+.nav-link.active {
+    border-bottom-color: #007bff; /* Persist the blue border bottom */
+}
+
 .nav-link:hover {
     border-bottom-color: #007bff; /* Adds a blue border bottom on hover */
 }

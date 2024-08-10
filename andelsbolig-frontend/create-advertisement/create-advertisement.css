@@ -1,0 +1,6 @@
+/* Add a hover effect to the image container */
+.thumbnail:hover {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+

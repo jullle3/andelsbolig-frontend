@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="andelsbolig-frontend/views/views.css">
     <link rel="stylesheet" href="andelsbolig-frontend/home/home.css">
     <link rel="stylesheet" href="andelsbolig-frontend/advertisement_detail/advertisement_detail.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/create-advertisement/create-advertisement.css">
 
     <!-- Import our custom JS -->
     <script type="module" src="andelsbolig-frontend/utils.js"></script>
@@ -81,7 +82,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
-                    <h1>Opret Din Annonce</h1>
+                    <h1>Opret & Rediger Din Annonce</h1>
                     <form id="createForm">
 
                         <label class="text-secondary form-label" for="title">Titel</label>
@@ -224,7 +225,7 @@
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Min Profil</h1>
-                    <form id="profileForm" novalidate>
+                    <form class="read-only-form" id="profileForm" novalidate>
                         <label class="text-secondary mt-2" for="fullName-profile">Fulde navn</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="fullName-profile" name="full_name" readonly>

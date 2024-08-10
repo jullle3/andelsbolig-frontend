@@ -26,6 +26,15 @@ export function showView(view) {
         views[view].classList.add('active');
     }, 10); // Delay to ensure the display change is processed
     closeNavbar(); // Close the navbar when a new view is shown
+
+    // if (view === 'create') {
+    //     window.scrollTo(0,0)
+        // window.scrollTo({
+        //     top: 0,
+        //     behavior: 'smooth'
+        // });
+    // }
+
     currentView = view; // Update the current view
 
     // Push the new state to the history stack
@@ -77,3 +86,6 @@ window.addEventListener('popstate', (event) => {
         showView(event.state.view);
     }
 });
+
+
+window.showView = showView;

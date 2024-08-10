@@ -1,6 +1,6 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
-import {displayErrorMessage} from "../utils.js";
+import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
@@ -17,12 +17,12 @@ export async function displayAdvertisementDetail(advertisement_id) {
     }
 
 
-
     const advertisement = await response.json();
-
     const detail_view = document.getElementById('detail-view');
-    // Start of the carousel markup
+    const decodedJwt = decodeJwt();
+    const isAdvertisementCreatedByUser = advertisement.created_by === decodedJwt.sub;
 
+    // Start of the image carousel
     // tmp disable
     //<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
     let carouselInnerHtml = advertisement.images.map((img, index) => `
@@ -76,7 +76,7 @@ export async function displayAdvertisementDetail(advertisement_id) {
         </div>
         
         <div class="col-lg-6 vertical-line p-4">
-            <form>
+            <form class="read-only-form">
                 <label class="text-secondary" for="display_price">Pris</label>
                 <div class="input-group">
                     <input class="form-control" value="${advertisement.price.toLocaleString('da-DK')}" type="text"  id="display_price" name="display_price" required readonly
@@ -124,7 +124,15 @@ export async function displayAdvertisementDetail(advertisement_id) {
               <i class="bi bi-eye"></i> <strong>Visninger</strong>
               ${advertisement.views}
             </p>
-        
+
+            ${isAdvertisementCreatedByUser ? `
+                <div class="row justify-content-center">
+                    <div class="col-auto w-100">
+                        <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50" onclick="showView('create')">Gå til redigering</button>
+                    </div>
+                </div>
+        ` : ''}        
+
         </div>
     </div>
 </div>

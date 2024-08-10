@@ -1,6 +1,6 @@
 import { basePath } from "../config/config.js";
 
-export function insertHeader() {
+export function SetupHeader() {
     document.body.insertAdjacentHTML('afterbegin', `
 <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-shadow">
   <div class="container">
@@ -14,7 +14,7 @@ export function insertHeader() {
       <ul class="navbar-nav ms-auto">
 <!--        <li class="nav-item"><a class="nav-link" href="#" data-view="faq">FAQ</a></li>-->
         <li class="nav-item"><a class="nav-link" href="#" data-view="payment2">Abonnér</a></li>
-        <li class="nav-item"><a class="nav-link" href="#" data-view="create">Opret Annonce</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-view="create">Opret & Rediger Annonce</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="register">Opret Bruger</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hej! Log ind her</a>
@@ -29,4 +29,15 @@ export function insertHeader() {
   </div>
 </nav>
     `);
+
+
+    // Add event listener to all nav links
+    document.querySelectorAll('nav ul li a').forEach(link => {
+        link.addEventListener('click', function() {
+            // Remove 'active' class from all links
+            document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active'));
+            // Add 'active' class to the clicked link
+            this.classList.add('active');
+        });
+    });
 }
