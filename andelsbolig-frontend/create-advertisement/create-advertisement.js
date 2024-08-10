@@ -158,6 +158,11 @@ function createImageElement(img) {
 
     // Add click event listener to delete the image
     deleteIcon.addEventListener('click', async () => {
+        const userConfirmed = confirm('Are you sure you want to delete this image?');
+        if (!userConfirmed) {
+            return;
+        }
+
         const thumbnail_name = img.thumbnail_url.split('/').pop();
         const response = await authFetch(`upload/${encodeURIComponent(thumbnail_name)}`, {
             method: 'DELETE'
