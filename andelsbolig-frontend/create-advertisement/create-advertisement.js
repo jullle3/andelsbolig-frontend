@@ -4,6 +4,7 @@ import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 
 export async function setupCreateAdvertisementView() {
+    addressIntegration();
     const createAdvertisementView = document.getElementById('create-view');
     createAdvertisementView.style.display = 'none'; // Hide the view by default
 
@@ -179,4 +180,46 @@ function createImageElement(img) {
     imgContainer.appendChild(deleteIcon);
 
     return imgContainer;
+}
+
+function addressIntegration() {
+    document.getElementById('address').addEventListener('input', async (event) => {
+        const input = event.target.value;
+        const dropdownMenu = document.getElementById('address-list');
+
+        if (input.length < 3) { // Only start searching after at least 3 characters have been typed
+            dropdownMenu.innerHTML = '';
+            dropdownMenu.classList.remove('show');
+            return;
+        }
+
+
+        try {
+            const response = await fetch(`https://api.dataforsyningen.dk/adgangsadresser/autocomplete?q=${encodeURIComponent(input)}&type=adgangsadresse&side=1&per_side=10&noformat=1&srid=25832`);
+            const addresses = await response.json();
+            dropdownMenu.innerHTML = ''; // Clear previous suggestions
+
+            if (addresses.length === 0) {
+                dropdownMenu.classList.remove('show');
+                return;
+            }
+
+            addresses.forEach(addresses => {
+                const item = document.createElement('a');
+                item.classList.add('dropdown-item');
+                item.href = '#';
+                item.textContent = addresses.tekst; // Assume address is a string. Adjust according to your actual data structure.
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('address').value = addresses.tekst;
+                    dropdownMenu.classList.remove('show');
+                });
+                dropdownMenu.appendChild(item);
+            });
+
+            dropdownMenu.classList.add('show');
+        } catch (error) {
+            console.error('Error fetching address suggestions:', error);
+        }
+    });
 }
