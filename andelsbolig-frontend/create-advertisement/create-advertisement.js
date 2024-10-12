@@ -2,8 +2,7 @@ import {authFetch} from "../auth/auth.js";
 import {fetchAndDisplayAdvertisements} from "../home/home.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
-let currentStage = 'street'; // can be 'street' or 'fullAddress'
-let selectedStreetId = ''; // Store the ID or key part of the selected street
+let datafordeler_id = null; // Store the ID or key part of the selected street
 
 
 export async function setupCreateAdvertisementView() {
@@ -64,8 +63,7 @@ export async function setupCreateAdvertisementView() {
             square_meters: parseInt(formData.get('square_meters')),
             rooms: parseInt(formData.get('rooms')),
             located_at_top: formData.get('located_at_top') ? true : false,
-            address: formData.get('address'),
-            city: "Auto-generated City",  // Auto-generate or leave blank for backend to handle
+            datafordeler_id: datafordeler_id,
         };
 
         const response = await authFetch('advertisement', {
@@ -186,22 +184,24 @@ function createImageElement(img) {
 }
 
 function addressIntegration() {
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation(); // Stops the click from propagating to other elements
-            // Handle the click event for the item here
+    const dropdownMenu = document.getElementById('address-list');
+    const addressInput = document.getElementById('address');
+
+    // Function to hide dropdown
+    function hideDropdown() {
+        dropdownMenu.classList.remove('show');
+        dropdownMenu.querySelectorAll('.nested-dropdown').forEach(nested => {
+            nested.style.display = 'none'; // Also hide all nested dropdowns
         });
-    });
+    }
 
-
-    document.getElementById('address').addEventListener('input', async (event) => {
+    // Listen for input on address field
+    addressInput.addEventListener('input', async (event) => {
         const input = event.target.value;
-        const dropdownMenu = document.getElementById('address-list');
 
         if (input.length < 3) {
             dropdownMenu.innerHTML = '';
-            dropdownMenu.classList.remove('show');
+            hideDropdown();
             return;
         }
 
@@ -212,14 +212,13 @@ function addressIntegration() {
             dropdownMenu.innerHTML = ''; // Clear previous suggestions
 
             if (streets.length === 0) {
-                dropdownMenu.classList.remove('show');
+                hideDropdown();
                 return;
             }
 
             streets.forEach(street => {
                 const item = document.createElement('a');
                 item.classList.add('dropdown-item');
-                // item.classList.add('dropdown-item', 'd-flex', 'justify-content-between', 'align-items-center');
                 item.href = '#';
                 item.textContent = street.tekst;
 
@@ -228,46 +227,36 @@ function addressIntegration() {
                 nestedContainer.style.display = 'none'; // Start hidden
                 item.appendChild(nestedContainer);
 
-                // Toggle visibility of the nested dropdown
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    nestedContainer.style.display = nestedContainer.style.display === 'none' ? 'block' : 'none';
-                });
-
-                dropdownMenu.appendChild(item);
-
                 item.addEventListener('click', async (e) => {
                     e.preventDefault();
                     e.stopPropagation(); // Prevent the dropdown from closing
 
-                    // Extract coordinates and adjust them
-                    let nord = parseFloat(street.adgangsadresse.y) + 1;
-                    let syd = parseFloat(street.adgangsadresse.y) - 1;
-                    let oest = parseFloat(street.adgangsadresse.x) + 1;
-                    let vest = parseFloat(street.adgangsadresse.x) - 1;
+                    if (!nestedContainer.hasChildNodes()) { // Fetch and populate if not already done
+                        const nord = parseFloat(street.adgangsadresse.y) + 1;
+                        const syd = parseFloat(street.adgangsadresse.y) - 1;
+                        const oest = parseFloat(street.adgangsadresse.x) + 1;
+                        const vest = parseFloat(street.adgangsadresse.x) - 1;
 
-                    // Second stage query
-                    const nestedResponse = await fetch(`https://services.datafordeler.dk/DAR/DAR/1/REST/adresse?pagesize=600&Nord=${nord}&Syd=${syd}&Oest=${oest}&Vest=${vest}&format=JSON&Status=3`);
-                    const fullAddresses = await nestedResponse.json();
+                        const nestedResponse = await fetch(`https://services.datafordeler.dk/DAR/DAR/1/REST/adresse?pagesize=600&Nord=${nord}&Syd=${syd}&Oest=${oest}&Vest=${vest}&format=JSON&Status=3`);
+                        const fullAddresses = await nestedResponse.json();
 
-                    nestedContainer.innerHTML = ''; // Clear previous nested dropdown content
-                    fullAddresses.forEach(address => {
-                        const nestedItem = document.createElement('a');
-                        nestedItem.classList.add('dropdown-item');
-                        nestedItem.href = '#';
-                        nestedItem.textContent = address.adressebetegnelse;
-                        nestedItem.addEventListener('click', (ne) => {
-                            ne.preventDefault();
-                            document.getElementById('address').value = address.adressebetegnelse;
-                            dropdownMenu.classList.remove('show'); // Close the dropdown
+                        fullAddresses.forEach(address => {
+                            const nestedItem = document.createElement('a');
+                            nestedItem.classList.add('dropdown-item');
+                            nestedItem.href = '#';
+                            nestedItem.textContent = address.adressebetegnelse;
+                            nestedItem.addEventListener('click', (ne) => {
+                                ne.preventDefault();
+                                document.getElementById('address').value = address.adressebetegnelse;
+                                datafordeler_id = address.id_lokalId;
+                                hideDropdown(); // Close the dropdown
+                            });
+                            nestedContainer.appendChild(nestedItem);
                         });
-                        nestedContainer.appendChild(nestedItem);
-                    });
-
-                    // Show nested dropdown only if not already shown
-                    if (!nestedContainer.classList.contains('show')) {
-                        nestedContainer.classList.add('show');
                     }
+
+                    // Toggle visibility of the nested dropdown content
+                    nestedContainer.style.display = nestedContainer.style.display === 'none' ? 'block' : 'none';
                 });
 
                 dropdownMenu.appendChild(item);
@@ -276,6 +265,13 @@ function addressIntegration() {
             dropdownMenu.classList.add('show');
         } catch (error) {
             console.error('Error fetching street suggestions:', error);
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!dropdownMenu.contains(e.target) && !addressInput.contains(e.target)) {
+            hideDropdown();
         }
     });
 }
