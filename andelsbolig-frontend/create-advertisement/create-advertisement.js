@@ -219,11 +219,22 @@ function addressIntegration() {
             streets.forEach(street => {
                 const item = document.createElement('a');
                 item.classList.add('dropdown-item');
+                // item.classList.add('dropdown-item', 'd-flex', 'justify-content-between', 'align-items-center');
                 item.href = '#';
                 item.textContent = street.tekst;
+
                 const nestedContainer = document.createElement('div');
                 nestedContainer.classList.add('nested-dropdown');
+                nestedContainer.style.display = 'none'; // Start hidden
                 item.appendChild(nestedContainer);
+
+                // Toggle visibility of the nested dropdown
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    nestedContainer.style.display = nestedContainer.style.display === 'none' ? 'block' : 'none';
+                });
+
+                dropdownMenu.appendChild(item);
 
                 item.addEventListener('click', async (e) => {
                     e.preventDefault();
@@ -235,6 +246,7 @@ function addressIntegration() {
                     let oest = parseFloat(street.adgangsadresse.x) + 1;
                     let vest = parseFloat(street.adgangsadresse.x) - 1;
 
+                    // Second stage query
                     const nestedResponse = await fetch(`https://services.datafordeler.dk/DAR/DAR/1/REST/adresse?pagesize=600&Nord=${nord}&Syd=${syd}&Oest=${oest}&Vest=${vest}&format=JSON&Status=3`);
                     const fullAddresses = await nestedResponse.json();
 
