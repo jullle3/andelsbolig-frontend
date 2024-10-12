@@ -56,14 +56,21 @@ button {
 
 .dropdown-item .nested-dropdown {
     margin-top: 5px;
-    border-top: 1px solid #ccc;
+    border-top: 3px solid #ccc;
     padding-top: 5px;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
-
+    background-color: transparent; /* Keeps background unchanged */
+    color: inherit; /* Text color remains the same */
 }
 
-/* CSS for hover effect on dropdown items */
-.dropdown-item:hover {
-    background-color: #f8f9fa; /* Light grey background */
-    color: #333; /* Darker text for better contrast */
+/* Apply hover effect only to nested dropdown items */
+.nested-dropdown .dropdown-item:hover {
+    background-color: #e6e6e6; /* Light grey background for hovered item */
+    color: #333; /* Darker text color for better visibility */
+}
+
+.nested-dropdown .dropdown-item {
+    border-bottom: 1px solid #ccc;
+    color: #495057; /* Slightly darker text for nested items */
+    margin-left: 10px; /* Indent nested items to visually distinguish hierarchy */
 }

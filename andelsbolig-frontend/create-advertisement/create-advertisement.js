@@ -243,7 +243,7 @@ function addressIntegration() {
                         const nestedItem = document.createElement('a');
                         nestedItem.classList.add('dropdown-item');
                         nestedItem.href = '#';
-                        nestedItem.textContent = address.adressebetegnelse; // Assuming 'tekst' is the correct field
+                        nestedItem.textContent = address.adressebetegnelse;
                         nestedItem.addEventListener('click', (ne) => {
                             ne.preventDefault();
                             document.getElementById('address').value = address.adressebetegnelse;
