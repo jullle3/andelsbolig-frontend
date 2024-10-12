@@ -2,6 +2,9 @@ import {authFetch} from "../auth/auth.js";
 import {fetchAndDisplayAdvertisements} from "../home/home.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
+let currentStage = 'street'; // can be 'street' or 'fullAddress'
+let selectedStreetId = ''; // Store the ID or key part of the selected street
+
 
 export async function setupCreateAdvertisementView() {
     addressIntegration();
@@ -183,43 +186,84 @@ function createImageElement(img) {
 }
 
 function addressIntegration() {
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation(); // Stops the click from propagating to other elements
+            // Handle the click event for the item here
+        });
+    });
+
+
     document.getElementById('address').addEventListener('input', async (event) => {
         const input = event.target.value;
         const dropdownMenu = document.getElementById('address-list');
 
-        if (input.length < 3) { // Only start searching after at least 3 characters have been typed
+        if (input.length < 3) {
             dropdownMenu.innerHTML = '';
             dropdownMenu.classList.remove('show');
             return;
         }
 
-
+        // First stage query
         try {
             const response = await fetch(`https://api.dataforsyningen.dk/adgangsadresser/autocomplete?q=${encodeURIComponent(input)}&type=adgangsadresse&side=1&per_side=10&noformat=1&srid=25832`);
-            const addresses = await response.json();
+            const streets = await response.json();
             dropdownMenu.innerHTML = ''; // Clear previous suggestions
 
-            if (addresses.length === 0) {
+            if (streets.length === 0) {
                 dropdownMenu.classList.remove('show');
                 return;
             }
 
-            addresses.forEach(addresses => {
+            streets.forEach(street => {
                 const item = document.createElement('a');
                 item.classList.add('dropdown-item');
                 item.href = '#';
-                item.textContent = addresses.tekst; // Assume address is a string. Adjust according to your actual data structure.
-                item.addEventListener('click', (e) => {
+                item.textContent = street.tekst;
+                const nestedContainer = document.createElement('div');
+                nestedContainer.classList.add('nested-dropdown');
+                item.appendChild(nestedContainer);
+
+                item.addEventListener('click', async (e) => {
                     e.preventDefault();
-                    document.getElementById('address').value = addresses.tekst;
-                    dropdownMenu.classList.remove('show');
+                    e.stopPropagation(); // Prevent the dropdown from closing
+
+                    // Extract coordinates and adjust them
+                    let nord = parseFloat(street.adgangsadresse.y) + 1;
+                    let syd = parseFloat(street.adgangsadresse.y) - 1;
+                    let oest = parseFloat(street.adgangsadresse.x) + 1;
+                    let vest = parseFloat(street.adgangsadresse.x) - 1;
+
+                    const nestedResponse = await fetch(`https://services.datafordeler.dk/DAR/DAR/1/REST/adresse?pagesize=600&Nord=${nord}&Syd=${syd}&Oest=${oest}&Vest=${vest}&format=JSON&Status=3`);
+                    const fullAddresses = await nestedResponse.json();
+
+                    nestedContainer.innerHTML = ''; // Clear previous nested dropdown content
+                    fullAddresses.forEach(address => {
+                        const nestedItem = document.createElement('a');
+                        nestedItem.classList.add('dropdown-item');
+                        nestedItem.href = '#';
+                        nestedItem.textContent = address.adressebetegnelse; // Assuming 'tekst' is the correct field
+                        nestedItem.addEventListener('click', (ne) => {
+                            ne.preventDefault();
+                            document.getElementById('address').value = address.adressebetegnelse;
+                            dropdownMenu.classList.remove('show'); // Close the dropdown
+                        });
+                        nestedContainer.appendChild(nestedItem);
+                    });
+
+                    // Show nested dropdown only if not already shown
+                    if (!nestedContainer.classList.contains('show')) {
+                        nestedContainer.classList.add('show');
+                    }
                 });
+
                 dropdownMenu.appendChild(item);
             });
 
             dropdownMenu.classList.add('show');
         } catch (error) {
-            console.error('Error fetching address suggestions:', error);
+            console.error('Error fetching street suggestions:', error);
         }
     });
 }

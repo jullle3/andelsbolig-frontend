@@ -53,3 +53,17 @@ button {
     pointer-events: none; /* Disable all pointer events */
 }
 
+
+.dropdown-item .nested-dropdown {
+    margin-top: 5px;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effects */
+
+}
+
+/* CSS for hover effect on dropdown items */
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Light grey background */
+    color: #333; /* Darker text for better contrast */
+}

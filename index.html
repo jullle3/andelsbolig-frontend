@@ -120,9 +120,13 @@
 
                         <label class="text-secondary mt-2" for="address">Adresse</label>
                         <div class="dropdown">
-                            <input class="form-control dropdown-toggle" type="text" id="address" name="address" required aria-expanded="false">
-                            <div class="dropdown-menu w-100" id="address-list"></div>
+                            <input class="form-control dropdown-toggle" type="text" id="address" name="address" required aria-expanded="false" autocomplete="off" placeholder="Start typing a street name...">
+                            <div class="dropdown-menu w-100" id="address-list">
+                                <!-- Nested dropdowns will be inserted here -->
+                            </div>
                         </div>
+
+
 
 
                         <div class="form-check form-switch mt-2">
