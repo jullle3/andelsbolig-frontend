@@ -53,3 +53,12 @@ button {
     pointer-events: none; /* Disable all pointer events */
 }
 
+
+.modal.show {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

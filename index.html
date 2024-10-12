@@ -44,6 +44,24 @@
 
 <!-- VIEWS -->
 <div id="root">
+
+
+
+    <div id="successModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Success</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Din annonce er oprettet & synlig for andre!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Error Message Container -->
     <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;">
         <span id="error-message"></span>
@@ -127,8 +145,6 @@
                         </div>
 
 
-
-
                         <div class="form-check form-switch mt-2">
                             <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
                             <label class="form-check-label text-secondary " for="located_at_top">Øverste etage</label>
@@ -143,7 +159,7 @@
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">
                                 <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
-                                        type="submit">Opret
+                                        type="submit" id="submitButton">Opret
                                 </button>
                             </div>
                         </div>
@@ -327,6 +343,8 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script type="module" src="andelsbolig-frontend/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

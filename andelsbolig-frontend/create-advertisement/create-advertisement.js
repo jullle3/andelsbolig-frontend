@@ -2,7 +2,7 @@ import {authFetch} from "../auth/auth.js";
 import {fetchAndDisplayAdvertisements} from "../home/home.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
-let datafordeler_id = null; // Store the ID or key part of the selected street
+let datafordeler_id = null;
 
 
 export async function setupCreateAdvertisementView() {
@@ -77,7 +77,10 @@ export async function setupCreateAdvertisementView() {
             displayErrorMessage(response.message);
             console.log(response)
             throw new Error('Failed to create advertisement');
+        } else {
+            // Show some success animation
         }
+        showView('home');
         await populateCreateAdvertisementForm();
     });
 
