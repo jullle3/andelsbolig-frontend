@@ -93,8 +93,17 @@
                             <div class="collapse position-absolute w-100 mt-1" id="advanced-search" style="top: 100%; left: 0; z-index: 10;">
                                 <div class="card card-body">
 
-                                    <h6>Pris</h6>
-                                    <div id="price-range-slider" class="slider mb-2"></div>
+                                    <div class="container">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <h6 class="mb-0">Pris:</h6>
+                                            </div>
+                                            <div class="col">
+                                                <div id="price-range-slider" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <input type="text" id="price-range" class="form-control mb-2" placeholder="Price range">
                                     <input type="text" id="size" class="form-control mb-2" placeholder="Size (sq meters)">
                                     <button type="button" class="btn action-button w-100 text-white" onclick="">Søg</button>
