@@ -1,6 +1,6 @@
-// Setup click events for all views
-import {setupProfileView} from "../profile/profile.js";
+import {loadGoogleMaps} from "../map/map.js";
 
+// Setup click events for all views
 const views = {
     home: document.getElementById('home-view'),
     detail: document.getElementById('detail-view'),
@@ -11,6 +11,7 @@ const views = {
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment-view2'),
     faq: document.getElementById('faq-view'),
+    map: document.getElementById('map-view'),
 };
 
 let currentView = 'home'; // Track the current view
@@ -26,6 +27,11 @@ export function showView(view) {
         views[view].classList.add('active');
     }, 10); // Delay to ensure the display change is processed
     closeNavbar(); // Close the navbar when a new view is shown
+
+    // Only load and initialize the map when needed, since it actually costs money $$$
+    if (view === 'map') {
+        loadGoogleMaps();
+    }
 
     // if (view === 'create') {
     //     window.scrollTo(0,0)

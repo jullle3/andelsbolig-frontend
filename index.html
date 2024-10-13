@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="andelsbolig-frontend/advertisement_detail/advertisement_detail.css">
     <link rel="stylesheet" href="andelsbolig-frontend/create-advertisement/create-advertisement.css">
 
+    <!-- Fonts/Icons  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <!-- Import our custom JS -->
     <script type="module" src="andelsbolig-frontend/utils.js"></script>
 
@@ -336,6 +339,12 @@
             </div>
         </div>
     </div>
+
+    <div id="map-view" class="view">
+        <div class="container">
+            <div id="map" style="height: 600px;"></div>
+        </div>
+    </div>
 </div>
 
 <!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->
@@ -344,6 +353,7 @@
         crossorigin="anonymous"></script>
 <script type="module" src="andelsbolig-frontend/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
 
 </body>
