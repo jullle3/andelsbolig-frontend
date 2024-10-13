@@ -2,14 +2,6 @@
 import {authFetch} from "../auth/auth.js";
 import {displayErrorMessage} from "../utils.js";
 
-const smallDotIcon = {
-    path: google.maps.SymbolPath.CIRCLE,
-    scale: 3,
-    fillColor: '#FF0000',
-    fillOpacity: 0.6,
-    strokeWeight: 0
-};
-
 
 // Load Google Maps script dynamically and initialize the map
 export function loadGoogleMaps() {
@@ -40,24 +32,42 @@ async function fetchLocationsAndDisplay() {
     }
 
     const advertisements = await response.json();
-
-    console.log(advertisements);
-
-    // Ensure AdvancedMarkerElement is loaded
-    if (!google.maps.marker) {
-        console.error("AdvancedMarkerElement library not loaded.");
-        return;
-    }
-
-    // Add markers to the map based on fetched locations
-    advertisements.objects.forEach(advertisement => {
-        const marker = new google.maps.marker.AdvancedMarkerElement({
-            position: new google.maps.LatLng(advertisement.location.coordinates[1], advertisement.location.coordinates[0]),
+    window.markers = advertisements.objects.map(ad => {
+        const dotContent = createBlueDotContent();
+        return new google.maps.marker.AdvancedMarkerElement({
+            position: new google.maps.LatLng(ad.location.coordinates[1], ad.location.coordinates[0]),
             map: window.map,
-            title: advertisement.title // Changed from location.name to advertisement.title
+            content: dotContent,
+            title: ad.title
         });
     });
 }
+
+function updateMarkerIcons() {
+    const zoomLevel = window.map.getZoom();
+    window.markers.forEach(marker => {
+        if (zoomLevel >= 15) {
+            marker.setIcon(null); // Remove the small dot icon
+            marker.setContent(marker.content); // Set to the previously created HTML content
+        } else {
+            marker.setContent(null); // Remove the HTML content
+            marker.setIcon(smallDotIcon); // Show the small dot icon
+        }
+    });
+}
+
+function createBlueDotContent() {
+    const dot = document.createElement('div');
+    dot.style.width = '14px';  // Same size as before
+    dot.style.height = '14px';  // Same size as before
+    dot.style.backgroundColor = '#007BFF';  // A vibrant blue color
+    dot.style.borderRadius = '50%';  // Keeps it circular
+    dot.style.boxShadow = '0 0 0 1px #0056b3';  // A slightly darker blue for the outline
+    dot.style.position = 'absolute';
+    dot.style.transform = 'translate(-50%, -50%)'; // Ensures it's centered
+    return dot;
+}
+
 
 
 
