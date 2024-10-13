@@ -128,7 +128,7 @@ export async function displayAdvertisementDetail(advertisement_id) {
             ${isAdvertisementCreatedByUser ? `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-                        <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50" onclick="showView('create')">Gå til redigering</button>
+                        <button class="mt-4 btn action-button w-100 text-white p-2 " onclick="showView('create')">Gå til redigering</button>
                     </div>
                 </div>
         ` : ''}        

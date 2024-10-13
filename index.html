@@ -74,29 +74,33 @@
 
 
     <div id="advertisement_list-view" class="view active p-3">
-
         <!-- Advanced search -->
-
         <div class="container mt-4">
             <div class="row justify-content-center">
-                <div class="col-md-6 d-flex position-relative">
-                    <input type="text" id="advertisement-list-search" class="form-control" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
-                    <button class="btn btn-secondary ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <div class="collapse position-absolute w-100 mt-1" id="advanced-search" style="top: 100%; left: 0; z-index: 10;">
-                        <div class="card card-body">
-                            <input type="text" id="price-range" class="form-control mb-2" placeholder="Price range">
-                            <input type="text" id="size" class="form-control mb-2" placeholder="Size (sq meters)">
-                            <input type="text" id="rooms" class="form-control mb-2" placeholder="Number of rooms">
-                            <button type="button" class="btn btn-primary w-100" onclick="applySearch()">Apply</button>
+<!--                <div class="col-6 d-flex position-relative">-->
+                <div class="col-6">
+
+
+                    <div class="input-group">
+                        <input class="form-control"  type="text" id="advertisement-list-search" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
+                        <div class="input-group-text">
+                            <button class="btn  ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search" style="top: 100%; left: 0; z-index: 10;">
+                                <div class="card card-body">
+                                    <input type="text" id="price-range" class="form-control mb-2" placeholder="Price range">
+                                    <input type="text" id="size" class="form-control mb-2" placeholder="Size (sq meters)">
+                                    <button type="button" class="btn action-button w-100 text-white" onclick="">Søg</button>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
-
-
 
         <!-- TODO Kan row delen rykkes til advertisement_list.js?        -->
         <div id="listings-container" class="row">
@@ -179,8 +183,7 @@
 
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">
-                                <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
-                                        type="submit" id="submitButton">Opret
+                                <button class="mt-4 btn action-button w-100 text-white p-2" type="submit" id="submitButton">Opret
                                 </button>
                             </div>
                         </div>
@@ -221,8 +224,7 @@
 
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">
-                                <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
-                                        type="submit">Register
+                                <button class="mt-4 btn action-button w-100 text-white p-2" type="submit">Opret
                                 </button>
                             </div>
                         </div>
@@ -251,8 +253,7 @@
 
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">
-                                <button class="mt-4 btn w-100 text-white p-2" style="background-color: #2c3e50"
-                                        type="submit">Login
+                                <button class="mt-4 btn action-button w-100 text-white p-2" type="submit">Login
                                 </button>
                             </div>
                         </div>
@@ -359,8 +360,12 @@
     </div>
 
     <div id="map-view" class="view">
-        <div class="container">
-            <div id="map"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 p-0">
+                    <div id="map"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
