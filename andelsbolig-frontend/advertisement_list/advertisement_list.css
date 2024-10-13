@@ -129,3 +129,29 @@
 
 
 
+/* Sliders */
+/* Customizing the slider handles */
+.noUi-handle {
+    background: #FFFFFF; /* White background for a clean look */
+    border: 1px solid #CCCCCC; /* Light grey border to match the site's neutral palette */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    cursor: pointer; /* Cursor indicates interactivity */
+    height: 24px; /* Slightly larger for easier interaction */
+    width: 24px; /* Maintain a square appearance */
+    border-radius: 12px; /* Fully rounded edges for a modern, button-like feel */
+    outline: none; /* Remove default focus outline */
+    top: -10px; /* Positioning adjustment to align with the slider bar */
+}
+
+/* Customizing the slider bar to be more subtle */
+.noUi-base {
+    height: 4px; /* Thinner bar for a more refined look */
+    background: #E0E0E0; /* Light grey background */
+}
+
+/* Customizing the connect bar */
+.noUi-connect {
+    /*background: #76B041; !* A vibrant green to match the action buttons on your site *!*/
+    background:  #2c3e50; /* A vibrant green to match the action buttons on your site */
+    height: 4px; /* Keep the connect bar subtle */
+}

@@ -17,7 +17,36 @@ export function setupAdvertisementListView() {
         fetchAndDisplayAdvertisements(searchTerm);
     }, 500));
 
+    setupSlider()
 }
+
+function setupSlider() {
+    var slider = document.getElementById('price-range-slider');
+
+    noUiSlider.create(slider, {
+        start: [250000, 750000], // Starting values for the handles
+        connect: true, // Display a colored bar between the handles
+        range: {
+            'min': 0,
+            'max': 1000000
+        },
+        step: 5000, // Increment steps
+        format: wNumb({
+            decimals: 0, // No decimals in the output
+            thousand: '.',
+            prefix: 'kr ',
+            suffix: " .-"
+        }),
+        tooltips: true // Show tooltips with formatted values
+    });
+
+    // When the slider value changes, update a hypothetical input/display
+    slider.noUiSlider.on('update', function(values, handle) {
+        $('#min-price').text(values[0]);
+        $('#max-price').text(values[1]);
+    });
+}
+
 
 export async function fetchAndDisplayAdvertisements(searchTerm = '') {
     const listingsContainer = document.getElementById('listings-container');
