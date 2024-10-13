@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-    showView('map');
+    showView('home');
     // displayAdvertisementDetail('66b78e9a3e8b4fe4fd952fbd')
 
     // Check the initial URL and show the corresponding view
