@@ -7,7 +7,7 @@ import {setupRegisterView} from "./create-user/create-user.js";
 import {setupLogoutView} from "./logout/logout.js";
 import {setupLoginView} from "./login/login.js";
 import {SetupHeader} from "./header/header.js";
-import {displayAdvertisementDetail} from "./advertisement_detail/advertisement_detail.js";
+import {setupMapView} from "./map/map.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     SetupHeader();
@@ -21,10 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupRegisterView();
     setupLoginView();
     setupLogoutView();
+    setupMapView();
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-    showView('create');
+    showView('map');
     // displayAdvertisementDetail('66b78e9a3e8b4fe4fd952fbd')
 
     // Check the initial URL and show the corresponding view

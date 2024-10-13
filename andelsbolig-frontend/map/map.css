@@ -6,6 +6,13 @@
 }
 
 
+/* Make the map div fill the entire parent (map-view) */
+#map {
+    height: 1000px;
+    /*height: 100%;*/
+    width: 100%;
+}
+
 /*
  * Property styles in unhighlighted state.
  */
@@ -20,7 +27,6 @@
     height: 30px;
     justify-content: center;
     padding: 4px;
-    position: relative;
     position: relative;
     transition: all 0.3s ease-out;
     width: 30px;

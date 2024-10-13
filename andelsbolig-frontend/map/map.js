@@ -1,22 +1,17 @@
 // Function to initialize the Google Map
 import {authFetch} from "../auth/auth.js";
 import {displayErrorMessage} from "../utils.js";
+import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 
 
-// Load Google Maps script dynamically and initialize the map
-export function loadGoogleMaps() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCStq9v7paVD8cksRB8LvIh1oZeGSIkEvk&callback=initMap&libraries=marker`;
-    script.async = true;
-    document.head.appendChild(script);
+export function setupMapView() {
 }
 
-
-function initMap() {
+export function initMap() {
     const mapOptions = {
         zoom: 7, // Adjusted zoom to get a good view of Denmark
         center: new google.maps.LatLng(56.26392, 9.501785), // Center on Denmark
-        mapId: '9df01a95f0b6f4d6 ' // Custom map style
+        mapId: '9df01a95f0b6f4d6' // Custom map style
     };
     window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     fetchLocationsAndDisplay(); // Fetch locations after initializing the map
@@ -34,7 +29,7 @@ async function fetchLocationsAndDisplay() {
     const advertisements = await response.json();
     window.markers = advertisements.objects.map(ad => {
         const marker = new google.maps.marker.AdvancedMarkerElement({
-            position: new google.maps.LatLng(ad.location.coordinates[1], ad.location.coordinates[0]),
+            position: new google.maps.LatLng(ad.location.coordinates[0], ad.location.coordinates[1]),
             map: window.map,
             title: ad.title,
             content: buildContent(ad),
@@ -56,7 +51,7 @@ function buildContent(advertisement) {
         <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
         <span class="fa-sr-only">home</span>
     </div>
-    <div class="details">
+    <div class="details" onclick="displayAdvertisementDetail('${advertisement._id}')">
         <div class="price">${advertisement.price}</div>
         <div class="address">${advertisement.address}</div>
         <div class="features">
@@ -93,3 +88,4 @@ function toggleHighlight(markerView) {
 }
 
 window.initMap = initMap;
+
