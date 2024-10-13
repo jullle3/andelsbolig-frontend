@@ -19,6 +19,7 @@ export function initMap() {
 
 
 async function fetchLocationsAndDisplay() {
+    let t1 = performance.now();
     const response = await authFetch('advertisement?size=10000');
     if (!response.ok) {
         let body = await response.json();
@@ -37,9 +38,12 @@ async function fetchLocationsAndDisplay() {
 
         // Attach the click event listener
         marker.addListener('click', () => toggleHighlight(marker));
-
         return marker;
     });
+
+    let t2 = performance.now(); // End timing after all markers are set up
+    console.log(`Added markers ${Math.round(t2 - t1)} milliseconds`);
+
 }
 
 function buildContent(advertisement) {
@@ -49,25 +53,28 @@ function buildContent(advertisement) {
     content.innerHTML = `
     <div class="icon">
         <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
-        <span class="fa-sr-only">home</span>
+<!--        <i aria-hidden="true" class="bi bi-clock-history"></i>-->
+<!--        <i aria-hidden="true"></i>-->
+<!--        <span class="fa-sr-only">home</span>-->
     </div>
     <div class="details" onclick="displayAdvertisementDetail('${advertisement._id}')">
+    <div class="details">
         <div class="price">${advertisement.price}</div>
         <div class="address">${advertisement.address}</div>
         <div class="features">
         <div>
-            <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
-            <span class="fa-sr-only">bedroom</span>
+<!--            <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>-->
+<!--            <span class="fa-sr-only">bedroom</span>-->
             <span>1</span>
         </div>
         <div>
-            <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
-            <span class="fa-sr-only">bathroom</span>
+<!--            <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>-->
+<!--            <span class="fa-sr-only">bathroom</span>-->
             <span>1</span>
         </div>
         <div>
-            <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
-            <span class="fa-sr-only">size</span>
+<!--            <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>-->
+<!--            <span class="fa-sr-only">size</span>-->
             <span>10<sup>2</sup></span>
         </div>
         </div>
@@ -75,6 +82,7 @@ function buildContent(advertisement) {
     `;
     return content;
 }
+
 
 
 function toggleHighlight(markerView) {
