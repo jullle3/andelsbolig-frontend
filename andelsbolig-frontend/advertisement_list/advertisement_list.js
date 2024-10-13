@@ -1,8 +1,7 @@
 import {authFetch} from "../auth/auth.js";
-import {showView} from "../views/viewManager.js";
 import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 
-export function setupHomeView() {
+export function setupAdvertisementListView() {
     // Debounce function to delay the search
     function debounce(func, delay) {
         let debounceTimeout;
@@ -13,7 +12,7 @@ export function setupHomeView() {
     }
 
     // Add debounce to search input
-    document.getElementById('home-search').addEventListener('input', debounce((e) => {
+    document.getElementById('advertisement-list-search').addEventListener('input', debounce((e) => {
         const searchTerm = e.target.value;
         fetchAndDisplayAdvertisements(searchTerm);
     }, 500));
@@ -41,7 +40,7 @@ export async function fetchAndDisplayAdvertisements(searchTerm = '') {
             <!-- Show 2 rows on mobile -->
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3 ">
 <!--            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">-->
-            <div class="card" onclick="displayAdvertisementDetail('${advertisement._id}')">
+            <div class="card advertisement-card" onclick="displayAdvertisementDetail('${advertisement._id}')">
             <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
           <div class="card-body">
                         <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>

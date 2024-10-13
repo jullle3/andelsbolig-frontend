@@ -27,7 +27,7 @@ export function setupLoginView() {
             updateJWT(result.jwt);
             // alert('User login success');
             loginForm.reset();
-            showView('home');
+            showView('advertisement_list');
             // To update the website with the user's information
             setupProfileView();
 

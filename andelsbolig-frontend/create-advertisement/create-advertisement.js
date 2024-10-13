@@ -1,5 +1,5 @@
 import {authFetch} from "../auth/auth.js";
-import {fetchAndDisplayAdvertisements} from "../home/home.js";
+import {fetchAndDisplayAdvertisements} from "../advertisement_list/advertisement_list.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 let datafordeler_id = null;
@@ -80,7 +80,7 @@ export async function setupCreateAdvertisementView() {
         } else {
             // Show some success animation
         }
-        showView('home');
+        showView('advertisement_list');
         await populateCreateAdvertisementForm();
     });
 

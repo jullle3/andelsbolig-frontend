@@ -1,7 +1,7 @@
 
 // Setup click events for all views
 const views = {
-    home: document.getElementById('home-view'),
+    advertisement_list: document.getElementById('advertisement_list-view'),
     detail: document.getElementById('detail-view'),
     login: document.getElementById('login-view'),
     create: document.getElementById('create-view'),
@@ -13,7 +13,7 @@ const views = {
     map: document.getElementById('map-view'),
 };
 
-let currentView = 'home'; // Track the current view
+let currentView = 'advertisement_list'; // Track the current view
 
 
 export function showView(view) {
@@ -55,8 +55,8 @@ export function setupViews() {
                 this.classList.add('active');
             }
             const viewName = this.getAttribute('data-view');
-            if (viewName === 'home' && currentView === 'home') {
-                scrollDownToHideNavbar(); // Scroll down if already on the home view
+            if (viewName === 'advertisement_list' && currentView === 'advertisement_list') {
+                scrollDownToHideNavbar(); // Scroll down if already on the advertisement_list view
             } else {
                 showView(viewName); // Call the function to update the view
             }

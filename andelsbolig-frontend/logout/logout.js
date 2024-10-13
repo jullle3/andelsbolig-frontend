@@ -10,6 +10,6 @@ export function setupLogoutView() {
         document.getElementById('navbar-name').textContent = 'Hej! Log ind her';
         document.getElementById('fullName-profile').value = '';
         document.getElementById('email-profile').value = '';
-        showView('home');
+        showView('advertisement_list');
     });
 }

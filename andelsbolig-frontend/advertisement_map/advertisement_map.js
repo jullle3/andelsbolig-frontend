@@ -95,10 +95,10 @@ function buildContent(advertisement) {
     content.classList.add("property");
     content.innerHTML = `
     <div class="icon">
-        <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
+        <i aria-hidden="true" class="fa fa-icon fa-advertisement_list" title="advertisement_list"></i>
 <!--        <i aria-hidden="true" class="bi bi-clock-history"></i>-->
 <!--        <i aria-hidden="true"></i>-->
-<!--        <span class="fa-sr-only">home</span>-->
+<!--        <span class="fa-sr-only">advertisement_list</span>-->
     </div>
     <div class="details" onclick="displayAdvertisementDetail('${advertisement._id}')">
     <div class="details">

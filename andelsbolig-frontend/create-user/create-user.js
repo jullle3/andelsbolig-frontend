@@ -29,7 +29,7 @@ export function setupRegisterView() {
             updateJWT(result.jwt);
             // alert('User registered successfully'); // Consider updating this to a more user-friendly message display as well
             registerForm.reset();
-            showView('home');
+            showView('advertisement_list');
         }
         else {
             const errorResponse = await response.json(); // Parse the error response
