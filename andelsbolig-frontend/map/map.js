@@ -33,42 +33,63 @@ async function fetchLocationsAndDisplay() {
 
     const advertisements = await response.json();
     window.markers = advertisements.objects.map(ad => {
-        const dotContent = createBlueDotContent();
-        return new google.maps.marker.AdvancedMarkerElement({
+        const marker = new google.maps.marker.AdvancedMarkerElement({
             position: new google.maps.LatLng(ad.location.coordinates[1], ad.location.coordinates[0]),
             map: window.map,
-            content: dotContent,
-            title: ad.title
+            title: ad.title,
+            content: buildContent(ad),
         });
+
+        // Attach the click event listener
+        marker.addListener('click', () => toggleHighlight(marker));
+
+        return marker;
     });
 }
 
-function updateMarkerIcons() {
-    const zoomLevel = window.map.getZoom();
-    window.markers.forEach(marker => {
-        if (zoomLevel >= 15) {
-            marker.setIcon(null); // Remove the small dot icon
-            marker.setContent(marker.content); // Set to the previously created HTML content
-        } else {
-            marker.setContent(null); // Remove the HTML content
-            marker.setIcon(smallDotIcon); // Show the small dot icon
-        }
-    });
+function buildContent(advertisement) {
+    const content = document.createElement("div");
+
+    content.classList.add("property");
+    content.innerHTML = `
+    <div class="icon">
+        <i aria-hidden="true" class="fa fa-icon fa-home" title="home"></i>
+        <span class="fa-sr-only">home</span>
+    </div>
+    <div class="details">
+        <div class="price">${advertisement.price}</div>
+        <div class="address">${advertisement.address}</div>
+        <div class="features">
+        <div>
+            <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
+            <span class="fa-sr-only">bedroom</span>
+            <span>1</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
+            <span class="fa-sr-only">bathroom</span>
+            <span>1</span>
+        </div>
+        <div>
+            <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
+            <span class="fa-sr-only">size</span>
+            <span>10<sup>2</sup></span>
+        </div>
+        </div>
+    </div>
+    `;
+    return content;
 }
 
-function createBlueDotContent() {
-    const dot = document.createElement('div');
-    dot.style.width = '14px';  // Same size as before
-    dot.style.height = '14px';  // Same size as before
-    dot.style.backgroundColor = '#007BFF';  // A vibrant blue color
-    dot.style.borderRadius = '50%';  // Keeps it circular
-    dot.style.boxShadow = '0 0 0 1px #0056b3';  // A slightly darker blue for the outline
-    dot.style.position = 'absolute';
-    dot.style.transform = 'translate(-50%, -50%)'; // Ensures it's centered
-    return dot;
+
+function toggleHighlight(markerView) {
+    if (markerView.content.classList.contains("highlight")) {
+        markerView.content.classList.remove("highlight");
+        markerView.zIndex = null;
+    } else {
+        markerView.content.classList.add("highlight");
+        markerView.zIndex = 1;
+    }
 }
-
-
-
 
 window.initMap = initMap;
