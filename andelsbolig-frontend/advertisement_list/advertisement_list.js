@@ -32,7 +32,7 @@ function setupOnClickSendSearchData() {
     window.sendSearchData = function() {
         // Construct the JSON body
         const jsonData = {
-            search: document.getElementById('advertisement-list-search').value,
+            text: document.getElementById('advertisement-list-search').value,
             priceRange: document.getElementById('price-range-slider').noUiSlider.get(),
             monthlyFeeRange: document.getElementById('monthly-fee-range-slider').noUiSlider.get(),
             squareMetersRange: document.getElementById('square-meters-range-slider').noUiSlider.get(),
@@ -42,22 +42,17 @@ function setupOnClickSendSearchData() {
         };
 
         // Fetch API to send the data to your backend
-        // fetch('/your-backend-endpoint', {  // Replace '/your-backend-endpoint' with your actual endpoint URL
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(jsonData)
-        // }).then(response => response.json())
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //         Process the response data here
-            // })
-            // .catch((error) => {
-            //     console.error('Error:', error);
-            // });
-    // };
-    }
+        authFetch('/advertisement', {
+            body: JSON.stringify(jsonData)
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Process the response data here
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
 }
 
 
@@ -187,6 +182,7 @@ function setupAutoComplete() {
     // Autocomplete for postal number input
     $("#postal-number").autocomplete({
         delay: 0,
+        minLength: 0, // Allow dropdown to appear with zero characters
         source: function(request, response) {
             const matches = $.map(postalData, function(postal_city, postal_code) {
                 if (postal_code.startsWith(request.term)) {
@@ -201,6 +197,9 @@ function setupAutoComplete() {
             $("#postal-number").val(parts[0]);
             return false; // Prevent the widget from updating the input with the selected value
         }
+    }).focus(function() {
+        // Trigger the search to show all entries when the field is focused
+        $(this).autocomplete("search", "");
     });
 }
 
