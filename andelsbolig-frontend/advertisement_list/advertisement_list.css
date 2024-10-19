@@ -155,3 +155,11 @@
     background:  #2c3e50; /* A vibrant green to match the action buttons on your site */
     height: 4px; /* Keep the connect bar subtle */
 }
+
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto; /* Enable scrolling */
+    border: 1px solid #ccc; /* Basic border styling */
+    background-color: white; /* Background color */
+}

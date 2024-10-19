@@ -1,5 +1,7 @@
 import {authFetch} from "../auth/auth.js";
 import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
+import {cityData, postalData} from "../config/hardcoded_data.js";
+
 
 export function setupAdvertisementListView() {
     // Debounce function to delay the search
@@ -22,20 +24,21 @@ export function setupAdvertisementListView() {
     setupSquareMetersSlider()
     setupRoomsSlider()
     setupOnClickSendSearchData()
+    setupAutoComplete()
 }
 
 
 function setupOnClickSendSearchData() {
     window.sendSearchData = function() {
-        // Collect data from inputs
-        const searchText = document.getElementById('advertisement-list-search').value;
-        const size = document.getElementById('size').value;
-
         // Construct the JSON body
         const jsonData = {
-            search: searchText,
+            search: document.getElementById('advertisement-list-search').value,
             priceRange: document.getElementById('price-range-slider').noUiSlider.get(),
-            size: size
+            monthlyFeeRange: document.getElementById('monthly-fee-range-slider').noUiSlider.get(),
+            squareMetersRange: document.getElementById('square-meters-range-slider').noUiSlider.get(),
+            roomsRange: document.getElementById('rooms-range-slider').noUiSlider.get(),
+            postalNumber: $("#postal-number").val,
+            city: $("#city").val,
         };
 
         // Fetch API to send the data to your backend
@@ -161,6 +164,43 @@ function setupRoomsSlider() {
     rooms_slider.noUiSlider.on('update', function(values, handle) {
         $('#min-price').text(values[0]);
         $('#max-price').text(values[1]);
+    });
+}
+
+
+
+function setupAutoComplete() {
+    // Autocomplete for city input
+    $("#city").autocomplete({
+        source: cityData,
+        delay: 0,
+        minLength: 0, // Allow dropdown to appear with zero characters
+        select: function(event, ui) {
+            console.log(ui.item.value)
+            $("#city").val(ui.item.value);
+        }
+    }).focus(function() {
+        // Trigger the search to show all entries when the field is focused
+        $(this).autocomplete("search", "");
+    });
+
+    // Autocomplete for postal number input
+    $("#postal-number").autocomplete({
+        delay: 0,
+        source: function(request, response) {
+            const matches = $.map(postalData, function(postal_city, postal_code) {
+                if (postal_code.startsWith(request.term)) {
+                    return `${postal_code} - ${postal_city}`;
+                }
+            });
+            response(matches);
+        },
+        select: function(event, ui) {
+            // Only use postal_code part
+            const parts = ui.item.value.split(" - ");
+            $("#postal-number").val(parts[0]);
+            return false; // Prevent the widget from updating the input with the selected value
+        }
     });
 }
 
