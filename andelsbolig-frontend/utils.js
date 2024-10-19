@@ -64,4 +64,13 @@ function formatNumber(input) {
     input.setSelectionRange(cursorPosition, cursorPosition);
 }
 
+
+// Clean the params for an HTTP request removing any empty or whitespace-only values
+export function cleanParams(params) {
+    return Object.fromEntries(
+        Object.entries(params).filter(([_, v]) => v && v.trim() !== '')
+    );
+}
+
+
 window.formatNumber = formatNumber;
