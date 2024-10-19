@@ -30,21 +30,24 @@ export function setupAdvertisementListView() {
 
 function setupOnClickSendSearchData() {
     window.sendSearchData = function() {
-        // Construct the JSON body
-        const jsonData = {
+        // Extract values and construct the query parameters
+        const params = new URLSearchParams({
             text: document.getElementById('advertisement-list-search').value,
-            priceRange: document.getElementById('price-range-slider').noUiSlider.get(),
-            monthlyFeeRange: document.getElementById('monthly-fee-range-slider').noUiSlider.get(),
-            squareMetersRange: document.getElementById('square-meters-range-slider').noUiSlider.get(),
-            roomsRange: document.getElementById('rooms-range-slider').noUiSlider.get(),
-            postalNumber: $("#postal-number").val,
-            city: $("#city").val,
-        };
+            price_from: document.getElementById('price-range-slider').noUiSlider.get()[0],
+            price_to: document.getElementById('price-range-slider').noUiSlider.get()[1],
+            monthly_fee_from: document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0],
+            monthly_fee_to: document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1],
+            square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
+            square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
+            rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
+            rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
+            postal_number: $("#postal-number").val(),
+            city: $("#city").val()
+        }).toString();
 
         // Fetch API to send the data to your backend
-        authFetch('/advertisement', {
-            body: JSON.stringify(jsonData)
-        }).then(response => response.json())
+        authFetch('/advertisement?' + params)
+            .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
                 // Process the response data here
