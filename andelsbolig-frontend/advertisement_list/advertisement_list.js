@@ -18,26 +18,26 @@ export function setupAdvertisementListView() {
     }, 500));
 
     setupPriceSlider()
-    setupOnClickSendSearchData()
     setupMonthlyFeeSlider()
+    setupSquareMetersSlider()
+    setupRoomsSlider()
+    setupOnClickSendSearchData()
 }
 
 
 function setupOnClickSendSearchData() {
     window.sendSearchData = function() {
         // Collect data from inputs
-        const priceRange = document.getElementById('price-range-slider').noUiSlider.get();
         const searchText = document.getElementById('advertisement-list-search').value;
         const size = document.getElementById('size').value;
 
         // Construct the JSON body
         const jsonData = {
             search: searchText,
-            priceRange: priceRange,
+            priceRange: document.getElementById('price-range-slider').noUiSlider.get(),
             size: size
         };
 
-        console.log(priceRange)
         // Fetch API to send the data to your backend
         // fetch('/your-backend-endpoint', {  // Replace '/your-backend-endpoint' with your actual endpoint URL
         //     method: 'POST',
@@ -86,9 +86,9 @@ function setupPriceSlider() {
 }
 
 function setupMonthlyFeeSlider() {
-    const price_slider = document.getElementById('monthly-fee-range-slider');
+    const monthly_fee_slider = document.getElementById('monthly-fee-range-slider');
 
-    noUiSlider.create(price_slider, {
+    noUiSlider.create(monthly_fee_slider, {
         start: [2500, 7500], // Starting values for the handles
         connect: true, // Display a colored bar between the handles
         range: {
@@ -106,7 +106,59 @@ function setupMonthlyFeeSlider() {
     });
 
     // When the slider value changes, update a hypothetical input/display
-    price_slider.noUiSlider.on('update', function(values, handle) {
+    monthly_fee_slider.noUiSlider.on('update', function(values, handle) {
+        $('#min-price').text(values[0]);
+        $('#max-price').text(values[1]);
+    });
+}
+
+function setupSquareMetersSlider() {
+    const square_meters_slider = document.getElementById('square-meters-range-slider');
+
+    noUiSlider.create(square_meters_slider, {
+        start: [50, 100], // Starting values for the handles
+        connect: true, // Display a colored bar between the handles
+        range: {
+            'min': 0,
+            'max': 400
+        },
+        step: 10,
+        format: wNumb({
+            decimals: 0, // No decimals in the output
+            thousand: '.',
+            // prefix: 'kr ',
+            // suffix: " .-"
+        }),
+        tooltips: true
+    });
+
+    square_meters_slider.noUiSlider.on('update', function(values, handle) {
+        $('#min-price').text(values[0]);
+        $('#max-price').text(values[1]);
+    });
+}
+
+function setupRoomsSlider() {
+    const rooms_slider = document.getElementById('rooms-range-slider');
+
+    noUiSlider.create(rooms_slider, {
+        start: [2, 5], // Starting values for the handles
+        connect: true, // Display a colored bar between the handles
+        range: {
+            'min': 1,
+            'max': 10
+        },
+        step: 1,
+        format: wNumb({
+            decimals: 0,
+            thousand: '.',
+            // prefix: 'kr ',
+            // suffix: " .-"
+        }),
+        tooltips: true // Show tooltips with formatted values
+    });
+
+    rooms_slider.noUiSlider.on('update', function(values, handle) {
         $('#min-price').text(values[0]);
         $('#max-price').text(values[1]);
     });

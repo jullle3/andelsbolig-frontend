@@ -77,43 +77,73 @@
 
 
     <div id="advertisement_list-view" class="view active p-3">
-        <!-- Advanced search -->
+        <!-- Search bar -->
         <div class="container mt-4">
             <div class="row justify-content-center">
-<!--                <div class="col-6 d-flex position-relative">-->
-                <div class="col-6">
+                <div class="col-8 d-flex position-relative">
 
 
                     <div class="input-group">
-                        <input class="form-control"  type="text" id="advertisement-list-search" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
+                        <input class="form-control" type="text" id="advertisement-list-search" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
                         <div class="input-group-text">
-                            <button class="btn  ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
+
+                            <!-- Advanced Search dropdown bar -->
+                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
-
                             <div class="collapse position-absolute w-100 mt-1" id="advanced-search" style="top: 100%; left: 0; z-index: 10;">
                                 <div class="card card-body">
-                                    <div class="container">
+
+                                    <!-- Price -->
+                                    <div class="container m-0">
                                         <div class="row align-items-center">
-                                            <div class="col-auto">
+                                            <div class="col-3 text-start">
                                                 <h6 class="mb-0">Pris kr</h6>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-9">
                                                 <div id="price-range-slider" class="slider"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="container">
+
+                                    <!-- Monthly fee-->
+                                    <div class="container mt-3 m-0">
                                         <div class="row align-items-center">
-                                            <div class="col-auto">
+                                            <div class="col-3 text-start">
                                                 <h6 class="mb-0">Månedlig ydelse kr</h6>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-9">
                                                 <div id="monthly-fee-range-slider" class="slider"></div>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <!-- Square meters in m2 -->
+                                    <div class="container mt-3 m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Boligstørrelse m2 </h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="square-meters-range-slider" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rooms -->
+                                    <div class="container mt-3 m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Værelser</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="rooms-range-slider" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Additional Inputs -->
+<!-- TODO, postal nr, city,                                     -->
 
                                     <input type="text" id="price-range" class="form-control mb-2" placeholder="Price range">
                                     <input type="text" id="size" class="form-control mb-2" placeholder="Size (sq meters)">
@@ -122,6 +152,8 @@
                             </div>
                         </div>
                     </div>
+
+
 
 
 
