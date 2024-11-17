@@ -28,6 +28,8 @@ export function setupAdvertisementListView() {
     setupAutoComplete()
 }
 
+
+// TODO: Denne skal rykkes ud i sin egen metode, så vi kan kalde den når brugeren trykker "Next Page" knap.
 function setupOnClickSendSearchData() {
     window.sendSearchData = async function () {
         // Extract values and construct the query parameters
@@ -205,12 +207,15 @@ function setupAutoComplete() {
 
 
 export async function displayAdvertisements(response) {
-    const advertisements = response.objects
+    const advertisements = response.objects;
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');
+
+    // Clear previous listings
     listingsContainer.innerHTML = '';
 
     updateSearchResultsCount(advertisements.length);
+
     // Check if advertisements are available
     if (advertisements.length === 0) {
         noResultsContainer.style.display = 'block';
@@ -218,18 +223,15 @@ export async function displayAdvertisements(response) {
         noResultsContainer.style.display = 'none';
         advertisements.forEach(advertisement => {
             listingsContainer.innerHTML += `
-            <!-- Show 1 row on mobile -->
-            <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->
-            <!-- Show 2 rows on mobile -->
-            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3 ">
-<!--            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-4">-->
-            <div class="card advertisement-card" onclick="displayAdvertisementDetail('${advertisement._id}')">
-            <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
-          <div class="card-body">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
+                <div class="card advertisement-card" onclick="displayAdvertisementDetail('${advertisement._id}')">
+                    <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
+                    <div class="card-body">
                         <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>
                         <p class="card-text">${advertisement.description.length > 50 ? advertisement.description.substring(0, 50) + '...' : advertisement.description}</p>
                         <p class="card-text"><strong>Pris</strong> ${advertisement.price.toLocaleString('da-DK')} DKK</p>
-                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
+                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>
+                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
                         <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
                     </div>
                 </div>
@@ -237,7 +239,20 @@ export async function displayAdvertisements(response) {
             `;
         });
     }
+
+    // Display Next Page button only if more results are available
+    if (response.total_object_count > response.count) {
+        $("#next-page-button").removeClass('d-none')
+    } else {
+        $("#next-page-button").addClass('d-none')
+    }
 }
+
+// Example function to handle next page button click, ensure you have correct API endpoint handling pagination
+async function fetchNextPage() {
+    // Handle fetching and displaying the next page of advertisements
+}
+
 
 
 function updateSearchResultsCount(count) {

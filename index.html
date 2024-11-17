@@ -201,6 +201,19 @@
             <!-- Listings will be inserted here -->
         </div>
 
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button id="next-page-button" class="btn action-button text-white">
+                        Next Page
+                        <i class="bi bi-chevron-right"></i>  <!-- Adding the right arrow icon -->
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
         <div id="no-results" class="no-results-container">
             <h3>Der er ingen resultater at vise. Prøv at ændre dine søgekriterier.</h3>
             <p></p>
@@ -363,12 +376,15 @@
 <!--        <label class="form-check-label text-secondary " for="located_at_top">Øverste etage</label>-->
 <!--    </div>-->
 
+
+
     <div id="profile-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Min Profil</h1>
-                    <form class="" id="profileForm" novalidate>
+                    <!-- Readonly form -->
+                    <form class="read-only-form" id="profileFormReadonly" novalidate>
                         <label class="text-secondary mt-2" for="fullName-profile">Fulde navn</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="fullName-profile" name="full_name" readonly>
@@ -378,19 +394,23 @@
                         <div class="input-group">
                             <input type="email" class="form-control" id="email-profile" name="email" readonly>
                         </div>
+                        </form>
 
+
+                    <!-- editable form -->
+                    <form id="profileForm">
                         <!-- Notification Settings -->
                         <h2 class="mt-4">Notifikationsindstillinger</h2>
-                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-3">
                             <span>Email</span>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="email-notifications">
+                                <input class="form-check-input profile-patch-operation" type="checkbox" id="email_notifications">
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-3">
                             <span>SMS</span>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="sms-notifications">
+                                <input class="form-check-input profile-patch-operation" type="checkbox" id="sms_notifications">
                             </div>
                         </div>
                     </form>
@@ -398,6 +418,7 @@
             </div>
         </div>
     </div>
+
 
 
 
