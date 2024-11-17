@@ -78,10 +78,9 @@
 
     <div id="advertisement_list-view" class="view active p-3">
         <!-- Search bar -->
-        <div class="container mt-4">
+        <div class="container mt-4 pb-2">
             <div class="row justify-content-center">
                 <div class="col-8 d-flex position-relative">
-
 
                     <div class="input-group">
                         <input class="form-control" type="text" id="advertisement-list-search" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
@@ -91,7 +90,6 @@
                             <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
-
 
                             <div class="collapse position-absolute w-100 mt-1" id="advanced-search" style="top: 100%; left: 0; z-index: 10;">
                                 <div class="card card-body">
@@ -178,6 +176,26 @@
             </div>
         </div>
 
+        <!-- Separate div for the results counter -->
+<!--        <div id="search-results-div" class="ms-3 align-self-center">-->
+<!--            <strong>Resultater</strong> <span id="search-result-count">0</span>-->
+<!--        </div>-->
+
+        <!-- Simplified and stylish results counter -->
+        <div class="container mt-0 pt-0">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="d-flex justify-content-start">
+                    <span class="badge rounded-pill bg-light text-dark border">
+                        <span id="search-result-count">0</span><span> Resultater</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Show advertisements -->
         <!-- TODO Kan row delen rykkes til advertisement_list.js?        -->
         <div id="listings-container" class="row">
             <!-- Listings will be inserted here -->

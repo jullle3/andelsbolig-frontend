@@ -210,6 +210,7 @@ export async function displayAdvertisements(response) {
     const noResultsContainer = document.getElementById('no-results');
     listingsContainer.innerHTML = '';
 
+    updateSearchResultsCount(advertisements.length);
     // Check if advertisements are available
     if (advertisements.length === 0) {
         noResultsContainer.style.display = 'block';
@@ -237,3 +238,9 @@ export async function displayAdvertisements(response) {
         });
     }
 }
+
+
+function updateSearchResultsCount(count) {
+    $('#search-result-count').text(count);
+}
+
