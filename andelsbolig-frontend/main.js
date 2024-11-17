@@ -1,8 +1,7 @@
-import {setupUtils} from "./utils.js";
+import {fetchAndDisplayAdvertisements, setupUtils} from "./utils.js";
 import {setupViews, showView} from "./views/viewManager.js";
 import {setupProfileView} from "./profile/profile.js";
 import {populateCreateAdvertisementForm, setupCreateAdvertisementView} from "./create-advertisement/create-advertisement.js";
-import {fetchAndDisplayAdvertisements} from "./advertisement_list/advertisement_list.js";
 import {setupRegisterView} from "./create-user/create-user.js";
 import {setupLogoutView} from "./logout/logout.js";
 import {setupLoginView} from "./login/login.js";

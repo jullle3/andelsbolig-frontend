@@ -1,4 +1,6 @@
 import {updateStripePaymentElements} from "./login/login.js";
+import {authFetch} from "./auth/auth.js";
+import {displayAdvertisements} from "./advertisement_list/advertisement_list.js";
 
 
 export function displayErrorMessage(message, ms = 5000) {
@@ -70,6 +72,16 @@ export function cleanParams(params) {
     return Object.fromEntries(
         Object.entries(params).filter(([_, v]) => v && v.trim() !== '')
     );
+}
+
+export function removeDots(inputString) {
+    return inputString.replace(/\./g, '');
+}
+
+export async function fetchAndDisplayAdvertisements(searchTerm = "") {
+    // Fetch the advertisements
+    const response = await authFetch('advertisement?text=' + searchTerm);
+    displayAdvertisements(await response.json());
 }
 
 

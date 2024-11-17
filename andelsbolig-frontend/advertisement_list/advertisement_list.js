@@ -1,7 +1,7 @@
 import {authFetch} from "../auth/auth.js";
 import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {cityData, postalData} from "../config/hardcoded_data.js";
-import {displayErrorMessage, cleanParams} from "../utils.js";
+import {displayErrorMessage, cleanParams, removeDots, fetchAndDisplayAdvertisements} from "../utils.js";
 
 
 export function setupAdvertisementListView() {
@@ -15,7 +15,7 @@ export function setupAdvertisementListView() {
     }
 
     // Add debounce to search input
-    document.getElementById('advertisement-list-search').addEventListener('input', debounce((e) => {
+    document.getElementById('advertisement-list-search').addEventListener('input', debounce(async (e) => {
         const searchTerm = e.target.value;
         fetchAndDisplayAdvertisements(searchTerm);
     }, 500));
@@ -28,16 +28,15 @@ export function setupAdvertisementListView() {
     setupAutoComplete()
 }
 
-
 function setupOnClickSendSearchData() {
     window.sendSearchData = async function () {
         // Extract values and construct the query parameters
         const params = new URLSearchParams(cleanParams({
             text: document.getElementById('advertisement-list-search').value,
-            price_from: document.getElementById('price-range-slider').noUiSlider.get()[0],
-            price_to: document.getElementById('price-range-slider').noUiSlider.get()[1],
-            monthly_fee_from: document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0],
-            monthly_fee_to: document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1],
+            price_from: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[0]),
+            price_to: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[1]),
+            monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0]),
+            monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1]),
             square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
             square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
             rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
@@ -52,9 +51,7 @@ function setupOnClickSendSearchData() {
             displayErrorMessage("Noget gik galt");
             return;
         }
-
-        console.log("Good")
-
+        displayAdvertisements(await response.json());
     };
 }
 
@@ -63,11 +60,11 @@ function setupPriceSlider() {
     const price_slider = document.getElementById('price-range-slider');
 
     noUiSlider.create(price_slider, {
-        start: [250000, 750000], // Starting values for the handles
+        start: [0, 7_000_000], // Starting values for the handles
         connect: true, // Display a colored bar between the handles
         range: {
             'min': 0,
-            'max': 1_000_000
+            'max': 10_000_000
         },
         step: 5000, // Increment steps
         format: wNumb({
@@ -90,7 +87,7 @@ function setupMonthlyFeeSlider() {
     const monthly_fee_slider = document.getElementById('monthly-fee-range-slider');
 
     noUiSlider.create(monthly_fee_slider, {
-        start: [2500, 7500], // Starting values for the handles
+        start: [0, 28_500], // Starting values for the handles
         connect: true, // Display a colored bar between the handles
         range: {
             'min': 0,
@@ -207,21 +204,18 @@ function setupAutoComplete() {
 }
 
 
-export async function fetchAndDisplayAdvertisements(searchTerm = '') {
+export async function displayAdvertisements(response) {
+    const advertisements = response.objects
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');
     listingsContainer.innerHTML = '';
 
-    // Fetch the advertisements
-    const response = await authFetch('advertisement?text=' + searchTerm);
-    const data = await response.json();
-
     // Check if advertisements are available
-    if (data.objects.length === 0) {
+    if (advertisements.length === 0) {
         noResultsContainer.style.display = 'block';
     } else {
         noResultsContainer.style.display = 'none';
-        data.objects.forEach(advertisement => {
+        advertisements.forEach(advertisement => {
             listingsContainer.innerHTML += `
             <!-- Show 1 row on mobile -->
             <!--            <div class="col-md-6 col-lg-4 col-xl-3 p-4">-->

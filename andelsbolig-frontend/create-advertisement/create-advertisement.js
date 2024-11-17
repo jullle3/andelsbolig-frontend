@@ -1,5 +1,4 @@
 import {authFetch} from "../auth/auth.js";
-import {fetchAndDisplayAdvertisements} from "../advertisement_list/advertisement_list.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 
 let datafordeler_id = null;
