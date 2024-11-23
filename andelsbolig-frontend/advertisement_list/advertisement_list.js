@@ -24,37 +24,38 @@ export function setupAdvertisementListView() {
     setupMonthlyFeeSlider()
     setupSquareMetersSlider()
     setupRoomsSlider()
-    setupOnClickSendSearchData()
     setupAutoComplete()
 }
 
 
-// TODO: Denne skal rykkes ud i sin egen metode, så vi kan kalde den når brugeren trykker "Next Page" knap.
-function setupOnClickSendSearchData() {
-    window.sendSearchData = async function () {
-        // Extract values and construct the query parameters
-        const params = new URLSearchParams(cleanParams({
-            text: document.getElementById('advertisement-list-search').value,
-            price_from: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[0]),
-            price_to: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[1]),
-            monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0]),
-            monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1]),
-            square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
-            square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
-            rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
-            rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
-            postal_number: $("#postal-number").val(),
-            city: $("#city").val()
-        })).toString();
+function sendSearchData(append=false) {
+    // Extract values and construct the query parameters
+    const params = new URLSearchParams(cleanParams({
+        text: document.getElementById('advertisement-list-search').value,
+        price_from: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[0]),
+        price_to: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[1]),
+        monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0]),
+        monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1]),
+        square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
+        square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
+        rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
+        rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
+        postal_number: $("#postal-number").val(),
+        city: $("#city").val()
+    })).toString();
 
-        // Fetch API to send the data to your backend
-        const response = await authFetch('advertisement?' + params)
+    // Fetch API to send the data to your backend
+    authFetch('advertisement?' + params).then(response => {
         if (!response.ok) {
             displayErrorMessage("Noget gik galt");
             return;
         }
-        displayAdvertisements(await response.json());
-    };
+        return response.json();
+    }).then(data => {
+        displayAdvertisements(data, append);
+    }).catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 
@@ -205,16 +206,14 @@ function setupAutoComplete() {
     });
 }
 
-
-export async function displayAdvertisements(response) {
+export async function displayAdvertisements(response, append=false) {
     const advertisements = response.objects;
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');
 
     // Clear previous listings
-    listingsContainer.innerHTML = '';
-
-    updateSearchResultsCount(advertisements.length);
+    if (!append)
+        listingsContainer.innerHTML = '';
 
     // Check if advertisements are available
     if (advertisements.length === 0) {
@@ -240,11 +239,50 @@ export async function displayAdvertisements(response) {
         });
     }
 
+    updateSearchResultsCount(listingsContainer.children.length);
+
     // Display Next Page button only if more results are available
     if (response.total_object_count > response.count) {
         $("#next-page-button").removeClass('d-none')
     } else {
         $("#next-page-button").addClass('d-none')
+    }
+
+    // Show popup after a short delay
+    setTimeout(showAnnonceagentPopup, 5000);
+}
+
+function showAnnonceagentPopup() {
+    // Create the popup HTML
+    const popup = document.createElement('div');
+    popup.id = 'annonceagent-popup';
+    popup.style.position = 'fixed';
+    popup.style.bottom = '20px';
+    popup.style.right = '20px';
+    popup.style.backgroundColor = '#fff';
+    popup.style.border = '1px solid #ccc';
+    popup.style.padding = '10px';
+    popup.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+    popup.innerHTML = `
+        <p>Opret annonceagent ud fra din søgning?</p>
+        <button id="create-annonceagent-button">Opret</button>
+    `;
+
+    // Append the popup to the body
+    document.body.appendChild(popup);
+
+    // Add event listener to the button
+    document.getElementById('create-annonceagent-button').addEventListener('click', createAnnonceagent);
+}
+
+function createAnnonceagent() {
+    // Logic to create the annonceagent based on the user's search
+    console.log('Annonceagent created based on the current search.');
+
+    // Remove the popup after creation
+    const popup = document.getElementById('annonceagent-popup');
+    if (popup) {
+        popup.remove();
     }
 }
 
@@ -259,3 +297,4 @@ function updateSearchResultsCount(count) {
     $('#search-result-count').text(count);
 }
 
+window.sendSearchData = sendSearchData;
