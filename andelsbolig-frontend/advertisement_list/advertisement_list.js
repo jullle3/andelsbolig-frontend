@@ -52,7 +52,7 @@ function sendSearchData(append=false) {
         }
         return response.json();
     }).then(data => {
-        displayAdvertisements(data, append);
+        displayAdvertisements(data, append, true);
     }).catch(error => {
         console.error('Error:', error);
     });
@@ -206,7 +206,7 @@ function setupAutoComplete() {
     });
 }
 
-export async function displayAdvertisements(response, append=false) {
+export async function displayAdvertisements(response, append=false, triggerPopup=false) {
     const advertisements = response.objects;
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');
@@ -248,31 +248,34 @@ export async function displayAdvertisements(response, append=false) {
         $("#next-page-button").addClass('d-none')
     }
 
-    // Show popup after a short delay
-    setTimeout(showAnnonceagentPopup, 5000);
+    if (triggerPopup) {
+        // Show popup after a short delay
+        setTimeout(showAnnonceagentPopup, 5000);
+    }
 }
 
 function showAnnonceagentPopup() {
-    // Create the popup HTML
-    const popup = document.createElement('div');
-    popup.id = 'annonceagent-popup';
-    popup.style.position = 'fixed';
-    popup.style.bottom = '20px';
-    popup.style.right = '20px';
-    popup.style.backgroundColor = '#fff';
-    popup.style.border = '1px solid #ccc';
-    popup.style.padding = '10px';
-    popup.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
-    popup.innerHTML = `
-        <p>Opret annonceagent ud fra din søgning?</p>
-        <button id="create-annonceagent-button">Opret</button>
+    // Create the popup HTML using Bootstrap classes
+    const popup = `
+        <div id="annonceagent-popup" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Annonceagent</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body d-flex justify-content-between align-items-center">
+                    <span>Opret annonceagent ud fra din søgning?</span>
+                    <button type="button" class="btn action-button text-white btn-sm" id="create-annonceagent-button">Opret</button>
+                </div>
+            </div>
+        </div>
     `;
 
     // Append the popup to the body
-    document.body.appendChild(popup);
+    $('body').append(popup);
 
     // Add event listener to the button
-    document.getElementById('create-annonceagent-button').addEventListener('click', createAnnonceagent);
+    $('#create-annonceagent-button').on('click', createAnnonceagent);
 }
 
 function createAnnonceagent() {
@@ -280,17 +283,8 @@ function createAnnonceagent() {
     console.log('Annonceagent created based on the current search.');
 
     // Remove the popup after creation
-    const popup = document.getElementById('annonceagent-popup');
-    if (popup) {
-        popup.remove();
-    }
+    $('#annonceagent-popup').remove();
 }
-
-// Example function to handle next page button click, ensure you have correct API endpoint handling pagination
-async function fetchNextPage() {
-    // Handle fetching and displaying the next page of advertisements
-}
-
 
 
 function updateSearchResultsCount(count) {
