@@ -115,6 +115,23 @@ export function parseFormattedInteger(value) {
 }
 
 
+
+export function showConfirmationModal(title, message, onConfirm) {
+    // Set the title and message
+    $('#genericConfirmationModalLabel').text(title);
+    $('#genericConfirmationModal .modal-body').text(message);
+
+    // Remove any existing event handlers to avoid duplication
+    $('#confirmActionButton').off('click').on('click', function() {
+        onConfirm(); // Execute the callback function when confirmed
+        $('#genericConfirmationModal').modal('hide');
+    });
+
+    // Show the modal
+    $('#genericConfirmationModal').modal('show');
+}
+
+
 window.formatNumber = formatNumber;
 window.hideSuccessMessage = hideSuccessMessage;
 window.hideErrorMessage = hideErrorMessage;

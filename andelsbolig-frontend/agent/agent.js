@@ -1,7 +1,9 @@
 import { authFetch } from "../auth/auth.js";
-import { displayErrorMessage } from "../utils.js";
+import {displayErrorMessage, showConfirmationModal} from "../utils.js";
 
 export async function SetupAgentView() {
+    setupDeleteConfirmation();
+
     const response = await authFetch(`/agent`);
     if (!response.ok) {
         console.log("error");
@@ -22,6 +24,26 @@ export async function SetupAgentView() {
         $tableBody.append('<tr><td colspan="4" class="text-center">No agents found.</td></tr>');
     }
 }
+
+function setupDeleteConfirmation() {
+    $('#agent-table-body').on('click', '.btn-delete-agent', function() {
+        const agentId = $(this).data('agent-id');
+        showConfirmationModal(
+            'Bekræft sletning',
+            'Vil du slette denne annonceagent?',
+            () => deleteAgent(agentId)
+        );
+    });
+
+    // Similar delegation can be used for editing if needed
+    $('#agent-table-body').on('click', '.btn-edit-agent', function() {
+        const agentId = $(this).data('agent-id');
+        editAgent(agentId); // Assume editAgent is similarly defined
+    });
+
+}
+
+
 
 function createAgentRow(agent) {
     return `
@@ -50,37 +72,18 @@ function editAgent(agentId) {
     // Add code to handle agent editing
 }
 
-
-function showConfirmationModal(title, message, onConfirm) {
-    // Set the title and message
-    $('#genericConfirmationModalLabel').text(title);
-    $('#genericConfirmationModal .modal-body').text(message);
-
-    // Remove any existing event handlers to avoid duplication
-    $('#confirmActionButton').off('click').on('click', function() {
-        onConfirm(); // Execute the callback function when confirmed
-        $('#genericConfirmationModal').modal('hide');
-    });
-
-    // Show the modal
-    $('#genericConfirmationModal').modal('show');
-}
-
-$(document).ready(function() {
-    // Example usage for deleting an agent
-    $('.delete-agent-button').on('click', function() {
-        const agentId = $(this).data('agentId');
-        showConfirmationModal(
-            'Confirm Delete',
-            'Are you sure you want to delete this agent?',
-            function() {
-                deleteAgent(agentId);
-            }
-        );
-    });
-});
-
 function deleteAgent(agentId) {
     console.log('Deleting agent:', agentId);
-    // Implement the deletion logic here
+    // Implement the deletion logic here, potentially using authFetch to send a DELETE request
+    // Example of authFetch usage:
+    authFetch(`/agent/${agentId}`, { method: 'DELETE' })
+        .then(response => {
+            if (!response.ok) throw new Error('Annonceagenten blev ikke slettet');
+            // Optionally, remove the row from the table to update the UI
+            $(`button[data-agent-id="${agentId}"]`).closest('tr').remove();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            displayErrorMessage(error.message); // Display error using your existing function
+        });
 }
