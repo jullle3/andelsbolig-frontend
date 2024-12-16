@@ -9,7 +9,7 @@ function setFullImageSrc(src) {
 
 export async function displayAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
-    const response = await authFetch(`advertisement/${advertisement_id}`);
+    const response = await authFetch(`/advertisement/${advertisement_id}`);
     if (!response.ok) {
         let body = await response.json()
         displayErrorMessage(body.detail);

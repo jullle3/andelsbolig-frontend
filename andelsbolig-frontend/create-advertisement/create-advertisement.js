@@ -19,7 +19,7 @@ export async function setupCreateAdvertisementView() {
             const formData = new FormData();
             formData.append('file', file);
 
-            const response = await authFetch('upload', {
+            const response = await authFetch('/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -65,7 +65,7 @@ export async function setupCreateAdvertisementView() {
             datafordeler_id: datafordeler_id,
         };
 
-        const response = await authFetch('advertisement', {
+        const response = await authFetch('/advertisement', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ export async function populateCreateAdvertisementForm() {
     }
 
     // Fetch existing advertisement
-    const response = await authFetch('advertisement?created_by=' + decodedJwt.sub);
+    const response = await authFetch('/advertisement?created_by=' + decodedJwt.sub);
     const data = await response.json();
     const advertisement = data.objects[0]; // Assuming only one advertisement per user
 
@@ -168,7 +168,7 @@ function createImageElement(img) {
         }
 
         const thumbnail_name = img.thumbnail_url.split('/').pop();
-        const response = await authFetch(`upload/${encodeURIComponent(thumbnail_name)}`, {
+        const response = await authFetch(`/upload/${encodeURIComponent(thumbnail_name)}`, {
             method: 'DELETE'
         });
 

@@ -16,7 +16,7 @@ export function setupRegisterView() {
             phone_number: formData.get('phone_number')
         };
 
-        const response = await authFetch('user', {
+        const response = await authFetch('/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

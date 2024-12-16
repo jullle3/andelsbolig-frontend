@@ -31,6 +31,33 @@ export function hideErrorMessage() {
     }
 }
 
+export function displaySuccessMessage(message, ms = 5000) {
+    let successContainer = document.getElementById('success-container');
+    let successMessage = document.getElementById('success-message');
+    successMessage.innerHTML = message.replace(/\n/g, '<br>');
+
+    successContainer.style.display = 'block';
+    successContainer.classList.add('show');
+
+    // Clear any existing timeout to avoid multiple timeouts running simultaneously
+    if (successContainer.timeoutId) {
+        clearTimeout(successContainer.timeoutId);
+    }
+
+    // Set a new timeout to hide the success message after X seconds
+    successContainer.timeoutId = setTimeout(() => hideSuccessMessage(), ms);
+}
+
+export function hideSuccessMessage() {
+    let errorContainer = document.getElementById('success-container');
+    if (errorContainer) {
+        errorContainer.classList.remove('show');
+        setTimeout(() => {
+            errorContainer.style.display = 'none';
+        }, 500); // Delay to allow for fade transition
+    }
+}
+
 
 export function decodeJwt() {
     const jwt = localStorage.getItem('jwt');
@@ -80,8 +107,13 @@ export function removeDots(inputString) {
 
 export async function fetchAndDisplayAdvertisements(searchTerm = "") {
     // Fetch the advertisements
-    const response = await authFetch('advertisement?text=' + searchTerm);
+    const response = await authFetch('/advertisement?text=' + searchTerm);
     displayAdvertisements(await response.json());
+}
+
+export function parseFormattedInteger(value) {
+    // Helper function to convert formatted string with delimiters to integer
+    return parseInt(value.replace(/\./g, ''), 10);
 }
 
 

@@ -1,7 +1,13 @@
 import {authFetch} from "../auth/auth.js";
 import {displayAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {cityData, postalData} from "../config/hardcoded_data.js";
-import {displayErrorMessage, cleanParams, removeDots, fetchAndDisplayAdvertisements} from "../utils.js";
+import {
+    displayErrorMessage,
+    cleanParams,
+    removeDots,
+    fetchAndDisplayAdvertisements,
+    parseFormattedInteger, displaySuccessMessage
+} from "../utils.js";
 
 
 export function setupAdvertisementListView() {
@@ -45,7 +51,7 @@ function sendSearchData(append=false) {
     })).toString();
 
     // Fetch API to send the data to your backend
-    authFetch('advertisement?' + params).then(response => {
+    authFetch('/advertisement?' + params).then(response => {
         if (!response.ok) {
             displayErrorMessage("Noget gik galt");
             return;
@@ -248,14 +254,15 @@ export async function displayAdvertisements(response, append=false, triggerPopup
         $("#next-page-button").addClass('d-none')
     }
 
+    showAnnonceagentPopup()
+
     if (triggerPopup) {
         // Show popup after a short delay
-        setTimeout(showAnnonceagentPopup, 5000);
+        setTimeout(showAnnonceagentPopup, 500);
     }
 }
 
 function showAnnonceagentPopup() {
-    // Create the popup HTML using Bootstrap classes
     const popup = `
         <div id="annonceagent-popup" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
             <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -275,15 +282,77 @@ function showAnnonceagentPopup() {
     $('body').append(popup);
 
     // Add event listener to the button
-    $('#create-annonceagent-button').on('click', createAnnonceagent);
+    $('#create-annonceagent-button').on('click', function() {
+        createAnnonceagent(crypto.randomUUID());
+    });
+
 }
 
-function createAnnonceagent() {
-    // Logic to create the annonceagent based on the user's search
-    console.log('Annonceagent created based on the current search.');
+function createAnnonceagent(agentId) {
+    const cityInput = $("#city").val();
+    const postalNumber = $("#postal-number").val();
 
-    // Remove the popup after creation
-    $('#annonceagent-popup').remove();
+    const priceRange = $("#price-range-slider")[0].noUiSlider.get();
+    const squareMetersRange = $("#square-meters-range-slider")[0].noUiSlider.get();
+    const roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
+
+    const minPrice = parseFormattedInteger(priceRange[0]);
+    const maxPrice = parseFormattedInteger(priceRange[1]);
+    const minSquareMeters = parseFormattedInteger(squareMetersRange[0]);
+    const maxSquareMeters = parseFormattedInteger(squareMetersRange[1]);
+    const minRooms = parseFormattedInteger(roomsRange[0]);
+    const maxRooms = parseFormattedInteger(roomsRange[1]);
+
+    // Construct the criteria object according to the backend model
+    const criteria = {
+        min_price: isNaN(minPrice) ? null : minPrice,
+        max_price: isNaN(maxPrice) ? null : maxPrice,
+        min_rooms: isNaN(minRooms) ? null : minRooms,
+        max_rooms: isNaN(maxRooms) ? null : maxRooms,
+        min_square_meters: isNaN(minSquareMeters) ? null : minSquareMeters,
+        max_square_meters: isNaN(maxSquareMeters) ? null : maxSquareMeters,
+        cities: cityInput ? [cityInput] : null,
+        postal_numbers: postalNumber ? [postalNumber] : null,
+        // Add features or max_distance_km if you have them from other inputs
+        features: null,
+        max_distance_km: null
+    };
+
+    // Construct the overall agent data
+    const agentData = {
+        notifications: ["sms", "email"],
+        active: true,
+        criteria: criteria
+    };
+
+    if (agentId != null) {
+        agentData.id = agentId;
+    }
+
+    authFetch("/agent", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(agentData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    displayErrorMessage("Der opstod en fejl");
+                    throw new Error(err.detail || "Unknown error occurred");
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            displaySuccessMessage("Annonceagent oprettet");
+            console.log("Agent successfully created or updated:", data);
+        })
+        .catch(error => {
+            displayErrorMessage("Der opstod en fejl");
+            console.error("Failed to create/update agent:", error);
+        });
 }
 
 

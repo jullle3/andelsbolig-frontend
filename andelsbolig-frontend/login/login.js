@@ -14,7 +14,7 @@ export function setupLoginView() {
             password: formData.get('password'),
         };
 
-        const response = await authFetch('login', {
+        const response = await authFetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

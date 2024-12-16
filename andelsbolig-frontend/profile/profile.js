@@ -24,7 +24,7 @@ export function setupProfileView() {
         const settingValue = $(this).is(':checked');  // true if checked (on), false if not (off)
 
         console.log(settingName, settingValue);
-        const response = await authFetch('user', {
+        const response = await authFetch('/user', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

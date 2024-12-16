@@ -44,7 +44,7 @@ function createCustomSVGIconWithPNG(imageUrl, width, height) {
 
 async function fetchLocationsAndDisplay() {
     let t1 = performance.now();
-    const response = await authFetch('advertisement?size=10000');
+    const response = await authFetch('/advertisement?size=10000');
     if (!response.ok) {
         let body = await response.json();
         displayErrorMessage(body.detail);
