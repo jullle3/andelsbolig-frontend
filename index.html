@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="andelsbolig-frontend/advertisement_detail/advertisement_detail.css">
     <link rel="stylesheet" href="andelsbolig-frontend/create-advertisement/create-advertisement.css">
     <link rel="stylesheet" href="andelsbolig-frontend/advertisement_map/advertisement_map.css">
+    <link rel="stylesheet" href="andelsbolig-frontend/agent/agent.css">
 
     <!-- Fonts/Icons  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -52,6 +53,25 @@
 <!-- VIEWS -->
 <div id="root">
 
+    <!-- Generic Confirmation Modal -->
+    <div class="modal fade" id="genericConfirmationModal" tabindex="-1" aria-labelledby="genericConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="genericConfirmationModalLabel">Confirm Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to perform this action?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="confirmActionButton">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <div id="successModal" class="modal" tabindex="-1">
@@ -68,18 +88,19 @@
     </div>
 
 
+    <!-- Success Message Container -->
+    <div id="success-container" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;" onclick="hideSuccessMessage()">
+        <span id="success-message"></span>
+        <button id="success-message-remove" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
 
     <!-- Error Message Container -->
-    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;">
+    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;" onclick="hideErrorMessage()">
         <span id="error-message"></span>
         <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
     </div>
 
-    <!-- Success Message Container -->
-    <div id="success-container" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
-        <span id="success-message"></span>
-        <button id="success-message-remove" type="button" class="btn-close" aria-label="Close"></button>
-    </div>
+
 
 
     <div id="advertisement_list-view" class="view active p-3">
@@ -512,6 +533,30 @@
             </div>
         </div>
     </div>
+
+
+    <!--  Agent View  -->
+    <div class="container mt-4" id="agent-view">
+        <div class="row">
+            <div class="col-12 table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table">
+                    <tr>
+                        <th>Beskrivelse</th>
+                        <th class="text-end">Status</th>
+                        <th class="text-end">Handlinger</th>
+                    </tr>
+                    </thead>
+                    <tbody id="agent-table-body">
+                    <!-- Agent rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 
 <!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->

@@ -6,8 +6,8 @@ import {displayAdvertisements} from "./advertisement_list/advertisement_list.js"
 export function displayErrorMessage(message, ms = 5000) {
     let errorContainer = document.getElementById('error-container');
     let errorMessage = document.getElementById('error-message');
-    errorMessage.innerHTML = message.replace(/\n/g, '<br>');
 
+    errorMessage.innerHTML = message.replace(/\n/g, '<br>');
     errorContainer.style.display = 'block';
     errorContainer.classList.add('show');
 
@@ -16,47 +16,45 @@ export function displayErrorMessage(message, ms = 5000) {
         clearTimeout(errorContainer.timeoutId);
     }
 
-    // Set a new timeout to hide the error message after X seconds
-    errorContainer.timeoutId = setTimeout(() => hideErrorMessage(), ms);
-}
-
-
-export function hideErrorMessage() {
-    let errorContainer = document.getElementById('error-container');
-    if (errorContainer) {
-        errorContainer.classList.remove('show');
-        setTimeout(() => {
-            errorContainer.style.display = 'none';
-        }, 500); // Delay to allow for fade transition
-    }
+    // Start the fade-out effect after ms-1000 milliseconds to allow for 1 second of fade effect
+    errorContainer.timeoutId = setTimeout(() => {
+        errorContainer.classList.add('fade-out');
+        // Finally, hide the message completely
+        setTimeout(() => hideErrorMessage(), 1000);
+    }, ms - 1000);
 }
 
 export function displaySuccessMessage(message, ms = 5000) {
     let successContainer = document.getElementById('success-container');
     let successMessage = document.getElementById('success-message');
-    successMessage.innerHTML = message.replace(/\n/g, '<br>');
 
+    successMessage.innerHTML = message.replace(/\n/g, '<br>');
     successContainer.style.display = 'block';
     successContainer.classList.add('show');
 
-    // Clear any existing timeout to avoid multiple timeouts running simultaneously
     if (successContainer.timeoutId) {
         clearTimeout(successContainer.timeoutId);
     }
 
-    // Set a new timeout to hide the success message after X seconds
-    successContainer.timeoutId = setTimeout(() => hideSuccessMessage(), ms);
+    successContainer.timeoutId = setTimeout(() => {
+        successContainer.classList.add('fade-out');
+        setTimeout(() => hideSuccessMessage(), 1000);
+    }, ms - 1000);
+}
+
+function hideErrorMessage() {
+    let errorContainer = document.getElementById('error-container');
+    errorContainer.style.display = 'none';
+    errorContainer.classList.remove('show', 'fade-out');
 }
 
 export function hideSuccessMessage() {
-    let errorContainer = document.getElementById('success-container');
-    if (errorContainer) {
-        errorContainer.classList.remove('show');
-        setTimeout(() => {
-            errorContainer.style.display = 'none';
-        }, 500); // Delay to allow for fade transition
-    }
+    let successContainer = document.getElementById('success-container');
+    successContainer.style.display = 'none';
+    successContainer.classList.remove('show', 'fade-out');
 }
+
+
 
 
 export function decodeJwt() {
@@ -118,3 +116,5 @@ export function parseFormattedInteger(value) {
 
 
 window.formatNumber = formatNumber;
+window.hideSuccessMessage = hideSuccessMessage;
+window.hideErrorMessage = hideErrorMessage;

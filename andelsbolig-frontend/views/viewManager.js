@@ -5,6 +5,7 @@ const views = {
     detail: document.getElementById('detail-view'),
     login: document.getElementById('login-view'),
     create: document.getElementById('create-view'),
+    agent: document.getElementById('agent-view'),
     register: document.getElementById('register-view'),
     profile: document.getElementById('profile-view'),
     // payment1: document.getElementById('payment-view1'),

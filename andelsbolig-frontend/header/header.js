@@ -16,6 +16,7 @@ export function SetupHeader() {
         <li class="nav-item"><a class="nav-link" href="#" data-view="map">Kort</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="payment2">Abonnér</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="create">Opret & Rediger Annonce</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-view="agent">Annonceagenter</a></li>
         <li class="nav-item"><a class="nav-link" href="#" data-view="register">Opret Bruger</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hej! Log ind her</a>

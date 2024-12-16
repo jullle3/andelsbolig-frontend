@@ -26,6 +26,10 @@ export function setupAdvertisementListView() {
         fetchAndDisplayAdvertisements(searchTerm);
     }, 500));
 
+
+    // document.getElementById('error-message-remove').addEventListener('click', () => hideErrorMessage());
+    // document.getElementById('success-message-remove').addEventListener('click', () => hideSuccessMessage());
+
     setupPriceSlider()
     setupMonthlyFeeSlider()
     setupSquareMetersSlider()
@@ -253,8 +257,6 @@ export async function displayAdvertisements(response, append=false, triggerPopup
     } else {
         $("#next-page-button").addClass('d-none')
     }
-
-    showAnnonceagentPopup()
 
     if (triggerPopup) {
         // Show popup after a short delay
