@@ -103,83 +103,117 @@ function setupPriceSliders() {
     });
 }
 
-
-function setupMonthlyFeeSlider() {
-    const monthly_fee_slider = document.getElementById('monthly-fee-range-slider');
-
-    noUiSlider.create(monthly_fee_slider, {
-        start: [0, 28_500], // Starting values for the handles
-        connect: true, // Display a colored bar between the handles
+function setupMonthlyFeeSliders() {
+    // Common configuration for both monthly-fee sliders
+    const monthlyFeeConfig = {
+        start: [0, 28_500],
+        connect: true,
         range: {
-            'min': 0,
-            'max': 40_000
+            min: 0,
+            max: 40_000
         },
-        step: 100, // Increment steps
+        step: 100,
         format: wNumb({
-            decimals: 0, // No decimals in the output
-            thousand: '.',
-            // prefix: 'kr ',
-            // suffix: " .-"
+            decimals: 0,
+            thousand: '.'
         }),
-        tooltips: true // Show tooltips with formatted values
+        tooltips: true
+    };
+
+    // Main view slider
+    const monthlyFeeSlider = document.getElementById('monthly-fee-range-slider');
+    noUiSlider.create(monthlyFeeSlider, monthlyFeeConfig);
+    monthlyFeeSlider.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the main slider
+        // Example: #min-monthly-fee and #max-monthly-fee
+        $('#min-monthly-fee').text(values[0]);
+        $('#max-monthly-fee').text(values[1]);
     });
 
-    // When the slider value changes, update a hypothetical input/display
-    monthly_fee_slider.noUiSlider.on('update', function(values, handle) {
-        $('#min-price').text(values[0]);
-        $('#max-price').text(values[1]);
+    // Agent-edit view slider
+    const monthlyFeeSliderAgentEdit = document.getElementById('monthly-fee-range-slider-agenteditview');
+    noUiSlider.create(monthlyFeeSliderAgentEdit, monthlyFeeConfig);
+    monthlyFeeSliderAgentEdit.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-monthly-fee-edit and #max-monthly-fee-edit
+        $('#min-monthly-fee-edit').text(values[0]);
+        $('#max-monthly-fee-edit').text(values[1]);
     });
 }
 
-function setupSquareMetersSlider() {
-    const square_meters_slider = document.getElementById('square-meters-range-slider');
-
-    noUiSlider.create(square_meters_slider, {
-        start: [50, 100], // Starting values for the handles
-        connect: true, // Display a colored bar between the handles
+function setupSquareMetersSliders() {
+    // Common configuration for both square-meters sliders
+    const squareMetersConfig = {
+        start: [50, 100],
+        connect: true,
         range: {
-            'min': 0,
-            'max': 400
+            min: 0,
+            max: 400
         },
         step: 10,
         format: wNumb({
-            decimals: 0, // No decimals in the output
-            thousand: '.',
-            // prefix: 'kr ',
-            // suffix: " .-"
+            decimals: 0,
+            thousand: '.'
         }),
         tooltips: true
+    };
+
+    // Main view slider
+    const squareMetersSlider = document.getElementById('square-meters-range-slider');
+    noUiSlider.create(squareMetersSlider, squareMetersConfig);
+    squareMetersSlider.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the main slider
+        // Example: #min-square-meters and #max-square-meters
+        $('#min-square-meters').text(values[0]);
+        $('#max-square-meters').text(values[1]);
     });
 
-    square_meters_slider.noUiSlider.on('update', function(values, handle) {
-        $('#min-price').text(values[0]);
-        $('#max-price').text(values[1]);
+    // Agent-edit view slider
+    const squareMetersSliderAgentEdit = document.getElementById('square-meters-range-slider-agenteditview');
+    noUiSlider.create(squareMetersSliderAgentEdit, squareMetersConfig);
+    squareMetersSliderAgentEdit.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-square-meters-edit and #max-square-meters-edit
+        $('#min-square-meters-edit').text(values[0]);
+        $('#max-square-meters-edit').text(values[1]);
     });
 }
 
-function setupRoomsSlider() {
-    const rooms_slider = document.getElementById('rooms-range-slider');
-
-    noUiSlider.create(rooms_slider, {
-        start: [2, 5], // Starting values for the handles
-        connect: true, // Display a colored bar between the handles
+function setupRoomsSliders() {
+    // Common configuration for both rooms sliders
+    const roomsConfig = {
+        start: [2, 5],
+        connect: true,
         range: {
-            'min': 1,
-            'max': 10
+            min: 1,
+            max: 10
         },
         step: 1,
         format: wNumb({
             decimals: 0,
-            thousand: '.',
-            // prefix: 'kr ',
-            // suffix: " .-"
+            thousand: '.'
         }),
-        tooltips: true // Show tooltips with formatted values
+        tooltips: true
+    };
+
+    // Main view slider
+    const roomsSlider = document.getElementById('rooms-range-slider');
+    noUiSlider.create(roomsSlider, roomsConfig);
+    roomsSlider.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the main slider
+        // Example: #min-rooms and #max-rooms
+        $('#min-rooms').text(values[0]);
+        $('#max-rooms').text(values[1]);
     });
 
-    rooms_slider.noUiSlider.on('update', function(values, handle) {
-        $('#min-price').text(values[0]);
-        $('#max-price').text(values[1]);
+    // Agent-edit view slider
+    const roomsSliderAgentEdit = document.getElementById('rooms-range-slider-agenteditview');
+    noUiSlider.create(roomsSliderAgentEdit, roomsConfig);
+    roomsSliderAgentEdit.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-rooms-edit and #max-rooms-edit
+        $('#min-rooms-edit').text(values[0]);
+        $('#max-rooms-edit').text(values[1]);
     });
 }
 
