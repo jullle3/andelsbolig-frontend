@@ -116,20 +116,28 @@ export function parseFormattedInteger(value) {
 
 
 
-export function showConfirmationModal(title, message, onConfirm) {
-    // Set the title and message
+export function showConfirmationModal(title, message, onConfirm, confirmButtonClass = "btn-danger") {
+    // Update the modal title & body text
     $('#genericConfirmationModalLabel').text(title);
     $('#genericConfirmationModal .modal-body').text(message);
 
-    // Remove any existing event handlers to avoid duplication
-    $('#confirmActionButton').off('click').on('click', function() {
-        onConfirm(); // Execute the callback function when confirmed
+    // Update the confirm button styling and text
+    const $confirmButton = $('#confirmActionButton');
+    // Remove any previous color classes you might have added
+    $confirmButton.removeClass('btn-danger btn-primary btn-success btn-warning action-button');
+    // Add the new (or default) class
+    $confirmButton.addClass(confirmButtonClass);
+
+    // Remove old click handlers; add the new confirm callback
+    $confirmButton.off('click').on('click', function() {
+        onConfirm();
         $('#genericConfirmationModal').modal('hide');
     });
 
     // Show the modal
     $('#genericConfirmationModal').modal('show');
 }
+
 
 
 window.formatNumber = formatNumber;

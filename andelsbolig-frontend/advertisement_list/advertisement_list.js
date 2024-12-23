@@ -355,7 +355,7 @@ function showAnnonceagentPopup() {
 
 }
 
-function createAnnonceagent(agentId) {
+export function createAnnonceagent(agentId) {
     const cityInput = $("#city").val();
     const postalNumber = $("#postal-number").val();
 
