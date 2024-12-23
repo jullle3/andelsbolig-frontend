@@ -9,6 +9,7 @@ import {SetupHeader} from "./header/header.js";
 import {setupMapView} from "./advertisement_map/advertisement_map.js";
 import {setupAdvertisementListView} from "./advertisement_list/advertisement_list.js";
 import {SetupAgentView} from "./agent/agent.js";
+import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     SetupHeader();
@@ -24,10 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLogoutView();
     setupMapView();
     SetupAgentView();
+    SetupAgentEditView();
 
     // Call on page load
     fetchAndDisplayAdvertisements();
-    showView('agent');
+    // showView('agent');
 
     // Check the initial URL and show the corresponding view
     const initialView = window.location.hash.replace('#', '') || 'advertisement_list';

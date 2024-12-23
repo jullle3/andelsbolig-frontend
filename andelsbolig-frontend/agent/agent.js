@@ -5,9 +5,19 @@ export async function SetupAgentView() {
     setupDeleteConfirmation();
 
     const response = await authFetch(`/agent`);
+
     if (!response.ok) {
-        console.log("error");
-        displayErrorMessage("Failed to load agents."); // Display error using your existing function
+        if (response.status === 401) {
+            displayErrorMessage("Du skal logge ind før vi kan finde dine annonceagenter");
+            return;
+        }
+
+        if (response.status === 403) {
+            displayErrorMessage("Du skal have et abonnement for at oprettet annonceagenter");
+            return;
+        }
+
+        displayErrorMessage("Der skete en fejl, vi beklager. ");
         return;
     }
 

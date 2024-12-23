@@ -537,26 +537,157 @@
 
     <!--  Agent View  -->
     <div class="container mt-4" id="agent-view">
-        <div class="row">
-            <div class="col-12 table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead class="table">
-                    <tr>
-                        <th>Beskrivelse</th>
-                        <th class="text-end">Status</th>
-                        <th class="text-end">Handlinger</th>
-                    </tr>
-                    </thead>
-                    <tbody id="agent-table-body">
-                    <!-- Agent rows will be dynamically inserted here -->
-                    </tbody>
-                </table>
-            </div>
+        <!-- Title and Button on one line (flex) -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">Annonceagenter</h3>
+            <button class="btn btn-primary action-button" id="create-agent" onclick="showView('agent_edit')">Opret annonceagent +</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Beskrivelse</th>
+                    <th class="text-end">Status</th>
+                    <th class="text-end">Handlinger</th>
+                </tr>
+                </thead>
+                <tbody id="agent-table-body">
+                <!-- Agent rows will be dynamically inserted here -->
+                </tbody>
+            </table>
         </div>
     </div>
 
 
+    <!--  Agent Edit View  -->
+    <div class="container mt-4" id="agent-edit-view">
+        <div class="d-flex align-items-center mb-3">
+            <button
+                    id="back-arrow"
+                    class="btn btn-light me-2"
+                    aria-label="Go Back">
+                <!-- Using a Bootstrap icon (make sure you've included bootstrap-icons) -->
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <h3 class="mb-0">Tilbage</h3>
+        </div>
 
+        <!-- Search bar -->
+        <div class="container mt-4 pb-2">
+            <div class="row justify-content-center">
+                <div class="col-8 d-flex position-relative">
+
+                    <div class="input-group">
+                        <input class="form-control" type="text" id="advertisement-list-search-agenteditview" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
+                        <div class="input-group-text">
+
+                            <!-- Advanced Search dropdown bar -->
+                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+
+                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-agenteditview" style="top: 100%; left: 0; z-index: 10;">
+                                <div class="card card-body">
+
+                                    <!-- Price -->
+                                    <div class="container m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Pris kr</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="price-range-slider-agenteditview" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Monthly fee-->
+                                    <div class="container mt-3 m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Månedlig ydelse kr</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="monthly-fee-range-slider-agenteditview" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Square meters in m2 -->
+                                    <div class="container mt-3 m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Boligstørrelse m2 </h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="square-meters-range-slider-agenteditview" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rooms -->
+                                    <div class="container mt-3 m-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Værelser</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <div id="rooms-range-slider-agenteditview" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Postal Number -->
+                                    <div class="container m-0 pt-3-">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">Postnr</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <input type="text" id="postal-number-agenteditview" class="form-control" placeholder="Indtast postnummer">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- City -->
+                                    <div class="container m-0 pt-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 text-start">
+                                                <h6 class="mb-0">By</h6>
+                                            </div>
+                                            <div class="col-9">
+                                                <input  type="text" id="city-agenteditview" class="form-control " placeholder="Indtast by">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData()">Søg</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simplified and stylish results counter -->
+        <div class="container mt-0 pt-0">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="d-flex justify-content-start">
+                    <span class="badge rounded-pill bg-light text-dark border">
+                        <span id="search-result-count-agenteditview">0</span><span> Resultater</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
 </div>
 
 <!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->
