@@ -1,5 +1,6 @@
 import { authFetch } from "../auth/auth.js";
 import {displayErrorMessage, showConfirmationModal} from "../utils.js";
+import {showView} from "../views/viewManager.js";
 
 export async function SetupAgentView() {
     setupDeleteConfirmation();
@@ -44,21 +45,39 @@ function setupDeleteConfirmation() {
             () => deleteAgent(agentId)
         );
     });
-
-    // Similar delegation can be used for editing if needed
-    $('#agent-table-body').on('click', '.btn-edit-agent', function() {
-        const agentId = $(this).data('agent-id');
-        editAgent(agentId); // Assume editAgent is similarly defined
-    });
-
 }
 
+
+async function editAgent(agentId) {
+    const response = await authFetch(`/agent/${agentId}`)
+    const agent = await response.json();
+
+    // TODO: text er ikke lagret i agent.criteria endnu fra backend
+    document.getElementById('advertisement-list-search-agenteditview').value = agent.criteria.text || '';
+    setSliderValue('price-range-slider-agenteditview', agent.criteria.min_price, agent.criteria.max_price);
+    // setSliderValue('monthly-fee-range-slider-agenteditview', agent.criteria.min_monthly_price, agent.criteria.max_monthly_price);
+    setSliderValue('square-meters-range-slider-agenteditview', agent.criteria.min_square_meters, agent.criteria.max_square_meters);
+    setSliderValue('rooms-range-slider-agenteditview', agent.criteria.min_rooms, agent.criteria.max_rooms);
+    // Safely setting values for postal numbers and cities
+    $("#postal-number-agenteditview").val((agent.postal_numbers && agent.criteria.postal_numbers.length > 0) ? agent.criteria.postal_numbers[0] : '');
+    $("#city-agenteditview").val((agent.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
+
+
+    showView("agent_edit")
+}
+
+function setSliderValue(sliderId, from, to) {
+    console.log(sliderId)
+    console.log(from)
+    document.getElementById(sliderId).noUiSlider.set([from, to]);
+}
 
 
 function createAgentRow(agent) {
     return `
         <tr>
             <td>${agent.description || 'N/A'}</td>
+            <td class="text-end">${agent.matches || 'N/A'}</td>
             <td class="text-end">
                 <span class="badge ${agent.active ? 'bg-success' : 'bg-secondary'}">${agent.active ? 'Aktiv' : 'Inaktiv'}</span>
             </td>
@@ -76,11 +95,6 @@ function createAgentRow(agent) {
     `;
 }
 
-// Optionally define editAgent and deleteAgent functions if they don't already exist
-function editAgent(agentId) {
-    console.log('Edit agent:', agentId);
-    // Add code to handle agent editing
-}
 
 function deleteAgent(agentId) {
     console.log('Deleting agent:', agentId);
@@ -97,3 +111,6 @@ function deleteAgent(agentId) {
             displayErrorMessage(error.message); // Display error using your existing function
         });
 }
+
+
+window.editAgent = editAgent
