@@ -34,7 +34,7 @@ export function setupAdvertisementListView() {
     setupMonthlyFeeSliders()
     setupSquareMetersSliders()
     setupRoomsSliders()
-    setupAutoComplete()
+    setupAllAutoCompletes()
 }
 
 
@@ -218,30 +218,37 @@ function setupRoomsSliders() {
 }
 
 
-
-function setupAutoComplete() {
-    // Autocomplete for city input
-    $("#city").autocomplete({
+/*********************************************************
+ * 1. CITY AUTOCOMPLETE
+ *********************************************************/
+function setupCityAutocomplete(selector, cityData) {
+    // Example: selector could be "#city" or "#city-agenteditview"
+    $(selector).autocomplete({
         source: cityData,
         delay: 0,
-        minLength: 0, // Allow dropdown to appear with zero characters
+        minLength: 0,
         select: function(event, ui) {
-            console.log(ui.item.value)
-            $("#city").val(ui.item.value);
+            console.log(ui.item.value);
+            $(selector).val(ui.item.value);
         }
     }).focus(function() {
         // Trigger the search to show all entries when the field is focused
         $(this).autocomplete("search", "");
     });
+}
 
-    // Autocomplete for postal number input
-    $("#postal-number").autocomplete({
+/*********************************************************
+ * 2. POSTAL AUTOCOMPLETE
+ *********************************************************/
+function setupPostalAutocomplete(selector, postalData) {
+    // Example: selector could be "#postal-number" or "#postal-number-agenteditview"
+    $(selector).autocomplete({
         delay: 0,
-        minLength: 0, // Allow dropdown to appear with zero characters
+        minLength: 0,
         source: function(request, response) {
-            const matches = $.map(postalData, function(postal_city, postal_code) {
-                if (postal_code.startsWith(request.term)) {
-                    return `${postal_code} - ${postal_city}`;
+            const matches = $.map(postalData, function(cityName, postalCode) {
+                if (postalCode.startsWith(request.term)) {
+                    return `${postalCode} - ${cityName}`;
                 }
             });
             response(matches);
@@ -249,14 +256,30 @@ function setupAutoComplete() {
         select: function(event, ui) {
             // Only use postal_code part
             const parts = ui.item.value.split(" - ");
-            $("#postal-number").val(parts[0]);
-            return false; // Prevent the widget from updating the input with the selected value
+            $(selector).val(parts[0]);
+            return false; // Prevent the widget from updating the input with the full "postal-code - city" string
         }
     }).focus(function() {
         // Trigger the search to show all entries when the field is focused
         $(this).autocomplete("search", "");
     });
 }
+
+/*********************************************************
+ * 3. WRAPPER FUNCTION TO SETUP ALL AUTOCOMPLETES
+ *********************************************************/
+function setupAllAutoCompletes() {
+    // Assuming `cityData` and `postalData` are globally available or imported
+
+    // Main View
+    setupCityAutocomplete("#city", cityData);
+    setupPostalAutocomplete("#postal-number", postalData);
+
+    // Agent Edit View
+    setupCityAutocomplete("#city-agenteditview", cityData);
+    setupPostalAutocomplete("#postal-number-agenteditview", postalData);
+}
+
 
 export async function displayAdvertisements(response, append=false, triggerPopup=false) {
     const advertisements = response.objects;
