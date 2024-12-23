@@ -577,99 +577,117 @@
         <div class="container mt-4 pb-2">
             <div class="row justify-content-center">
                 <div class="col-8 d-flex position-relative">
-
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="advertisement-list-search-agenteditview" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
-                        <div class="input-group-text">
-
-                            <!-- Advanced Search dropdown bar -->
-                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-
-                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-agenteditview" style="top: 100%; left: 0; z-index: 10;">
-                                <div class="card card-body">
-
-                                    <!-- Price -->
-                                    <div class="container m-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">Pris kr</h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <div id="price-range-slider-agenteditview" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Monthly fee-->
-                                    <div class="container mt-3 m-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">Månedlig ydelse kr</h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <div id="monthly-fee-range-slider-agenteditview" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Square meters in m2 -->
-                                    <div class="container mt-3 m-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">Boligstørrelse m2 </h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <div id="square-meters-range-slider-agenteditview" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Rooms -->
-                                    <div class="container mt-3 m-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">Værelser</h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <div id="rooms-range-slider-agenteditview" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Postal Number -->
-                                    <div class="container m-0 pt-3-">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">Postnr</h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <input type="text" id="postal-number-agenteditview" class="form-control" placeholder="Indtast postnummer">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- City -->
-                                    <div class="container m-0 pt-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 text-start">
-                                                <h6 class="mb-0">By</h6>
-                                            </div>
-                                            <div class="col-9">
-                                                <input  type="text" id="city-agenteditview" class="form-control " placeholder="Indtast by">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData()">Søg</button>
-
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Text Search Input -->
+                    <div class="input-group w-100">
+                        <input
+                                class="form-control"
+                                type="text"
+                                id="advertisement-list-search-agenteditview"
+                                placeholder="Fritekst, vej, by, postnr, kommune eller landsdel"
+                        />
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Advanced Search Fields (always visible) -->
+            <div class="row justify-content-center mt-3">
+                <div class="col-8">
+                    <div class="card card-body">
+
+                        <!-- Price -->
+                        <div class="container m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Pris kr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="price-range-slider-agenteditview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monthly fee-->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Månedlig ydelse kr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="monthly-fee-range-slider-agenteditview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Square meters in m2 -->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Boligstørrelse m2</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="square-meters-range-slider-agenteditview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rooms -->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Værelser</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="rooms-range-slider-agenteditview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Postal Number -->
+                        <div class="container m-0 pt-3">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Postnr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <input
+                                            type="text"
+                                            id="postal-number-agenteditview"
+                                            class="form-control"
+                                            placeholder="Indtast postnummer"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- City -->
+                        <div class="container m-0 pt-3">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">By</h6>
+                                </div>
+                                <div class="col-9">
+                                    <input
+                                            type="text"
+                                            id="city-agenteditview"
+                                            class="form-control"
+                                            placeholder="Indtast by"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <button
+                                type="button"
+                                class="btn action-button w-100 text-white mt-3"
+                                onclick="sendSearchData()">
+                            Søg
+                        </button>
+
+                    </div> <!-- End card body -->
+                </div> <!-- End col-8 -->
+            </div> <!-- End row -->
+
 
         <!-- Simplified and stylish results counter -->
         <div class="container mt-0 pt-0">
