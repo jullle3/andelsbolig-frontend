@@ -30,10 +30,10 @@ export function setupAdvertisementListView() {
     // document.getElementById('error-message-remove').addEventListener('click', () => hideErrorMessage());
     // document.getElementById('success-message-remove').addEventListener('click', () => hideSuccessMessage());
 
-    setupPriceSlider()
-    setupMonthlyFeeSlider()
-    setupSquareMetersSlider()
-    setupRoomsSlider()
+    setupPriceSliders()
+    setupMonthlyFeeSliders()
+    setupSquareMetersSliders()
+    setupRoomsSliders()
     setupAutoComplete()
 }
 
@@ -69,32 +69,40 @@ function sendSearchData(append=false) {
 }
 
 
-function setupPriceSlider() {
-    const price_slider = document.getElementById('price-range-slider');
-
-    noUiSlider.create(price_slider, {
-        start: [0, 7_000_000], // Starting values for the handles
-        connect: true, // Display a colored bar between the handles
+function setupPriceSliders() {
+    // Common configuration for both sliders
+    const sliderConfig = {
+        start: [0, 7_000_000], // Starting handles
+        connect: true,
         range: {
-            'min': 0,
-            'max': 10_000_000
+            min: 0,
+            max: 10_000_000
         },
-        step: 5000, // Increment steps
+        step: 5000,
         format: wNumb({
-            decimals: 0, // No decimals in the output
-            thousand: '.',
-            // prefix: 'kr ',
-            // suffix: " .-"
+            decimals: 0,
+            thousand: '.'
         }),
-        tooltips: true // Show tooltips with formatted values
-    });
+        tooltips: true
+    };
 
-    // When the slider value changes, update a hypothetical input/display
-    price_slider.noUiSlider.on('update', function(values, handle) {
+    const slider1 = document.getElementById('price-range-slider');
+    noUiSlider.create(slider1, sliderConfig);
+    slider1.noUiSlider.on('update', (values) => {
+        // Update DOM elements (example IDs: #min-price / #max-price)
         $('#min-price').text(values[0]);
         $('#max-price').text(values[1]);
     });
+
+    const slider2 = document.getElementById('price-range-slider-agenteditview');
+    noUiSlider.create(slider2, sliderConfig);
+    slider2.noUiSlider.on('update', (values) => {
+        // Update DOM elements (example IDs: #min-price-edit / #max-price-edit)
+        $('#min-price-edit').text(values[0]);
+        $('#max-price-edit').text(values[1]);
+    });
 }
+
 
 function setupMonthlyFeeSlider() {
     const monthly_fee_slider = document.getElementById('monthly-fee-range-slider');
