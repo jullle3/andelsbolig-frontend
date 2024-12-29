@@ -8,6 +8,7 @@ import {
     fetchAndDisplayAdvertisements,
     parseFormattedInteger, displaySuccessMessage
 } from "../utils.js";
+import {loadAndShowAgents} from "../agent/agent.js";
 
 
 export function setupAdvertisementListView() {
@@ -101,6 +102,15 @@ function setupPriceSliders() {
         $('#min-price-edit').text(values[0]);
         $('#max-price-edit').text(values[1]);
     });
+
+    const slider3 = document.getElementById('price-range-slider-agentcreateview');
+    noUiSlider.create(slider3, sliderConfig);
+    slider3.noUiSlider.on('update', (values) => {
+        // Update DOM elements (example IDs: #min-price-edit / #max-price-edit)
+        $('#min-price-edit').text(values[0]);
+        $('#max-price-edit').text(values[1]);
+    });
+
 }
 
 function setupMonthlyFeeSliders() {
@@ -134,6 +144,16 @@ function setupMonthlyFeeSliders() {
     const monthlyFeeSliderAgentEdit = document.getElementById('monthly-fee-range-slider-agenteditview');
     noUiSlider.create(monthlyFeeSliderAgentEdit, monthlyFeeConfig);
     monthlyFeeSliderAgentEdit.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-monthly-fee-edit and #max-monthly-fee-edit
+        $('#min-monthly-fee-edit').text(values[0]);
+        $('#max-monthly-fee-edit').text(values[1]);
+    });
+
+    // Agent-edit view slider
+    const monthlyFeeSliderAgentCreate = document.getElementById('monthly-fee-range-slider-agentcreateview');
+    noUiSlider.create(monthlyFeeSliderAgentCreate, monthlyFeeConfig);
+    monthlyFeeSliderAgentCreate.noUiSlider.on('update', (values) => {
         // Update DOM elements for the agent-edit slider
         // Example: #min-monthly-fee-edit and #max-monthly-fee-edit
         $('#min-monthly-fee-edit').text(values[0]);
@@ -177,6 +197,16 @@ function setupSquareMetersSliders() {
         $('#min-square-meters-edit').text(values[0]);
         $('#max-square-meters-edit').text(values[1]);
     });
+
+    // Agent-edit view slider
+    const squareMetersSliderAgentCreate = document.getElementById('square-meters-range-slider-agentcreateview');
+    noUiSlider.create(squareMetersSliderAgentCreate, squareMetersConfig);
+    squareMetersSliderAgentCreate.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-square-meters-edit and #max-square-meters-edit
+        $('#min-square-meters-edit').text(values[0]);
+        $('#max-square-meters-edit').text(values[1]);
+    });
 }
 
 function setupRoomsSliders() {
@@ -210,6 +240,15 @@ function setupRoomsSliders() {
     const roomsSliderAgentEdit = document.getElementById('rooms-range-slider-agenteditview');
     noUiSlider.create(roomsSliderAgentEdit, roomsConfig);
     roomsSliderAgentEdit.noUiSlider.on('update', (values) => {
+        // Update DOM elements for the agent-edit slider
+        // Example: #min-rooms-edit and #max-rooms-edit
+        $('#min-rooms-edit').text(values[0]);
+        $('#max-rooms-edit').text(values[1]);
+    });
+    // Agent-edit view slider
+    const roomsSliderAgentCreate = document.getElementById('rooms-range-slider-agentcreateview');
+    noUiSlider.create(roomsSliderAgentCreate, roomsConfig);
+    roomsSliderAgentCreate.noUiSlider.on('update', (values) => {
         // Update DOM elements for the agent-edit slider
         // Example: #min-rooms-edit and #max-rooms-edit
         $('#min-rooms-edit').text(values[0]);
@@ -350,34 +389,50 @@ function showAnnonceagentPopup() {
 
     // Add event listener to the button
     $('#create-annonceagent-button').on('click', function() {
-        createAnnonceagent(crypto.randomUUID());
+        createAnnonceagent(crypto.randomUUID(), "advertisement_list");
     });
 
 }
 
-export function createAnnonceagent(agentId) {
-    const cityInput = $("#city").val();
-    const postalNumber = $("#postal-number").val();
+export function createAnnonceagent(agentId, view) {
+    let cityInput, postalNumber, priceRange, squareMetersRange, roomsRange;
 
-    const priceRange = $("#price-range-slider")[0].noUiSlider.get();
-    const squareMetersRange = $("#square-meters-range-slider")[0].noUiSlider.get();
-    const roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
+    // Pick values from correct views/sliders
+    if (view === 'advertisement_list') {
+        cityInput = $("#city").val();
+        postalNumber = $("#postal-number").val();
+        priceRange = $("#price-range-slider")[0].noUiSlider.get();
+        squareMetersRange = $("#square-meters-range-slider")[0].noUiSlider.get();
+        roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
+     } else if (view === 'agent-create') {
+        cityInput = $("#city-agentcreateview").val();
+        postalNumber = $("#postal-number-agentcreateview").val();
+        priceRange = $("#price-range-slider-agentcreateview")[0].noUiSlider.get();
+        squareMetersRange = $("#square-meters-range-slider-agentcreateview")[0].noUiSlider.get();
+        roomsRange = $("#rooms-range-slider-agentcreateview")[0].noUiSlider.get();
+    } else if (view === 'agent-edit') {
+        cityInput = $("#city-agenteditview").val();
+        postalNumber = $("#postal-number-agenteditview").val();
+        priceRange = $("#price-range-slider-agenteditview")[0].noUiSlider.get();
+        squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
+        roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
+    }
 
-    const minPrice = parseFormattedInteger(priceRange[0]);
-    const maxPrice = parseFormattedInteger(priceRange[1]);
-    const minSquareMeters = parseFormattedInteger(squareMetersRange[0]);
-    const maxSquareMeters = parseFormattedInteger(squareMetersRange[1]);
-    const minRooms = parseFormattedInteger(roomsRange[0]);
-    const maxRooms = parseFormattedInteger(roomsRange[1]);
+    const priceFrom = parseFormattedInteger(priceRange[0]);
+    const priceTo = parseFormattedInteger(priceRange[1]);
+    const squareMetersFrom = parseFormattedInteger(squareMetersRange[0]);
+    const squareMetersTo = parseFormattedInteger(squareMetersRange[1]);
+    const roomsFrom = parseFormattedInteger(roomsRange[0]);
+    const roomsTo = parseFormattedInteger(roomsRange[1]);
 
     // Construct the criteria object according to the backend model
     const criteria = {
-        min_price: isNaN(minPrice) ? null : minPrice,
-        max_price: isNaN(maxPrice) ? null : maxPrice,
-        min_rooms: isNaN(minRooms) ? null : minRooms,
-        max_rooms: isNaN(maxRooms) ? null : maxRooms,
-        min_square_meters: isNaN(minSquareMeters) ? null : minSquareMeters,
-        max_square_meters: isNaN(maxSquareMeters) ? null : maxSquareMeters,
+        price_from: isNaN(priceFrom) ? null : priceFrom,
+        price_to: isNaN(priceTo) ? null : priceTo,
+        rooms_from: isNaN(roomsFrom) ? null : roomsFrom,
+        rooms_to: isNaN(roomsTo) ? null : roomsTo,
+        square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,
+        square_meters_to: isNaN(squareMetersTo) ? null : squareMetersTo,
         cities: cityInput ? [cityInput] : null,
         postal_numbers: postalNumber ? [postalNumber] : null,
         // Add features or max_distance_km if you have them from other inputs
@@ -414,12 +469,14 @@ export function createAnnonceagent(agentId) {
         })
         .then(data => {
             displaySuccessMessage("Annonceagent oprettet");
+            loadAndShowAgents()
             console.log("Agent successfully created or updated:", data);
         })
         .catch(error => {
             displayErrorMessage("Der opstod en fejl");
             console.error("Failed to create/update agent:", error);
         });
+
 }
 
 

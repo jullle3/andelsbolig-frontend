@@ -6,6 +6,7 @@ const views = {
     login: document.getElementById('login-view'),
     create: document.getElementById('create-view'),
     agent: document.getElementById('agent-view'),
+    agent_create: document.getElementById('agent-create-view'),
     agent_edit: document.getElementById('agent-edit-view'),
     register: document.getElementById('register-view'),
     profile: document.getElementById('profile-view'),

@@ -10,6 +10,7 @@ import {setupMapView} from "./advertisement_map/advertisement_map.js";
 import {setupAdvertisementListView} from "./advertisement_list/advertisement_list.js";
 import {SetupAgentView} from "./agent/agent.js";
 import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
+import {SetupAgentCreateView} from "./agent_create/agent_create.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     SetupHeader();
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMapView();
     SetupAgentView();
     SetupAgentEditView();
+    SetupAgentCreateView();
 
     // Call on page load
     fetchAndDisplayAdvertisements();

@@ -259,7 +259,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
-                    <h1>Opret & Rediger Din Annonce</h1>
+                    <h1>Opret & Rediger Annonce</h1>
                     <form id="createForm">
 
                         <label class="text-secondary form-label" for="title">Titel</label>
@@ -540,7 +540,7 @@
         <!-- Title and Button on one line (flex) -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">Annonceagenter</h3>
-            <button class="btn btn-primary action-button" onclick="showView('agent_edit')">Opret annonceagent +</button>
+            <button class="btn btn-primary action-button" onclick="showView('agent_create')">Opret annonceagent +</button>
         </div>
 
         <div class="table-responsive">
@@ -563,9 +563,9 @@
 
     <!--  Agent Edit View  -->
     <div class="view container mt-4" id="agent-edit-view">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" style="max-width: 500px">
             <button
-                    id="back-arrow"
+                    id="back-arrow-edit-view"
                     class="btn btn-light me-2"
                     aria-label="Go Back">
                 <i class="bi bi-arrow-left"></i>
@@ -576,7 +576,7 @@
         <!-- Search bar -->
         <div class="container">
             <div class="row justify-content-center">
-                <h1 class="pb-4">Opret & Rediger Din AnnonceAgent</h1>
+                <h1 class="pb-4">Rediger din Annonceagent</h1>
                 <div class="col-8 d-flex position-relative">
                     <!-- Text Search Input -->
                     <div class="input-group w-100 pb-1">
@@ -691,6 +691,147 @@
 
                         <!-- Search Button -->
                         <button
+                                id="editAnnonceagentBtn"
+                                type="button"
+                                class="btn action-button w-100 text-white mt-3">
+                            Rediger Annonceagent
+                        </button>
+                    </div> <!-- End card body -->
+                </div> <!-- End col-8 -->
+            </div> <!-- End row -->
+        </div> <!-- End container -->
+    </div>
+
+    <!--  Agent Create View  -->
+    <div class="view container mt-4" id="agent-create-view">
+        <div class="d-flex align-items-center" style="max-width: 500px">
+            <button
+                    id="back-arrow-create-view"
+                    class="btn btn-light me-2"
+                    aria-label="Go Back">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <h3 class="mb-0 pb-0">Tilbage</h3>
+        </div>
+
+        <!-- Search bar -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <h1 class="pb-4">Opret Din Annonceagent</h1>
+                <div class="col-8 d-flex position-relative">
+                    <!-- Text Search Input -->
+                    <div class="input-group w-100 pb-1">
+                        <input
+                                class="form-control"
+                                type="text"
+                                id="advertisement-list-search-agentcreateview"
+                                placeholder="Fritekst, vej, by, postnr, kommune eller landsdel"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Counter: placed immediately below the search bar -->
+            <div class="row justify-content-center mt-2">
+                <div class="col-8">
+                    <div class="d-flex justify-content-start">
+                    <span class="badge rounded-pill bg-light text-dark border">
+                        <span id="search-result-count-agentcreateview">0</span>
+                        <span> Resultater</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Search Fields (always visible) -->
+            <div class="row justify-content-center mt-3">
+                <div class="col-8">
+                    <div class="card card-body">
+
+                        <!-- Price -->
+                        <div class="container m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Pris kr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="price-range-slider-agentcreateview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monthly fee-->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Månedlig ydelse kr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="monthly-fee-range-slider-agentcreateview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Square meters in m2 -->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Boligstørrelse m2</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="square-meters-range-slider-agentcreateview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rooms -->
+                        <div class="container mt-3 m-0">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Værelser</h6>
+                                </div>
+                                <div class="col-9">
+                                    <div id="rooms-range-slider-agentcreateview" class="slider"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Postal Number -->
+                        <div class="container m-0 pt-3">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">Postnr</h6>
+                                </div>
+                                <div class="col-9">
+                                    <input
+                                            type="text"
+                                            id="postal-number-agentcreateview"
+                                            class="form-control"
+                                            placeholder="Indtast postnummer"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- City -->
+                        <div class="container m-0 pt-3">
+                            <div class="row align-items-center">
+                                <div class="col-3 text-start">
+                                    <h6 class="mb-0">By</h6>
+                                </div>
+                                <div class="col-9">
+                                    <input
+                                            type="text"
+                                            id="city-agentcreateview"
+                                            class="form-control"
+                                            placeholder="Indtast by"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <button
                                 id="createAnnonceagentBtn"
                                 type="button"
                                 class="btn action-button w-100 text-white mt-3">
@@ -702,13 +843,11 @@
             </div> <!-- End row -->
         </div> <!-- End container -->
     </div>
-    </div>
+
+
 </div>
 
-<!-- Placed at end of body since it manipulates HTML elements which must be loaded first -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script type="module" src="andelsbolig-frontend/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <!-- Include jQuery UI -->

@@ -1,10 +1,14 @@
 import { authFetch } from "../auth/auth.js";
 import {displayErrorMessage, showConfirmationModal} from "../utils.js";
 import {showView} from "../views/viewManager.js";
+import {activeAgent} from "../agent_edit/agent_edit.js";
 
 export async function SetupAgentView() {
     setupDeleteConfirmation();
+    loadAndShowAgents()
+}
 
+export async function loadAndShowAgents() {
     const response = await authFetch(`/agent`);
 
     if (!response.ok) {
@@ -34,8 +38,9 @@ export async function SetupAgentView() {
     } else {
         $tableBody.append('<tr><td colspan="4" class="text-center">No agents found.</td></tr>');
     }
-}
 
+    showView('agent')
+}
 function setupDeleteConfirmation() {
     $('#agent-table-body').on('click', '.btn-delete-agent', function() {
         const agentId = $(this).data('agent-id');
@@ -51,24 +56,29 @@ function setupDeleteConfirmation() {
 async function editAgent(agentId) {
     const response = await authFetch(`/agent/${agentId}`)
     const agent = await response.json();
+    activeAgent._id = agent._id
+    activeAgent.created = agent.created
+    activeAgent.updated = agent.updated
+    activeAgent.created_by = agent.created_by
+    activeAgent.notifications = agent.notifications
+    activeAgent.active = agent.active
+    activeAgent.criteria = agent.criteria
 
     // TODO: text er ikke lagret i agent.criteria endnu fra backend
+    // Edit sliders to update UI
     document.getElementById('advertisement-list-search-agenteditview').value = agent.criteria.text || '';
-    setSliderValue('price-range-slider-agenteditview', agent.criteria.min_price, agent.criteria.max_price);
+    setSliderValue('price-range-slider-agenteditview', agent.criteria.price_from, agent.criteria.price_to);
     // setSliderValue('monthly-fee-range-slider-agenteditview', agent.criteria.min_monthly_price, agent.criteria.max_monthly_price);
-    setSliderValue('square-meters-range-slider-agenteditview', agent.criteria.min_square_meters, agent.criteria.max_square_meters);
-    setSliderValue('rooms-range-slider-agenteditview', agent.criteria.min_rooms, agent.criteria.max_rooms);
+    setSliderValue('square-meters-range-slider-agenteditview', agent.criteria.square_meters_from, agent.criteria.square_meters_to);
+    setSliderValue('rooms-range-slider-agenteditview', agent.criteria.rooms_from, agent.criteria.rooms_to);
     // Safely setting values for postal numbers and cities
     $("#postal-number-agenteditview").val((agent.postal_numbers && agent.criteria.postal_numbers.length > 0) ? agent.criteria.postal_numbers[0] : '');
     $("#city-agenteditview").val((agent.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
-
 
     showView("agent_edit")
 }
 
 function setSliderValue(sliderId, from, to) {
-    console.log(sliderId)
-    console.log(from)
     document.getElementById(sliderId).noUiSlider.set([from, to]);
 }
 
