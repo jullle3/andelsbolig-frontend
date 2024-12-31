@@ -220,15 +220,10 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Show advertisements -->
-        <!-- TODO Kan row delen rykkes til advertisement_list.js?        -->
         <div id="listings-container" class="row">
             <!-- Listings will be inserted here -->
         </div>
-
-
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
@@ -239,8 +234,6 @@
                 </div>
             </div>
         </div>
-
-
         <div id="no-results" class="no-results-container">
             <h3>Der er ingen resultater at vise. Prøv at ændre dine søgekriterier.</h3>
             <p></p>
@@ -251,10 +244,7 @@
     </div>
 
 
-    <div id="detail-view" class="view">
-    </div>
-
-
+    <div id="detail-view" class="view"></div>
     <div id="create-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -327,8 +317,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="register-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -367,8 +355,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="login-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -396,15 +382,6 @@
             </div>
         </div>
     </div>
-
-
-<!--    <div class="form-check form-switch mt-2">-->
-<!--        <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">-->
-<!--        <label class="form-check-label text-secondary " for="located_at_top">Øverste etage</label>-->
-<!--    </div>-->
-
-
-
     <div id="profile-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -445,24 +422,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-    <!--    <div id="payment-view1" class="view">-->
-    <!--        <div class="container">-->
-    <!--            &lt;!&ndash; Stripe Buy Button &ndash;&gt;-->
-    <!--            <stripe-buy-button-->
-    <!--                    id="stripeBuyButton"-->
-    <!--                    buy-button-id="buy_btn_1Phs9TRwMNhLL1Z9ExKDi9Cp"-->
-    <!--                    publishable-key="pk_test_51PhrGIRwMNhLL1Z9dUFZqpxKIZrfZr64BTyUmHwWdEUjWjm3XulkLuozpbOuFT7dmkzKYAQ1ePD2cV2HLEnD1yMC00Q95j5SB1"-->
-    <!--            >-->
-    <!--            </stripe-buy-button>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-
     <div id="payment-view2" class="view">
         <div class="container">
             <stripe-pricing-table
@@ -472,8 +431,6 @@
             </stripe-pricing-table>
         </div>
     </div>
-
-
     <div id="faq-view" class="view">
         <div class="accordion w-100" id="basicAccordion">
             <div class="accordion-item">
@@ -523,7 +480,6 @@
             </div>
         </div>
     </div>
-
     <div id="map-view" class="view">
         <div class="container-fluid">
             <div class="row">
@@ -533,8 +489,6 @@
             </div>
         </div>
     </div>
-
-
     <!--  Agent View  -->
     <div class="view container mt-4" id="agent-view">
         <!-- Title and Button on one line (flex) -->
@@ -559,11 +513,9 @@
             </table>
         </div>
     </div>
-
-
     <!--  Agent Edit View  -->
     <div class="view container mt-4" id="agent-edit-view">
-        <div class="d-flex align-items-center" style="max-width: 500px">
+        <div class="d-flex align-items-center">
             <button
                     id="back-arrow-edit-view"
                     class="btn btn-light me-2"
@@ -592,19 +544,17 @@
 
             <!-- Results Counter: placed immediately below the search bar -->
             <div class="row justify-content-center mt-2">
-                <div class="col-8">
-                    <div class="d-flex justify-content-start">
-                    <span class="badge rounded-pill bg-light text-dark border">
-                        <span id="search-result-count-agenteditview">0</span>
-                        <span> Resultater</span>
-                    </span>
-                    </div>
+                <div class="col-12 col-md-auto d-flex justify-content-center">
+                <span class="badge rounded-pill bg-light text-dark border">
+                    <span id="search-result-count-agenteditview">0</span>
+                    <span> Resultater</span>
+                </span>
                 </div>
-            </div>
+
 
             <!-- Advanced Search Fields (always visible) -->
             <div class="row justify-content-center mt-3">
-                <div class="col-8">
+                <div class="col-8" style="min-width: 600px">
                     <div class="card card-body">
 
                         <!-- Price -->
