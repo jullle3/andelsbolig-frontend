@@ -8,7 +8,8 @@ import {
     fetchAndDisplayAdvertisements,
     parseFormattedInteger, displaySuccessMessage
 } from "../utils.js";
-import {loadAndShowAgents} from "../agent/agent.js";
+import {loadAgents} from "../agent/agent.js";
+import {showView} from "../views/viewManager.js";
 
 
 export function setupAdvertisementListView() {
@@ -469,7 +470,9 @@ export function createAnnonceagent(agentId, view) {
         })
         .then(data => {
             displaySuccessMessage("Annonceagent oprettet");
-            loadAndShowAgents()
+            loadAgents()
+            showView('agent')
+
             console.log("Agent successfully created or updated:", data);
         })
         .catch(error => {

@@ -5,10 +5,10 @@ import {activeAgent} from "../agent_edit/agent_edit.js";
 
 export async function SetupAgentView() {
     setupDeleteConfirmation();
-    loadAndShowAgents()
+    loadAgents()
 }
 
-export async function loadAndShowAgents() {
+export async function loadAgents() {
     const response = await authFetch(`/agent`);
 
     if (!response.ok) {
@@ -27,7 +27,6 @@ export async function loadAndShowAgents() {
     }
 
     let agents = await response.json();
-    console.log(agents);
 
     const $tableBody = $('#agent-table-body');
     $tableBody.empty(); // Clear previous entries
@@ -38,8 +37,6 @@ export async function loadAndShowAgents() {
     } else {
         $tableBody.append('<tr><td colspan="4" class="text-center">No agents found.</td></tr>');
     }
-
-    showView('agent')
 }
 function setupDeleteConfirmation() {
     $('#agent-table-body').on('click', '.btn-delete-agent', function() {

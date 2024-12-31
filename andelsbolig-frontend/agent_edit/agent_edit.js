@@ -7,7 +7,7 @@ import {
     removeDots,
     showConfirmationModal
 } from "../utils.js";
-import {loadAndShowAgents} from "../agent/agent.js";
+import {loadAgents} from "../agent/agent.js";
 
 
 // The agent currently being edited
@@ -136,7 +136,9 @@ export function updateAnnonceagent() {
         })
         .then(data => {
             displaySuccessMessage("Annonceagent opdateret");
-            loadAndShowAgents()
+            loadAgents()
+            showView('agent')
+
         })
         .catch(error => {
             displayErrorMessage("Der opstod en fejl");
