@@ -99,8 +99,8 @@ export function updateAnnonceagent() {
     const criteria = {
         price_from: isNaN(priceFrom) ? null : priceFrom,
         price_to: isNaN(priceTo) ? null : priceTo,
-        monthlyPriceFrom: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
-        monthlyPriceTo: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
+        monthly_price_from: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
+        monthly_price_to: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
         rooms_from: isNaN(roomsFrom) ? null : roomsFrom,
         rooms_to: isNaN(roomsTo) ? null : roomsTo,
         square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,

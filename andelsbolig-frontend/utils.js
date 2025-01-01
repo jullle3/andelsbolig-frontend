@@ -111,6 +111,7 @@ export async function fetchAndDisplayAdvertisements(searchTerm = "") {
 
 export function parseFormattedInteger(value) {
     // Helper function to convert formatted string with delimiters to integer
+    console.log(value)
     return parseInt(value.replace(/\./g, ''), 10);
 }
 

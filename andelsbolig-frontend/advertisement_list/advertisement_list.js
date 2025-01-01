@@ -305,19 +305,20 @@ function setupPostalAutocomplete(selector, postalData) {
     });
 }
 
-/*********************************************************
- * 3. WRAPPER FUNCTION TO SETUP ALL AUTOCOMPLETES
- *********************************************************/
 function setupAllAutoCompletes() {
-    // Assuming `cityData` and `postalData` are globally available or imported
-
+    // TODO: i dont like this...
     // Main View
-    setupCityAutocomplete("#city", cityData);
     setupPostalAutocomplete("#postal-number", postalData);
+    setupCityAutocomplete("#city", cityData);
 
     // Agent Edit View
+    // setupPostalAutocomplete("#postal-number-agenteditview", postalData);
     setupCityAutocomplete("#city-agenteditview", cityData);
-    setupPostalAutocomplete("#postal-number-agenteditview", postalData);
+
+    // Agent Edit View
+    setupPostalAutocomplete("#postal-number-agentcreateview", postalData);
+    setupCityAutocomplete("#city-agentcreateview", cityData);
+
 }
 
 
@@ -428,7 +429,7 @@ export function createAnnonceagent(agentId, view) {
     const priceFrom = parseFormattedInteger(priceRange[0]);
     const priceTo = parseFormattedInteger(priceRange[1]);
     const monthlyPriceFrom = parseFormattedInteger(monthlyPriceRange[0]);
-    const monthlyPriceTo = parseFormattedInteger(monthlyPriceFrom[1]);
+    const monthlyPriceTo = parseFormattedInteger(monthlyPriceRange[1]);
     const squareMetersFrom = parseFormattedInteger(squareMetersRange[0]);
     const squareMetersTo = parseFormattedInteger(squareMetersRange[1]);
     const roomsFrom = parseFormattedInteger(roomsRange[0]);
@@ -438,8 +439,8 @@ export function createAnnonceagent(agentId, view) {
     const criteria = {
         price_from: isNaN(priceFrom) ? null : priceFrom,
         price_to: isNaN(priceTo) ? null : priceTo,
-        monthlyPriceFrom: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
-        monthlyPriceTo: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
+        monthly_price_from: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
+        monthly_price_to: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
         rooms_from: isNaN(roomsFrom) ? null : roomsFrom,
         rooms_to: isNaN(roomsTo) ? null : roomsTo,
         square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,

@@ -65,12 +65,12 @@ async function editAgent(agentId) {
     // Edit sliders to update UI
     document.getElementById('advertisement-list-search-agenteditview').value = agent.criteria.text || '';
     setSliderValue('price-range-slider-agenteditview', agent.criteria.price_from, agent.criteria.price_to);
-    // setSliderValue('monthly-price-range-slider-agenteditview', agent.criteria.min_monthly_price, agent.criteria.max_monthly_price);
+    setSliderValue('monthly-price-range-slider-agenteditview', agent.criteria.monthly_price_from, agent.criteria.monthly_price_to);
     setSliderValue('square-meters-range-slider-agenteditview', agent.criteria.square_meters_from, agent.criteria.square_meters_to);
     setSliderValue('rooms-range-slider-agenteditview', agent.criteria.rooms_from, agent.criteria.rooms_to);
     // Safely setting values for postal numbers and cities
-    $("#postal-number-agenteditview").val((agent.postal_numbers && agent.criteria.postal_numbers.length > 0) ? agent.criteria.postal_numbers[0] : '');
-    $("#city-agenteditview").val((agent.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
+    $("#postal-number-agenteditview").val((agent.criteria.postal_numbers && agent.criteria.postal_numbers.length > 0) ? agent.criteria.postal_numbers[0] : '');
+    $("#city-agenteditview").val((agent.criteria.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
     $("#name-agenteditview").val(agent.name);
 
     showView("agent_edit")
