@@ -8,8 +8,6 @@ export function setupProfileView() {
         const decodedPayload = atob(payload); // Base64 decode
         const payloadObj = JSON.parse(decodedPayload); // Parse the JSON string
 
-        console.log(payloadObj.sms_notifications);
-        console.log(payloadObj.email_notifications);
         document.getElementById('navbar-name').textContent = payloadObj.full_name;
         document.getElementById('fullName-profile').value = payloadObj.full_name;
         document.getElementById('email-profile').value = payloadObj.email;
@@ -23,7 +21,6 @@ export function setupProfileView() {
         const settingName = this.id;  // e.g., 'email-notifications' or 'sms-notifications'
         const settingValue = $(this).is(':checked');  // true if checked (on), false if not (off)
 
-        console.log(settingName, settingValue);
         const response = await authFetch('/user', {
             method: 'PATCH',
             headers: {
@@ -36,7 +33,5 @@ export function setupProfileView() {
             displayErrorMessage("Noget gik galt");
             return;
         }
-        console.log("Gucci")
-
     })
 }

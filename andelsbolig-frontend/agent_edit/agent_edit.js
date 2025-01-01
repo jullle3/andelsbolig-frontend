@@ -32,6 +32,7 @@ export async function SetupAgentEditView() {
             // Get the match count from the backend
             const count = await getAnnonceagentMatchCount();
 
+            return
             // Show confirmation modal
             showConfirmationModal(
                 'Rediger Annonceagent',
@@ -40,7 +41,6 @@ export async function SetupAgentEditView() {
                 "action-button btn-primary"
             );
         } catch (error) {
-            console.error('Error getting match count:', error);
             alert('Noget gik galt, prøv igen senere.');
         }
     });

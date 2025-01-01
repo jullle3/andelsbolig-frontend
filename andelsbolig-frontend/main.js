@@ -10,13 +10,15 @@ import {setupMapView} from "./advertisement_map/advertisement_map.js";
 import {setupAdvertisementListView} from "./advertisement_list/advertisement_list.js";
 import {SetupAgentView} from "./agent/agent.js";
 import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
-import {SetupAgentCreateView} from "./agent_create/agent_create.js";
+import {insertSharedComponents, SetupAgentCreateView} from "./agent_create/agent_create.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     SetupHeader();
     setupUtils();
     setupViews();
     setupProfileView();
+    insertSharedComponents()
+
     setupAdvertisementListView();
     setupCreateAdvertisementView();
     populateCreateAdvertisementForm();
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check the initial URL and show the corresponding view
     const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
-    showView(initialView);
+    // showView(initialView);
     showView('agent_edit');
 });
 
