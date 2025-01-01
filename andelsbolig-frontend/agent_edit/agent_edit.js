@@ -32,7 +32,6 @@ export async function SetupAgentEditView() {
             // Get the match count from the backend
             const count = await getAnnonceagentMatchCount();
 
-            return
             // Show confirmation modal
             showConfirmationModal(
                 'Rediger Annonceagent',
@@ -54,8 +53,8 @@ async function getAnnonceagentMatchCount() {
         text: document.getElementById('advertisement-list-search-agenteditview').value,
         price_from: removeDots(document.getElementById('price-range-slider-agenteditview').noUiSlider.get()[0]),
         price_to: removeDots(document.getElementById('price-range-slider-agenteditview').noUiSlider.get()[1]),
-        monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider-agenteditview').noUiSlider.get()[0]),
-        monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider-agenteditview').noUiSlider.get()[1]),
+        monthly_fee_from: removeDots(document.getElementById('monthly-price-range-slider-agenteditview').noUiSlider.get()[0]),
+        monthly_fee_to: removeDots(document.getElementById('monthly-price-range-slider-agenteditview').noUiSlider.get()[1]),
         square_meter_from: document.getElementById('square-meters-range-slider-agenteditview').noUiSlider.get()[0],
         square_meter_to: document.getElementById('square-meters-range-slider-agenteditview').noUiSlider.get()[1],
         rooms_from: document.getElementById('rooms-range-slider-agenteditview').noUiSlider.get()[0],
@@ -82,11 +81,15 @@ export function updateAnnonceagent() {
     const cityInput = $("#city-agenteditview").val();
     const postalNumber = $("#postal-number-agenteditview").val();
     const priceRange = $("#price-range-slider-agenteditview")[0].noUiSlider.get();
+    const monthlyPriceRange = $("#monthly-price-range-slider-agenteditview")[0].noUiSlider.get();
     const squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
     const roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
+    const name = $("#name-agenteditview").val();
 
     const priceFrom = parseFormattedInteger(priceRange[0]);
     const priceTo = parseFormattedInteger(priceRange[1]);
+    const monthlyPriceFrom = parseFormattedInteger(monthlyPriceRange[0]);
+    const monthlyPriceTo = parseFormattedInteger(monthlyPriceRange[1]);
     const squareMetersFrom = parseFormattedInteger(squareMetersRange[0]);
     const squareMetersTo = parseFormattedInteger(squareMetersRange[1]);
     const roomsFrom = parseFormattedInteger(roomsRange[0]);
@@ -96,6 +99,8 @@ export function updateAnnonceagent() {
     const criteria = {
         price_from: isNaN(priceFrom) ? null : priceFrom,
         price_to: isNaN(priceTo) ? null : priceTo,
+        monthlyPriceFrom: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
+        monthlyPriceTo: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
         rooms_from: isNaN(roomsFrom) ? null : roomsFrom,
         rooms_to: isNaN(roomsTo) ? null : roomsTo,
         square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,
@@ -116,6 +121,7 @@ export function updateAnnonceagent() {
         notifications: activeAgent.notifications,
         active: activeAgent.active,
         criteria: criteria,
+        name: name
     };
 
     authFetch("/agent", {

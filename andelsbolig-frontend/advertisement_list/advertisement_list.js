@@ -46,8 +46,8 @@ function sendSearchData(append=false) {
         text: document.getElementById('advertisement-list-search').value,
         price_from: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[0]),
         price_to: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[1]),
-        monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[0]),
-        monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider').noUiSlider.get()[1]),
+        monthly_fee_from: removeDots(document.getElementById('monthly-price-range-slider').noUiSlider.get()[0]),
+        monthly_fee_to: removeDots(document.getElementById('monthly-price-range-slider').noUiSlider.get()[1]),
         square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
         square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
         rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
@@ -132,7 +132,7 @@ function setupMonthlyFeeSliders() {
     };
 
     // Main view slider
-    const monthlyFeeSlider = document.getElementById('monthly-fee-range-slider');
+    const monthlyFeeSlider = document.getElementById('monthly-price-range-slider');
     noUiSlider.create(monthlyFeeSlider, monthlyFeeConfig);
     monthlyFeeSlider.noUiSlider.on('update', (values) => {
         // Update DOM elements for the main slider
@@ -142,7 +142,7 @@ function setupMonthlyFeeSliders() {
     });
 
     // Agent-edit view slider
-    const monthlyFeeSliderAgentEdit = document.getElementById('monthly-fee-range-slider-agenteditview');
+    const monthlyFeeSliderAgentEdit = document.getElementById('monthly-price-range-slider-agenteditview');
     noUiSlider.create(monthlyFeeSliderAgentEdit, monthlyFeeConfig);
     monthlyFeeSliderAgentEdit.noUiSlider.on('update', (values) => {
         // Update DOM elements for the agent-edit slider
@@ -152,7 +152,7 @@ function setupMonthlyFeeSliders() {
     });
 
     // Agent-edit view slider
-    const monthlyFeeSliderAgentCreate = document.getElementById('monthly-fee-range-slider-agentcreateview');
+    const monthlyFeeSliderAgentCreate = document.getElementById('monthly-price-range-slider-agentcreateview');
     noUiSlider.create(monthlyFeeSliderAgentCreate, monthlyFeeConfig);
     monthlyFeeSliderAgentCreate.noUiSlider.on('update', (values) => {
         // Update DOM elements for the agent-edit slider
@@ -396,31 +396,39 @@ function showAnnonceagentPopup() {
 }
 
 export function createAnnonceagent(agentId, view) {
-    let cityInput, postalNumber, priceRange, squareMetersRange, roomsRange;
+    let cityInput, postalNumber, priceRange, monthlyPriceRange, squareMetersRange, roomsRange, name;
 
     // Pick values from correct views/sliders
     if (view === 'advertisement_list') {
         cityInput = $("#city").val();
         postalNumber = $("#postal-number").val();
         priceRange = $("#price-range-slider")[0].noUiSlider.get();
+        monthlyPriceRange = $("#monthly-price-range-slider")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
+        name = null;
      } else if (view === 'agent-create') {
         cityInput = $("#city-agentcreateview").val();
         postalNumber = $("#postal-number-agentcreateview").val();
         priceRange = $("#price-range-slider-agentcreateview")[0].noUiSlider.get();
+        monthlyPriceRange = $("#monthly-price-range-slider-agentcreateview")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider-agentcreateview")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider-agentcreateview")[0].noUiSlider.get();
+        name = $("#name-agentcreateview").val();
     } else if (view === 'agent-edit') {
         cityInput = $("#city-agenteditview").val();
         postalNumber = $("#postal-number-agenteditview").val();
         priceRange = $("#price-range-slider-agenteditview")[0].noUiSlider.get();
+        monthlyPriceRange = $("#monthly-price-range-slider-agenteditview")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
+        name = $("#name-agenteditview").val();
     }
 
     const priceFrom = parseFormattedInteger(priceRange[0]);
     const priceTo = parseFormattedInteger(priceRange[1]);
+    const monthlyPriceFrom = parseFormattedInteger(monthlyPriceRange[0]);
+    const monthlyPriceTo = parseFormattedInteger(monthlyPriceFrom[1]);
     const squareMetersFrom = parseFormattedInteger(squareMetersRange[0]);
     const squareMetersTo = parseFormattedInteger(squareMetersRange[1]);
     const roomsFrom = parseFormattedInteger(roomsRange[0]);
@@ -430,12 +438,14 @@ export function createAnnonceagent(agentId, view) {
     const criteria = {
         price_from: isNaN(priceFrom) ? null : priceFrom,
         price_to: isNaN(priceTo) ? null : priceTo,
+        monthlyPriceFrom: isNaN(monthlyPriceFrom) ? null : monthlyPriceFrom,
+        monthlyPriceTo: isNaN(monthlyPriceTo) ? null : monthlyPriceTo,
         rooms_from: isNaN(roomsFrom) ? null : roomsFrom,
         rooms_to: isNaN(roomsTo) ? null : roomsTo,
         square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,
         square_meters_to: isNaN(squareMetersTo) ? null : squareMetersTo,
-        cities: cityInput ? [cityInput] : null,
         postal_numbers: postalNumber ? [postalNumber] : null,
+        cities: cityInput ? [cityInput] : null,
         // Add features or max_distance_km if you have them from other inputs
         features: null,
         max_distance_km: null
@@ -445,7 +455,8 @@ export function createAnnonceagent(agentId, view) {
     const agentData = {
         notifications: ["sms", "email"],
         active: true,
-        criteria: criteria
+        criteria: criteria,
+        name: name,
     };
 
     if (agentId != null) {

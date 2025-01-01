@@ -7,20 +7,20 @@ export async function SetupAgentCreateView() {
         window.history.back();
     });
 
-    // document.getElementById('createAnnonceagentBtn').addEventListener('click', async () => {
-    //     try {
-    //         const count = await getAnnonceagentMatchCount();
-    //         showConfirmationModal(
-    //             'Opret Annonceagent',
-    //             `Din Annonceagent matcher ${count} boliger, vil du oprette den?`,
-    //             () => createAnnonceagent(crypto.randomUUID(), "agent-create"),
-    //             "action-button btn-primary"
-    //         );
-    //     } catch (error) {
-    //         console.error('Error getting match count:', error);
-    //         alert('Noget gik galt, prøv igen senere.');
-    //     }
-    // });
+    document.getElementById('createAnnonceagentBtn').addEventListener('click', async () => {
+        try {
+            const count = await getAnnonceagentMatchCount();
+            showConfirmationModal(
+                'Opret Annonceagent',
+                `Din Annonceagent matcher ${count} boliger, vil du oprette den?`,
+                () => createAnnonceagent(crypto.randomUUID(), "agent-create"),
+                "action-button btn-primary"
+            );
+        } catch (error) {
+            console.error('Error getting match count:', error);
+            alert('Noget gik galt, prøv igen senere.');
+        }
+    });
 }
 
 
@@ -32,8 +32,8 @@ async function getAnnonceagentMatchCount() {
         text: document.getElementById('advertisement-list-search-agentcreateview').value,
         price_from: removeDots(document.getElementById('price-range-slider-agentcreateview').noUiSlider.get()[0]),
         price_to: removeDots(document.getElementById('price-range-slider-agentcreateview').noUiSlider.get()[1]),
-        monthly_fee_from: removeDots(document.getElementById('monthly-fee-range-slider-agentcreateview').noUiSlider.get()[0]),
-        monthly_fee_to: removeDots(document.getElementById('monthly-fee-range-slider-agentcreateview').noUiSlider.get()[1]),
+        monthly_fee_from: removeDots(document.getElementById('monthly-price-range-slider-agentcreateview').noUiSlider.get()[0]),
+        monthly_fee_to: removeDots(document.getElementById('monthly-price-range-slider-agentcreateview').noUiSlider.get()[1]),
         square_meter_from: document.getElementById('square-meters-range-slider-agentcreateview').noUiSlider.get()[0],
         square_meter_to: document.getElementById('square-meters-range-slider-agentcreateview').noUiSlider.get()[1],
         rooms_from: document.getElementById('rooms-range-slider-agentcreateview').noUiSlider.get()[0],
@@ -60,7 +60,7 @@ function generateSharedComponents(viewType) {
     const searchIdSuffix = viewType === "edit" ? "agenteditview" : "agentcreateview";
 
     return `
-        <!-- Search bar -->
+        <!-- Text search bar -->
         <div class="container">
             <div class="row justify-content-center">
                 <h1 class="pb-4">${viewType === "edit" ? "Rediger din Annonceagent" : "Opret Din Annonceagent"}</h1>
@@ -81,7 +81,7 @@ function generateSharedComponents(viewType) {
                 </div>
             </div>
 
-            <!-- Advanced Search Fields -->
+            <!-- Advanced Search Fields & Search button -->
             <div class="row justify-content-center mt-3">
                 <div class="col-8" style="min-width: 600px">
                     <div class="card card-body">
@@ -108,8 +108,8 @@ function generateAdvancedSearchFields(suffix) {
         <!-- Monthly fee -->
         <div class="mt-3 m-0 p-0 pb-4">
             <div class="row align-items-center">
-                <div class="col-4 text-start"><h6 class="mb-0">Mdl. ydelse krkr</h6></div>
-                <div class="col-8"><div id="monthly-fee-range-slider-${suffix}" class="slider"></div></div>
+                <div class="col-4 text-start"><h6 class="mb-0">Mdl. ydelse kr</h6></div>
+                <div class="col-8"><div id="monthly-price-range-slider-${suffix}" class="slider"></div></div>
             </div>
         </div>
         <!-- Square meters -->
@@ -144,29 +144,38 @@ function generateAdvancedSearchFields(suffix) {
                 </div>
             </div>
         </div>
+
+        <!-- Name -->
+        <div class="m-0 p-0 pb-4">
+            <div class="row align-items-center">
+                <div class="col-4 text-start"><h6 class="mb-0">Navn</h6></div>
+                <div class="col-8">
+                    <input type="text" id="name-${suffix}" class="form-control" placeholder="F.eks. Store boliger i København" />
+                </div>
+            </div>
+        </div>
+
     `;
 }
 
 
 export function insertSharedComponents() {
-    // Function to insert the near duplicate HTML for agent create and agent edit views
-    document.querySelectorAll('.view[data-view]').forEach(view => {
-        const viewType = view.dataset.view; // "edit" or "create"
+    document.querySelectorAll('.view[data-agent-type]').forEach(view => {
+        const agentType = view.getAttribute('data-agent-type'); // Retrieve "edit" or "create"
         const container = view.querySelector('.shared-components-container');
-        container.innerHTML = generateSharedComponents(viewType);
+        if (!container) return;
 
-        // Attach any additional event listeners here
-        // if (viewType === "edit") {
-        //     document.getElementById("editAnnonceagentBtn").addEventListener("click", () => {
-        //         console.log("Edit agent logic goes here");
-                // Implement your editing logic
-            // });
-        // } else if (viewType === "create") {
-        //     document.getElementById("createAnnonceagentBtn").addEventListener("click", () => {
-        //         console.log("Create agent logic goes here");
-        //         Implement your creation logic
-            // });
-        // }
+        container.innerHTML = generateSharedComponents(agentType);
+
+        // Attach specific event listeners
+        // const buttonId = viewType === 'edit' ? 'editAnnonceagentBtn' : 'createAnnonceagentBtn';
+        // document.getElementById(buttonId).addEventListener('click', event => {
+        //     event.stopPropagation();
+        //     if (viewType === 'edit') {
+        //         console.log('Edit agent logic goes here');
+        //     } else if (viewType === 'create') {
+        //         console.log('Create agent logic goes here');
+        //     }
+        // });
     });
 }
-

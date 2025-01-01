@@ -20,23 +20,25 @@ let currentView = 'advertisement_list'; // Track the current view
 
 
 export function showView(view) {
+    if (!views[view]) {
+        console.error(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
+        view = 'advertisement_list'; // Fallback to a default view
+    }
+
+    // Hide all views
     Object.values(views).forEach(v => {
         v.classList.remove('active');
         v.style.display = 'none';
     });
+
+    // Show the target view
     views[view].style.display = 'block';
     setTimeout(() => {
         views[view].classList.add('active');
     }, 10); // Delay to ensure the display change is processed
-    closeNavbar(); // Close the navbar when a new view is shown
 
-    // if (view === 'create') {
-    //     window.scrollTo(0,0)
-        // window.scrollTo({
-        //     top: 0,
-        //     behavior: 'smooth'
-        // });
-    // }
+    // Close the navbar when a new view is shown
+    closeNavbar();
 
     currentView = view; // Update the current view
 

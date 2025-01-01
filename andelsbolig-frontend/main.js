@@ -37,6 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check the initial URL and show the corresponding view
     const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
     // showView(initialView);
-    showView('agent_edit');
+    showView('agent_create');
 });
 
