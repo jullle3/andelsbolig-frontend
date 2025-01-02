@@ -53,7 +53,8 @@ function sendSearchData(append=false) {
         rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
         rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
         postal_number: $("#postal-number").val(),
-        city: $("#city").val()
+        city: $("#city").val(),
+        radius: $("#radius").val()
     })).toString();
 
     // Fetch API to send the data to your backend
@@ -91,7 +92,6 @@ function setupPriceSliders() {
     const slider1 = document.getElementById('price-range-slider');
     noUiSlider.create(slider1, sliderConfig);
     slider1.noUiSlider.on('update', (values) => {
-        // Update DOM elements (example IDs: #min-price / #max-price)
         $('#min-price').text(values[0]);
         $('#max-price').text(values[1]);
     });
@@ -99,7 +99,6 @@ function setupPriceSliders() {
     const slider2 = document.getElementById('price-range-slider-agenteditview');
     noUiSlider.create(slider2, sliderConfig);
     slider2.noUiSlider.on('update', (values) => {
-        // Update DOM elements (example IDs: #min-price-edit / #max-price-edit)
         $('#min-price-edit').text(values[0]);
         $('#max-price-edit').text(values[1]);
     });
@@ -107,7 +106,6 @@ function setupPriceSliders() {
     const slider3 = document.getElementById('price-range-slider-agentcreateview');
     noUiSlider.create(slider3, sliderConfig);
     slider3.noUiSlider.on('update', (values) => {
-        // Update DOM elements (example IDs: #min-price-edit / #max-price-edit)
         $('#min-price-edit').text(values[0]);
         $('#max-price-edit').text(values[1]);
     });
@@ -135,8 +133,6 @@ function setupMonthlyFeeSliders() {
     const monthlyFeeSlider = document.getElementById('monthly-price-range-slider');
     noUiSlider.create(monthlyFeeSlider, monthlyFeeConfig);
     monthlyFeeSlider.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the main slider
-        // Example: #min-monthly-fee and #max-monthly-fee
         $('#min-monthly-fee').text(values[0]);
         $('#max-monthly-fee').text(values[1]);
     });
@@ -145,8 +141,6 @@ function setupMonthlyFeeSliders() {
     const monthlyFeeSliderAgentEdit = document.getElementById('monthly-price-range-slider-agenteditview');
     noUiSlider.create(monthlyFeeSliderAgentEdit, monthlyFeeConfig);
     monthlyFeeSliderAgentEdit.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-monthly-fee-edit and #max-monthly-fee-edit
         $('#min-monthly-fee-edit').text(values[0]);
         $('#max-monthly-fee-edit').text(values[1]);
     });
@@ -155,8 +149,6 @@ function setupMonthlyFeeSliders() {
     const monthlyFeeSliderAgentCreate = document.getElementById('monthly-price-range-slider-agentcreateview');
     noUiSlider.create(monthlyFeeSliderAgentCreate, monthlyFeeConfig);
     monthlyFeeSliderAgentCreate.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-monthly-fee-edit and #max-monthly-fee-edit
         $('#min-monthly-fee-edit').text(values[0]);
         $('#max-monthly-fee-edit').text(values[1]);
     });
@@ -183,8 +175,6 @@ function setupSquareMetersSliders() {
     const squareMetersSlider = document.getElementById('square-meters-range-slider');
     noUiSlider.create(squareMetersSlider, squareMetersConfig);
     squareMetersSlider.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the main slider
-        // Example: #min-square-meters and #max-square-meters
         $('#min-square-meters').text(values[0]);
         $('#max-square-meters').text(values[1]);
     });
@@ -193,8 +183,6 @@ function setupSquareMetersSliders() {
     const squareMetersSliderAgentEdit = document.getElementById('square-meters-range-slider-agenteditview');
     noUiSlider.create(squareMetersSliderAgentEdit, squareMetersConfig);
     squareMetersSliderAgentEdit.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-square-meters-edit and #max-square-meters-edit
         $('#min-square-meters-edit').text(values[0]);
         $('#max-square-meters-edit').text(values[1]);
     });
@@ -203,8 +191,6 @@ function setupSquareMetersSliders() {
     const squareMetersSliderAgentCreate = document.getElementById('square-meters-range-slider-agentcreateview');
     noUiSlider.create(squareMetersSliderAgentCreate, squareMetersConfig);
     squareMetersSliderAgentCreate.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-square-meters-edit and #max-square-meters-edit
         $('#min-square-meters-edit').text(values[0]);
         $('#max-square-meters-edit').text(values[1]);
     });
@@ -231,8 +217,6 @@ function setupRoomsSliders() {
     const roomsSlider = document.getElementById('rooms-range-slider');
     noUiSlider.create(roomsSlider, roomsConfig);
     roomsSlider.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the main slider
-        // Example: #min-rooms and #max-rooms
         $('#min-rooms').text(values[0]);
         $('#max-rooms').text(values[1]);
     });
@@ -241,8 +225,6 @@ function setupRoomsSliders() {
     const roomsSliderAgentEdit = document.getElementById('rooms-range-slider-agenteditview');
     noUiSlider.create(roomsSliderAgentEdit, roomsConfig);
     roomsSliderAgentEdit.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-rooms-edit and #max-rooms-edit
         $('#min-rooms-edit').text(values[0]);
         $('#max-rooms-edit').text(values[1]);
     });
@@ -250,8 +232,6 @@ function setupRoomsSliders() {
     const roomsSliderAgentCreate = document.getElementById('rooms-range-slider-agentcreateview');
     noUiSlider.create(roomsSliderAgentCreate, roomsConfig);
     roomsSliderAgentCreate.noUiSlider.on('update', (values) => {
-        // Update DOM elements for the agent-edit slider
-        // Example: #min-rooms-edit and #max-rooms-edit
         $('#min-rooms-edit').text(values[0]);
         $('#max-rooms-edit').text(values[1]);
     });
@@ -261,15 +241,14 @@ function setupRoomsSliders() {
 /*********************************************************
  * 1. CITY AUTOCOMPLETE
  *********************************************************/
-function setupCityAutocomplete(selector, cityData) {
-    // Example: selector could be "#city" or "#city-agenteditview"
-    $(selector).autocomplete({
+function setupCityAutocomplete(suffix, cityData) {
+    $("#city" + suffix).autocomplete({
         source: cityData,
         delay: 0,
         minLength: 0,
         select: function(event, ui) {
             console.log(ui.item.value);
-            $(selector).val(ui.item.value);
+            $("#city" + suffix).val(ui.item.value);
         }
     }).focus(function() {
         // Trigger the search to show all entries when the field is focused
@@ -280,9 +259,9 @@ function setupCityAutocomplete(selector, cityData) {
 /*********************************************************
  * 2. POSTAL AUTOCOMPLETE
  *********************************************************/
-function setupPostalAutocomplete(selector, postalData) {
+function setupPostalAutocomplete(suffix, postalData) {
     // Example: selector could be "#postal-number" or "#postal-number-agenteditview"
-    $(selector).autocomplete({
+    $("#postal-number" + suffix).autocomplete({
         delay: 0,
         minLength: 0,
         source: function(request, response) {
@@ -294,10 +273,16 @@ function setupPostalAutocomplete(selector, postalData) {
             response(matches);
         },
         select: function(event, ui) {
-            // Only use postal_code part
+            // Split the string "postalcode - cityName"
             const parts = ui.item.value.split(" - ");
-            $(selector).val(parts[0]);
-            return false; // Prevent the widget from updating the input with the full "postal-code - city" string
+
+            // Set the input to the postal code
+            $("#postal-number" + suffix).val(parts[0]);
+            // Also update the radius div with the postal code
+            $("#radius-postalnumber" + suffix).val(parts[0]);
+
+            // Prevent the widget from overwriting the input field value
+            return false;
         }
     }).focus(function() {
         // Trigger the search to show all entries when the field is focused
@@ -305,19 +290,20 @@ function setupPostalAutocomplete(selector, postalData) {
     });
 }
 
+
 function setupAllAutoCompletes() {
     // TODO: i dont like this...
     // Main View
-    setupPostalAutocomplete("#postal-number", postalData);
-    setupCityAutocomplete("#city", cityData);
+    setupPostalAutocomplete("", postalData);
+    setupCityAutocomplete("", cityData);
 
     // Agent Edit View
-    // setupPostalAutocomplete("#postal-number-agenteditview", postalData);
-    setupCityAutocomplete("#city-agenteditview", cityData);
+    setupPostalAutocomplete("-agenteditview", postalData);
+    setupCityAutocomplete("-agenteditview", cityData);
 
     // Agent Edit View
-    setupPostalAutocomplete("#postal-number-agentcreateview", postalData);
-    setupCityAutocomplete("#city-agentcreateview", cityData);
+    setupPostalAutocomplete("-agentcreateview", postalData);
+    setupCityAutocomplete("-agentcreateview", cityData);
 
 }
 
@@ -397,7 +383,7 @@ function showAnnonceagentPopup() {
 }
 
 export function createAnnonceagent(agentId, view) {
-    let cityInput, postalNumber, priceRange, monthlyPriceRange, squareMetersRange, roomsRange, name;
+    let cityInput, postalNumber, priceRange, monthlyPriceRange, squareMetersRange, roomsRange, radius, name;
 
     // Pick values from correct views/sliders
     if (view === 'advertisement_list') {
@@ -407,6 +393,7 @@ export function createAnnonceagent(agentId, view) {
         monthlyPriceRange = $("#monthly-price-range-slider")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
+        radius = $("#radius").val();
         name = null;
      } else if (view === 'agent-create') {
         cityInput = $("#city-agentcreateview").val();
@@ -415,6 +402,7 @@ export function createAnnonceagent(agentId, view) {
         monthlyPriceRange = $("#monthly-price-range-slider-agentcreateview")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider-agentcreateview")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider-agentcreateview")[0].noUiSlider.get();
+        radius = $("#radius-agentcreateview").val();
         name = $("#name-agentcreateview").val();
     } else if (view === 'agent-edit') {
         cityInput = $("#city-agenteditview").val();
@@ -423,6 +411,7 @@ export function createAnnonceagent(agentId, view) {
         monthlyPriceRange = $("#monthly-price-range-slider-agenteditview")[0].noUiSlider.get();
         squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
         roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
+        radius = $("#radius-agenteditview").val();
         name = $("#name-agenteditview").val();
     }
 
@@ -446,6 +435,7 @@ export function createAnnonceagent(agentId, view) {
         square_meters_from: isNaN(squareMetersFrom) ? null : squareMetersFrom,
         square_meters_to: isNaN(squareMetersTo) ? null : squareMetersTo,
         postal_numbers: postalNumber ? [postalNumber] : null,
+        radius: radius ? radius : null,
         cities: cityInput ? [cityInput] : null,
         // Add features or max_distance_km if you have them from other inputs
         features: null,

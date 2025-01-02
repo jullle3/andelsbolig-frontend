@@ -80,6 +80,7 @@ async function getAnnonceagentMatchCount() {
 export function updateAnnonceagent() {
     const cityInput = $("#city-agenteditview").val();
     const postalNumber = $("#postal-number-agenteditview").val();
+    const radius = $("#radius-agenteditview").val();
     const priceRange = $("#price-range-slider-agenteditview")[0].noUiSlider.get();
     const monthlyPriceRange = $("#monthly-price-range-slider-agenteditview")[0].noUiSlider.get();
     const squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
@@ -107,6 +108,7 @@ export function updateAnnonceagent() {
         square_meters_to: isNaN(squareMetersTo) ? null : squareMetersTo,
         cities: cityInput ? [cityInput] : null,
         postal_numbers: postalNumber ? [postalNumber] : null,
+        radius: radius ? radius : null,
         // Add features or max_distance_km if you have them from other inputs
         features: null,
         max_distance_km: null

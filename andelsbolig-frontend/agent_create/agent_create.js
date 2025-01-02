@@ -125,7 +125,7 @@ function generateAdvancedSearchFields(suffix) {
                 <div class="col-4 text-start"><h6 class="mb-0">Værelser</h6></div>
                 <div class="col-8"><div id="rooms-range-slider-${suffix}" class="slider"></div></div>
             </div>
-        </div>
+        </div>      
         <!-- Postal Number -->
         <div class="m-0 p-0 pb-4">
             <div class="row align-items-center">
@@ -142,6 +142,18 @@ function generateAdvancedSearchFields(suffix) {
                 <div class="col-8">
                     <input type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by" />
                 </div>
+            </div>
+        </div>
+         <!-- Radius search -->
+        <div class="m-0 p-0 pb-4">
+            <div class="row align-items-center">
+                <div class="col-4 text-start"><h6 class="mb-0">Radius søgning</h6></div>
+                <div class="col-2">
+                    <input type="text" id="radius-${suffix}" class="form-control">
+                    </div>
+                <div class="col-2"><h6 class="mb-0">km fra</h6></div>
+                <div class="col-4">
+                    <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr"></div>
             </div>
         </div>
 
@@ -167,15 +179,5 @@ export function insertSharedComponents() {
 
         container.innerHTML = generateSharedComponents(agentType);
 
-        // Attach specific event listeners
-        // const buttonId = viewType === 'edit' ? 'editAnnonceagentBtn' : 'createAnnonceagentBtn';
-        // document.getElementById(buttonId).addEventListener('click', event => {
-        //     event.stopPropagation();
-        //     if (viewType === 'edit') {
-        //         console.log('Edit agent logic goes here');
-        //     } else if (viewType === 'create') {
-        //         console.log('Create agent logic goes here');
-        //     }
-        // });
     });
 }
