@@ -383,7 +383,7 @@ function showAnnonceagentPopup() {
 }
 
 export function createAnnonceagent(agentId, view) {
-    let cityInput, postalNumber, priceRange, monthlyPriceRange, squareMetersRange, roomsRange, radius, name;
+    let cityInput, postalNumber, priceRange, monthlyPriceRange, squareMetersRange, roomsRange, radius, name, active;
 
     // Pick values from correct views/sliders
     if (view === 'advertisement_list') {
@@ -395,6 +395,7 @@ export function createAnnonceagent(agentId, view) {
         roomsRange = $("#rooms-range-slider")[0].noUiSlider.get();
         radius = $("#radius").val();
         name = null;
+        active = true;
      } else if (view === 'agent-create') {
         cityInput = $("#city-agentcreateview").val();
         postalNumber = $("#postal-number-agentcreateview").val();
@@ -404,6 +405,7 @@ export function createAnnonceagent(agentId, view) {
         roomsRange = $("#rooms-range-slider-agentcreateview")[0].noUiSlider.get();
         radius = $("#radius-agentcreateview").val();
         name = $("#name-agentcreateview").val();
+        active = $("#active-agentcreateview").is(":checked");
     } else if (view === 'agent-edit') {
         cityInput = $("#city-agenteditview").val();
         postalNumber = $("#postal-number-agenteditview").val();
@@ -413,6 +415,7 @@ export function createAnnonceagent(agentId, view) {
         roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
         radius = $("#radius-agenteditview").val();
         name = $("#name-agenteditview").val();
+        active = $("#active-agenteditview").is(":checked");
     }
 
     const priceFrom = parseFormattedInteger(priceRange[0]);
@@ -445,7 +448,7 @@ export function createAnnonceagent(agentId, view) {
     // Construct the overall agent data
     const agentData = {
         notifications: ["sms", "email"],
-        active: true,
+        active: active,
         criteria: criteria,
         name: name,
     };

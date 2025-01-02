@@ -86,6 +86,7 @@ export function updateAnnonceagent() {
     const squareMetersRange = $("#square-meters-range-slider-agenteditview")[0].noUiSlider.get();
     const roomsRange = $("#rooms-range-slider-agenteditview")[0].noUiSlider.get();
     const name = $("#name-agenteditview").val();
+    let active = $("#active-agenteditview").is(":checked");
 
     const priceFrom = parseFormattedInteger(priceRange[0]);
     const priceTo = parseFormattedInteger(priceRange[1]);
@@ -114,6 +115,7 @@ export function updateAnnonceagent() {
         max_distance_km: null
     };
 
+
     // Construct the overall agent data
     const agentData = {
         _id: activeAgent._id,
@@ -121,9 +123,9 @@ export function updateAnnonceagent() {
         updated: activeAgent.updated,
         created_by: activeAgent.created_by,
         notifications: activeAgent.notifications,
-        active: activeAgent.active,
         criteria: criteria,
-        name: name
+        name: name,
+        active: active,
     };
 
     authFetch("/agent", {

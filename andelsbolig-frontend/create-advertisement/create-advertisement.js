@@ -1,11 +1,19 @@
 import {authFetch} from "../auth/auth.js";
-import {decodeJwt, displayErrorMessage} from "../utils.js";
+import {
+    decodeJwt,
+    displayErrorMessage,
+    displaySuccessMessage,
+    fetchAndDisplayAdvertisements,
+    showConfirmationModal
+} from "../utils.js";
+import {showView} from "../views/viewManager.js";
 
 let datafordeler_id = null;
 
 
 export async function setupCreateAdvertisementView() {
     addressIntegration();
+    setupDeleteAdvertisementConfirmation();
     const createAdvertisementView = document.getElementById('create-view');
     createAdvertisementView.style.display = 'none'; // Hide the view by default
 
@@ -79,8 +87,11 @@ export async function setupCreateAdvertisementView() {
         } else {
             // Show some success animation
         }
-        showView('advertisement_list');
+
+        displaySuccessMessage("Ændringer godkendt")
         await populateCreateAdvertisementForm();
+        await fetchAndDisplayAdvertisements();
+        showView('advertisement_list');
     });
 
 }
@@ -123,6 +134,11 @@ export async function populateCreateAdvertisementForm() {
             const imgElement = createImageElement(img);
             imagePreview.appendChild(imgElement);
         });
+
+        // SHOW the button & assign the relevant ID
+        const editBtn = document.getElementById('editAdvertisementBtn');
+        editBtn.classList.remove('d-none'); // unhide the button
+        editBtn.dataset.advertisementId = advertisement._id; // store the ID or any other field
     }
 }
 
@@ -277,3 +293,29 @@ function addressIntegration() {
         }
     });
 }
+
+
+function setupDeleteAdvertisementConfirmation() {
+    $('#editAdvertisementBtn').on('click', function() {
+        const agentId = $(this).data('advertisement-id');
+        showConfirmationModal(
+            'Bekræft permanent sletning',
+            'Vil du slette denne annonce permanent? Dette kan ikke fortrydes! Du kan efterfølgende oprette en ny.',
+            () => deleteAdvertisement(agentId)
+        );
+    });
+}
+
+async function deleteAdvertisement(advertisementId) {
+    const response = await authFetch(`/advertisement/${advertisementId}`, { method: 'DELETE' });
+    if (!response.ok) {
+        displayErrorMessage("Der gik noget galt");
+        return
+    }
+    displaySuccessMessage('Annonce slettet, du kan nu oprette en ny');
+    await fetchAndDisplayAdvertisements();
+    showView('advertisement_list');
+}
+
+
+

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     SetupAgentView();
     SetupAgentEditView();
     SetupAgentCreateView();
-    // showView('agent_create');
+    showView('create');
 
     // Call on page load
     fetchAndDisplayAdvertisements();

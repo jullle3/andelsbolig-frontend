@@ -72,6 +72,7 @@ async function editAgent(agentId) {
     $("#postal-number-agenteditview").val((agent.criteria.postal_numbers && agent.criteria.postal_numbers.length > 0) ? agent.criteria.postal_numbers[0] : '');
     $("#city-agenteditview").val((agent.criteria.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
     $("#name-agenteditview").val(agent.name);
+    $("#active-agenteditview").prop('checked', agent.active);
 
     showView("agent_edit")
 }

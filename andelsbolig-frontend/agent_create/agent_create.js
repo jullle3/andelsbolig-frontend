@@ -166,6 +166,13 @@ function generateAdvancedSearchFields(suffix) {
                 </div>
             </div>
         </div>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <span>Aktiv</span>
+            <div class="form-check form-switch">
+                <input class="form-check-input profile-patch-operation" type="checkbox" id="active-${suffix}" checked>
+            </div>
+        </div>
 
     `;
 }
