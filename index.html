@@ -330,6 +330,55 @@
                             <span class="input-group-text">%</span>
                         </div>
 
+
+                        <div class="mt-2 text-secondary">
+                            <label for="energimaerke" class="form-label">Energimærkning</label>
+                            <select
+                                    id="energimaerke"
+                                    name="energimaerke"
+                                    class="form-select"
+                            >
+                                <option value="" disabled selected></option>
+                                <!-- A 2020 (Darkest Green) -->
+                                <option value="A2020" style="background-color: #007800; color: #fff;">
+                                    A2020
+                                </option>
+                                <!-- A 2015 (Darker Green) -->
+                                <option value="A2015" style="background-color: #239a3b; color: #fff;">
+                                    A2015
+                                </option>
+                                <!-- A 2010 (Lighter Green) -->
+                                <option value="A2010" style="background-color: #5bbf47; color: #fff;">
+                                    A2010
+                                </option>
+                                <!-- B (Greenish) -->
+                                <option value="B" style="background-color: #b7d75d; color: #000;">
+                                    B
+                                </option>
+                                <!-- C (Yellow) -->
+                                <option value="C" style="background-color: #f2d71a; color: #000;">
+                                    C
+                                </option>
+                                <!-- D (Orange) -->
+                                <option value="D" style="background-color: #f2a127; color: #000;">
+                                    D
+                                </option>
+                                <!-- E (Reddish-Orange) -->
+                                <option value="E" style="background-color: #e86726; color: #fff;">
+                                    E
+                                </option>
+                                <!-- F (Red) -->
+                                <option value="F" style="background-color: #b52424; color: #fff;">
+                                    F
+                                </option>
+                                <!-- G (Purple) -->
+                                <option value="G" style="background-color: #68386c; color: #fff;">
+                                    G
+                                </option>
+                            </select>
+                        </div>
+
+
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check form-switch mt-2">
                                 <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
@@ -350,10 +399,6 @@
                             <input class="form-control" type="file" id="create-images" multiple>
                             <div id="imagePreview"></div>
                         </div>
-
-
-
-
 
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">

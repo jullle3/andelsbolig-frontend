@@ -44,6 +44,7 @@ export async function setupCreateAdvertisementView() {
         }
     });
 
+    // TODO: Handle new fields
     // Create advertisement form submission
     document.getElementById('createForm').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -61,7 +62,6 @@ export async function setupCreateAdvertisementView() {
 
         const formattedPrice = formatNumber(priceInput);
         const formattedMonthlyFee = formatNumber(monthlyFeeInput);
-
         const newAdvertisement = {
             title: formData.get('title'),
             description: formData.get('description'),
@@ -97,6 +97,8 @@ export async function setupCreateAdvertisementView() {
 }
 
 
+
+// TODO: Handle new fields
 export async function populateCreateAdvertisementForm() {
     /**
      * Populates the create advertisement form with existing advertisement data if available.
