@@ -300,7 +300,7 @@ function setupDeleteAdvertisementConfirmation() {
         const agentId = $(this).data('advertisement-id');
         showConfirmationModal(
             'Bekræft permanent sletning',
-            'Vil du slette denne annonce permanent? Dette kan ikke fortrydes! Du kan efterfølgende oprette en ny.',
+            'Vil du slette denne annonce permanent? Dette kan ikke fortrydes. Du kan efterfølgende oprette en ny.',
             () => deleteAdvertisement(agentId)
         );
     });

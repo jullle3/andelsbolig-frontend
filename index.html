@@ -259,6 +259,8 @@
 
 
     <div id="detail-view" class="view"></div>
+
+
     <div id="create-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -272,13 +274,22 @@
                         <label class="text-secondary mt-2" for="description">Beskrivelse</label>
                         <textarea class="form-control" name="description" id="description" rows="3"></textarea>
 
-                        <label class="text-secondary mt-2" for="display_price">Pris</label>
+                        <label class="text-secondary mt-2" for="display_price">Pris / Andelskrone</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="display_price" name="display_price" required
                                    oninput="formatNumber(this, 'price');">
                             <div class="input-group-text">kr</div>
                             <input type="hidden" id="price" name="price">
                         </div>
+
+                        <label class="text-secondary mt-2" for="display_improvements_price">Hvor meget udgør forbedringer?</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="display_improvements_price" name="display_improvements_price" required
+                                   oninput="formatNumber(this, 'price');">
+                            <div class="input-group-text">kr</div>
+                            <input type="hidden" id="improvements" name="improvements">
+                        </div>
+
 
                         <label class="text-secondary mt-2" for="display_monthly_fee">Månedlig ydelse</label>
                         <div class="input-group">
@@ -290,7 +301,7 @@
 
                         <label class="text-secondary mt-2" for="square_meters">Størrelse</label>
                         <div class="input-group">
-                            <input class="form-control" id="square_meters" name="square_meters" required>
+                            <input class="form-control" type="number" id="square_meters" name="square_meters" required>
                             <span class="input-group-text">m²</span>
                         </div>
 
@@ -308,9 +319,30 @@
                         </div>
 
 
-                        <div class="form-check form-switch mt-2">
-                            <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
-                            <label class="form-check-label text-secondary " for="located_at_top">Øverste etage</label>
+                        <label class="text-secondary mt-3" for="building_year">Byggeår for ejendommen</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number"  id="building_year" name="building_year" min=1600 max="2030">
+                        </div>
+
+                        <label class="text-secondary mt-2" for="debt_factor">Friværdi i ejendommen</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" id="debt_factor" name="debt_factor" min="0" max="100">
+                            <span class="input-group-text">%</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
+                                <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
+                            </div>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="balcony" name="balcony">
+                                <label class="form-check-label text-secondary" for="balcony">Altan</label>
+                            </div>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="elevator" name="elevator">
+                                <label class="form-check-label text-secondary" for="elevator">Elevator</label>
+                            </div>
                         </div>
 
                         <div class="mt-2">
@@ -318,6 +350,10 @@
                             <input class="form-control" type="file" id="create-images" multiple>
                             <div id="imagePreview"></div>
                         </div>
+
+
+
+
 
                         <div class="row justify-content-center">
                             <div class="col-auto w-100">

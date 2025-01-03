@@ -20,7 +20,7 @@ export function SetupHeader() {
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hej! Log ind her</a>
           <ul class="dropdown-menu dropdown-content" aria-labelledby="navbar-name">
-            <li><a class="dropdown-item" href="#" data-view="profile">My Profile</a></li>
+            <li><a class="dropdown-item" href="#" data-view="profile">Profil</a></li>
             <li><a class="dropdown-item" href="#" id="logoutLink">Logout</a></li>
             <li><a class="dropdown-item" href="#" data-view="login">Login</a></li>
             <li><a class="dropdown-item" href="#" data-view="register">Opret Bruger</a></li>
