@@ -523,6 +523,44 @@
             </div>
         </div>
     </div>
+
+    <div id="seller-profile-view" class="view">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div style="max-width: 500px">
+
+                    <!-- User Image -->
+                    <div class="text-center mb-4">
+                        <img
+                                src="pics/user_stock.png"
+                                class="rounded-circle"
+                                alt="User Image"
+                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%"
+                        >
+                    </div>
+
+                    <h1 id="seller-fullNameNavbar-profile"></h1>
+                    <!-- Readonly form -->
+                    <form class="read-only-form" id="sellerProfileFormReadonly" novalidate>
+                        <label class="text-secondary mt-2" for="seller-email-profile">Email</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="seller-email-profile" name="email" readonly>
+                        </div>
+
+                        <label class="text-secondary mt-2" for="seller-phone-profile">Telefon</label>
+                        <div class="input-group">
+                            <input type="tel" class="form-control" id="seller-phone-profile" name="phone" readonly>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="payment-view2" class="view">
         <div class="container">
             <stripe-pricing-table

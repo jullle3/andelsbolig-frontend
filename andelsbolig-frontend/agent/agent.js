@@ -5,7 +5,11 @@ import {activeAgent} from "../agent_edit/agent_edit.js";
 
 export async function SetupAgentView() {
     setupDeleteConfirmation();
+}
+
+export async function loadAgentView() {
     loadAgents()
+    showView("agent")
 }
 
 export async function loadAgents() {
@@ -123,3 +127,4 @@ function deleteAgent(agentId) {
 
 
 window.editAgent = editAgent
+window.loadAgentView = loadAgentView

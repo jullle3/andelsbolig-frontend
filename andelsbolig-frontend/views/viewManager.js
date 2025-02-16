@@ -1,3 +1,4 @@
+import {loadAgentView} from "../agent/agent.js";
 
 // Setup click events for all views
 const views = {
@@ -10,6 +11,7 @@ const views = {
     agent_edit: document.getElementById('agent-edit-view'),
     register: document.getElementById('register-view'),
     profile: document.getElementById('profile-view'),
+    seller_profile: document.getElementById('seller-profile-view'),
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment-view2'),
     faq: document.getElementById('faq-view'),
@@ -62,6 +64,8 @@ export function setupViews() {
             const viewName = this.getAttribute('data-view');
             if (viewName === 'advertisement_list' && currentView === 'advertisement_list') {
                 scrollDownToHideNavbar(); // Scroll down if already on the advertisement_list view
+            } else if (viewName === 'agent') {
+                loadAgentView()
             } else {
                 showView(viewName); // Call the function to update the view
             }

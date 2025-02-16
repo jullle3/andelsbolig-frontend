@@ -1,13 +1,14 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
+import {loadSellerProfileView} from "../seller_profile/profile.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
     modalImage.src = src; // Set the source of the modal image to the source of the clicked image
 }
 
-export async function displayAdvertisementDetail(advertisement_id) {
+export async function loadAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
     const response = await authFetch(`/advertisement/${advertisement_id}`);
     if (!response.ok) {
@@ -16,11 +17,15 @@ export async function displayAdvertisementDetail(advertisement_id) {
         return;
     }
 
-
+    let isAdvertisementCreatedByUser;
     const advertisement = await response.json();
     const detail_view = document.getElementById('detail-view');
     const decodedJwt = decodeJwt();
-    const isAdvertisementCreatedByUser = advertisement.created_by === decodedJwt.sub;
+    if (decodedJwt === null) {
+        isAdvertisementCreatedByUser = false;
+    } else {
+        isAdvertisementCreatedByUser = advertisement.created_by === decodedJwt.sub;
+    }
 
     // Start of the image carousel
     // tmp disable
@@ -128,10 +133,20 @@ export async function displayAdvertisementDetail(advertisement_id) {
             ${isAdvertisementCreatedByUser ? `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-                        <button class="mt-4 btn action-button w-100 text-white p-2 " onclick="showView('create')">Gå til redigering</button>
+                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('create')">
+                            Gå til redigering
+                        </button>
                     </div>
                 </div>
-        ` : ''}        
+            ` : `
+                <div class="row justify-content-center">
+                    <div class="col-auto w-100">
+                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="loadSellerProfileView('${advertisement.created_by}')">
+                            Kontakt sælger
+                        </button>
+                    </div>
+                </div>
+            `}
 
         </div>
     </div>
@@ -142,6 +157,6 @@ export async function displayAdvertisementDetail(advertisement_id) {
     showView('detail');
 }
 
-window.displayAdvertisementDetail = displayAdvertisementDetail;
+window.loadAdvertisementDetail = loadAdvertisementDetail;
 window.setFullImageSrc = setFullImageSrc;
 
