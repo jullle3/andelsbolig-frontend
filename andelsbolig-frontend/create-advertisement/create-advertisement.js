@@ -14,7 +14,7 @@ let datafordeler_id = null;
 export async function setupCreateAdvertisementView() {
     addressIntegration();
     setupDeleteAdvertisementConfirmation();
-    const createAdvertisementView = document.getElementById('create-view');
+    const createAdvertisementView = document.getElementById('create');
     createAdvertisementView.style.display = 'none'; // Hide the view by default
 
     // Handle image uploads

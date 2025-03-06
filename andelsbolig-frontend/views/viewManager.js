@@ -6,7 +6,7 @@ const views = {
     advertisement_list: document.getElementById('advertisement_list-view'),
     detail: document.getElementById('detail-view'),
     login: document.getElementById('login-view'),
-    create: document.getElementById('create-view'),
+    create: document.getElementById('create'),
     agent: document.getElementById('agent-view'),
     agent_create: document.getElementById('agent-create-view'),
     agent_edit: document.getElementById('agent-edit-view'),
