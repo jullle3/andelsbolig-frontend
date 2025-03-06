@@ -139,6 +139,9 @@ export function showConfirmationModal(title, message, onConfirm, confirmButtonCl
     $('#genericConfirmationModal').modal('show');
 }
 
+export function isLoggedIn() {
+    return localStorage.getItem('jwt') !== null;
+}
 
 
 window.formatNumber = formatNumber;

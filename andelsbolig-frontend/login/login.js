@@ -1,5 +1,5 @@
 import {authFetch} from "../auth/auth.js";
-import {showView} from "../views/viewManager.js";
+import {showView, viewAfterLogin} from "../views/viewManager.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 import {setupProfileView} from "../profile/profile.js";
 
@@ -63,6 +63,40 @@ export function setupLoginView() {
             }
         });
     });
+
+
+
+    // TODO This should replace existing login
+    // Login modal
+    document.getElementById('loginModalSubmit').addEventListener('click', async () => {
+        const email = document.getElementById('modal-login-email').value;
+        const password = document.getElementById('modal-login-password').value;
+
+        handleLogin(email, password);
+    });
+}
+
+async function handleLogin(email, password) {
+    const response = await authFetch('/login', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+
+    if (response.ok) {
+        const result = await response.json();
+        updateJWT(result.jwt);
+        setupProfileView();
+        $('#loginModal').modal('hide');
+        if (viewAfterLogin) {
+            showView(viewAfterLogin);
+            viewAfterLogin = null;
+        } else {
+            showView('advertisement_list');
+        }
+    } else {
+        displayErrorMessage('Login mislykkedes. Tjek dine oplysninger.');
+    }
 }
 
 export function updateJWT(jwt) {

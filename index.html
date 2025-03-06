@@ -483,6 +483,8 @@
             </div>
         </div>
     </div>
+
+
     <div id="profile-view" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -677,6 +679,36 @@
     </div>
 
 </div>
+
+
+<!--Modals-->
+<!-- Login Modal/Popup -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Log ind på din konto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalLoginForm">
+                    <label class="text-secondary" for="modal-login-email">Email</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="modal-login-email" required>
+                    </div>
+                    <label class="text-secondary mt-2" for="modal-login-password">Adgangskode</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="modal-login-password" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annullér</button>
+                <button type="button" class="btn action-button text-white" id="loginModalSubmit">Log ind</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script type="module" src="andelsbolig-frontend/main.js"></script>

@@ -1,4 +1,5 @@
 import {loadAgentView} from "../agent/agent.js";
+import {displayErrorMessage, isLoggedIn} from "../utils.js";
 
 // Setup click events for all views
 const views = {
@@ -18,36 +19,45 @@ const views = {
     map: document.getElementById('map-view'),
 };
 
-let currentView = 'advertisement_list'; // Track the current view
+// Starting view
+let currentView = 'advertisement_list';
+// Store requested view if not logged in
+export let viewAfterLogin = null;
 
+// Add the views that require login here
+// const protectedViews = ['create', 'agent', 'agent_create', 'agent_edit', 'profile'];
+const protectedViews = ['create'];
 
 export function showView(view) {
-    if (!views[view]) {
-        console.error(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
-        view = 'advertisement_list'; // Fallback to a default view
+    if (protectedView(view) && !isLoggedIn()) {
+        displayLoginModal(view)
+        return
     }
 
-    // Hide all views
+    if (!views[view]) {
+        console.error(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
+        view = 'advertisement_list';
+    }
+
     Object.values(views).forEach(v => {
         v.classList.remove('active');
         v.style.display = 'none';
     });
 
-    // Show the target view
     views[view].style.display = 'block';
-    setTimeout(() => {
-        views[view].classList.add('active');
-    }, 10); // Delay to ensure the display change is processed
+    setTimeout(() => views[view].classList.add('active'), 10);
 
-    // Close the navbar when a new view is shown
     closeNavbar();
+    currentView = view;
 
-    currentView = view; // Update the current view
-
-    // Push the new state to the history stack
     history.pushState({ view: view }, '', `#${view}`);
 }
 
+function displayLoginModal(requestedView) {
+    viewAfterLogin = requestedView;  // Remember the original view
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+}
 
 export function setupViews() {
     const clickableElements = document.querySelectorAll('[data-view]');
@@ -72,6 +82,11 @@ export function setupViews() {
         });
     });
 }
+
+function protectedView(viewName) {
+    return protectedViews.includes(viewName);
+}
+
 
 function closeNavbar() {
     const navbarCollapse = document.querySelector('.navbar-collapse');
