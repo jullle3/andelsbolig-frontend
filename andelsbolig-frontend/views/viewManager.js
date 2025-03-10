@@ -3,32 +3,33 @@ import {displayErrorMessage, isLoggedIn} from "../utils.js";
 
 // Setup click events for all views
 const views = {
-    advertisement_list: document.getElementById('advertisement_list-view'),
-    detail: document.getElementById('detail-view'),
-    login: document.getElementById('login-view'),
+    advertisement_list: document.getElementById('advertisement_list'),
+    detail: document.getElementById('detail'),
+    login: document.getElementById('login'),
     create: document.getElementById('create'),
-    agent: document.getElementById('agent-view'),
-    agent_create: document.getElementById('agent-create-view'),
-    agent_edit: document.getElementById('agent-edit-view'),
-    register: document.getElementById('register-view'),
-    profile: document.getElementById('profile-view'),
-    seller_profile: document.getElementById('seller-profile-view'),
+    agent: document.getElementById('agent'),
+    agent_create: document.getElementById('agent_create'),
+    agent_edit: document.getElementById('agent_edit'),
+    register: document.getElementById('register'),
+    profile: document.getElementById('profile'),
+    seller_profile: document.getElementById('seller_profile'),
     // payment1: document.getElementById('payment-view1'),
-    payment2: document.getElementById('payment-view2'),
-    faq: document.getElementById('faq-view'),
-    map: document.getElementById('map-view'),
+    payment2: document.getElementById('payment2'),
+    faq: document.getElementById('faq'),
+    map: document.getElementById('map'),
 };
 
 // Starting view
 let currentView = 'advertisement_list';
+// All views that require login
+const protectedViews = ["agent"];
 // Store requested view if not logged in
 export let viewAfterLogin = null;
 
-// Add the views that require login here
-// const protectedViews = ['create', 'agent', 'agent_create', 'agent_edit', 'profile'];
-const protectedViews = ['create'];
 
+// TODO: Endpoints that need to load config upon requests should be called from here
 export function showView(view) {
+    // Check user is logged in
     if (protectedView(view) && !isLoggedIn()) {
         displayLoginModal(view)
         return

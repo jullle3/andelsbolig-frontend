@@ -19,7 +19,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
 
     let isAdvertisementCreatedByUser;
     const advertisement = await response.json();
-    const detail_view = document.getElementById('detail-view');
+    const detail_view = document.getElementById('detail');
     const decodedJwt = decodeJwt();
     if (decodedJwt === null) {
         isAdvertisementCreatedByUser = false;

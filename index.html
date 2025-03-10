@@ -103,7 +103,7 @@
 
 
 
-    <div id="advertisement_list-view" class="view active p-3">
+    <div id="advertisement_list" class="view active p-3">
         <!-- Search bar -->
         <div class="container mt-4 pb-2">
             <div class="row justify-content-center">
@@ -258,7 +258,7 @@
     </div>
 
 
-    <div id="detail-view" class="view"></div>
+    <div id="detail" class="view"></div>
 
 
     <div id="create" class="view">
@@ -418,23 +418,23 @@
         </div>
     </div>
 
-    <div id="register-view" class="view">
+    <div id="register" class="view">
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Opret Din Bruger</h1>
                     <form id="registerForm" novalidate>
-                        <label class="text-secondary mt-2" for="email">Email</label>
+                        <label class="text-secondary mt-2" for="email">Email*</label>
                         <div class="input-group">
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
 
-                        <label class="text-secondary mt-2" for="password">Adgangskode</label>
+                        <label class="text-secondary mt-2" for="password">Adgangskode*</label>
                         <div class="input-group">
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
 
-                        <label class="text-secondary mt-2" for="full_name">Fulde navn</label>
+                        <label class="text-secondary mt-2" for="full_name">Fulde navn*</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="full_name" name="full_name" required>
                         </div>
@@ -456,7 +456,8 @@
             </div>
         </div>
     </div>
-    <div id="login-view" class="view">
+
+    <div id="login" class="view">
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
@@ -485,7 +486,7 @@
     </div>
 
 
-    <div id="profile-view" class="view">
+    <div id="profile" class="view">
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
@@ -526,7 +527,7 @@
         </div>
     </div>
 
-    <div id="seller-profile-view" class="view">
+    <div id="seller_profile" class="view">
         <div class="container">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
@@ -563,7 +564,7 @@
 
 
 
-    <div id="payment-view2" class="view">
+    <div id="payment2" class="view">
         <div class="container">
             <stripe-pricing-table
                     id="stripePricingTable"
@@ -572,7 +573,7 @@
             </stripe-pricing-table>
         </div>
     </div>
-    <div id="faq-view" class="view">
+    <div id="faq" class="view">
         <div class="accordion w-100" id="basicAccordion">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -621,7 +622,7 @@
             </div>
         </div>
     </div>
-    <div id="map-view" class="view">
+    <div id="map" class="view">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 p-0">
@@ -631,7 +632,7 @@
         </div>
     </div>
     <!--  Agent View  -->
-    <div class="view container mt-4" id="agent-view">
+    <div class="view container mt-4" id="agent">
         <!-- Title and Button on one line (flex) -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">Annonceagenter</h3>
@@ -657,7 +658,7 @@
 
 
     <!-- Agent edit view -->
-    <div class="view container mt-4" id="agent-edit-view" data-agent-type="edit">
+    <div class="view container mt-4" id="agent_edit" data-agent-type="edit">
         <div class="d-flex align-items-center">
             <button id="back-arrow-edit-view" class="btn btn-light me-2" aria-label="Go Back">
                 <i class="bi bi-arrow-left"></i>
@@ -668,7 +669,7 @@
     </div>
 
     <!-- Agent create view -->
-    <div class="view container mt-4" id="agent-create-view" data-agent-type="create">
+    <div class="view container mt-4" id="agent_create" data-agent-type="create">
         <div class="d-flex align-items-center">
             <button id="back-arrow-create-view" class="btn btn-light me-2" aria-label="Go Back">
                 <i class="bi bi-arrow-left"></i>
@@ -691,7 +692,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="modalLoginForm">
+                <form id="loginModalForm" novalidate>
                     <label class="text-secondary" for="modal-login-email">Email</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="modal-login-email" required>
@@ -700,10 +701,15 @@
                     <div class="input-group">
                         <input type="password" class="form-control" id="modal-login-password" required>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annullér</button>
-                <button type="button" class="btn action-button text-white" id="loginModalSubmit">Log ind</button>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-auto w-100">
+                            <button type="button" class="btn action-button w-100 text-white p-2" id="loginModalSubmit">Log ind</button>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="text-secondary">Har du ikke en konto? <a href="#" data-bs-dismiss="modal" onclick="showView('register')">Opret en her</a></p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

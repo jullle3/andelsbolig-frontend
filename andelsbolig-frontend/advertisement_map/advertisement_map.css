@@ -6,7 +6,7 @@
 }
 
 
-/* Make the map div fill the entire parent (map-view) */
+/* Make the map div fill the entire parent (map) */
 #map {
     height: 1000px;
     /*height: 100%;*/

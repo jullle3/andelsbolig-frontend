@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     SetupAgentView();
     SetupAgentEditView();
     SetupAgentCreateView();
-    // showView('seller_profile');
+    showView('agent');
+
 
     // Call on page load
     fetchAndDisplayAdvertisements();
