@@ -1,45 +1,10 @@
 import {authFetch} from "../auth/auth.js";
-import {showView, viewAfterLogin} from "../views/viewManager.js";
+import {resetViewAfterLogin, showView, viewAfterLogin} from "../views/viewManager.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 import {setupProfileView} from "../profile/profile.js";
+import {updateNavbar} from "../header/header.js";
 
 export function setupLoginView() {
-    const loginForm = document.getElementById('loginForm');
-
-    document.getElementById('loginForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const formData = new FormData(loginForm);
-        const userData = {
-            email: formData.get('email'),
-            password: formData.get('password'),
-        };
-
-        const response = await authFetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            updateJWT(result.jwt);
-            // alert('User login success');
-            loginForm.reset();
-            showView('advertisement_list');
-            // To update the website with the user's information
-            setupProfileView();
-
-        }
-        else {
-            const errorResponse = await response.json(); // Parse the error response
-            const errorMessage = errorResponse.detail || 'Failed to login user';
-            displayErrorMessage(errorMessage);
-        }
-    });
-
-
     // Add event listener to toggle password visibility for all password
     const passwordInputs = document.querySelectorAll('input[type="password"]');
 
@@ -64,15 +29,66 @@ export function setupLoginView() {
         });
     });
 
-
-
-    // TODO This should replace existing login
-    // Login modal
     document.getElementById('loginModalSubmit').addEventListener('click', async () => {
         const email = document.getElementById('modal-login-email').value;
         const password = document.getElementById('modal-login-password').value;
 
         handleLogin(email, password);
+    });
+
+
+    document.getElementById('modalRegisterForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const userData = {
+            email : document.getElementById('modal-register-email').value,
+            password : document.getElementById('modal-register-password').value,
+            full_name : document.getElementById('modal-register-fullname').value,
+        };
+
+        // Optional param
+        const phone = document.getElementById('modal-register-phone').value.trim();
+        if (phone) userData.phone_number = phone;
+
+        const response = await authFetch('/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        const response_json = await response.json();
+
+        if (!response.ok) {
+            console.log(response_json)
+            displayErrorMessage(response_json.detail)
+            return
+        }
+
+        updateJWT(response_json.jwt);
+        registerForm.reset();
+        showView('advertisement_list');
+    });
+
+
+    // Smooth transition from login to register modal
+    document.getElementById('showRegisterModalLink').addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const loginModalEl = document.getElementById('loginModal');
+        const registerModalEl = document.getElementById('registerModal');
+
+        const loginModal = bootstrap.Modal.getInstance(loginModalEl) || new bootstrap.Modal(loginModalEl);
+        const registerModal = new bootstrap.Modal(registerModalEl);
+
+        // Hide login modal first
+        loginModalEl.addEventListener('hidden.bs.modal', function onHidden() {
+            loginModalEl.removeEventListener('hidden.bs.modal', onHidden);
+            registerModal.show();
+        });
+
+        loginModalEl.addEventListener('shown.bs.modal', () => loginModal.hide(), {once: true});
+        loginModal.hide();
+        registerModal.show();
     });
 }
 
@@ -86,14 +102,17 @@ async function handleLogin(email, password) {
     if (response.ok) {
         const result = await response.json();
         updateJWT(result.jwt);
+        // TODO: setupProfileView() skal rykkes til showView()
         setupProfileView();
-        $('#loginModal').modal('hide');
-        if (viewAfterLogin) {
-            showView(viewAfterLogin);
-            viewAfterLogin = null;
-        } else {
-            showView('advertisement_list');
-        }
+        updateNavbar()
+
+        // Close the login modal after successful login
+        const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+        loginModal.hide();
+
+        showView(viewAfterLogin);
+        resetViewAfterLogin();
+
     } else {
         displayErrorMessage('Login mislykkedes. Tjek dine oplysninger.');
     }

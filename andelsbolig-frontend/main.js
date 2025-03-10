@@ -2,7 +2,6 @@ import {fetchAndDisplayAdvertisements, setupUtils} from "./utils.js";
 import {setupViews, showView} from "./views/viewManager.js";
 import {setupProfileView} from "./profile/profile.js";
 import {populateCreateAdvertisementForm, setupCreateAdvertisementView} from "./create-advertisement/create-advertisement.js";
-import {setupRegisterView} from "./create-user/create-user.js";
 import {setupLogoutView} from "./logout/logout.js";
 import {setupLoginView} from "./login/login.js";
 import {SetupHeader} from "./header/header.js";
@@ -23,14 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCreateAdvertisementView();
     populateCreateAdvertisementForm();
 
-    setupRegisterView();
     setupLoginView();
     setupLogoutView();
     setupMapView();
     SetupAgentView();
     SetupAgentEditView();
     SetupAgentCreateView();
-    showView('agent');
+    showView('advertisement_list');
 
 
     // Call on page load

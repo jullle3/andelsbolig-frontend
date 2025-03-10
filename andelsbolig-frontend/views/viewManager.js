@@ -4,13 +4,13 @@ import {displayErrorMessage, isLoggedIn} from "../utils.js";
 // Setup click events for all views
 const views = {
     advertisement_list: document.getElementById('advertisement_list'),
+    // Hack to redirect users to that page when completing login
+    login: document.getElementById('advertisement_list'),
     detail: document.getElementById('detail'),
-    login: document.getElementById('login'),
     create: document.getElementById('create'),
     agent: document.getElementById('agent'),
     agent_create: document.getElementById('agent_create'),
     agent_edit: document.getElementById('agent_edit'),
-    register: document.getElementById('register'),
     profile: document.getElementById('profile'),
     seller_profile: document.getElementById('seller_profile'),
     // payment1: document.getElementById('payment-view1'),
@@ -22,10 +22,13 @@ const views = {
 // Starting view
 let currentView = 'advertisement_list';
 // All views that require login
-const protectedViews = ["agent"];
+const protectedViews = ["agent", "login", "create"];
 // Store requested view if not logged in
 export let viewAfterLogin = null;
 
+export function resetViewAfterLogin() {
+    viewAfterLogin = null;
+}
 
 // TODO: Endpoints that need to load config upon requests should be called from here
 export function showView(view) {
@@ -78,7 +81,7 @@ export function setupViews() {
             } else if (viewName === 'agent') {
                 loadAgentView()
             } else {
-                showView(viewName); // Call the function to update the view
+                showView(viewName);
             }
         });
     });

@@ -418,74 +418,6 @@
         </div>
     </div>
 
-    <div id="register" class="view">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div style="max-width: 500px">
-                    <h1>Opret Din Bruger</h1>
-                    <form id="registerForm" novalidate>
-                        <label class="text-secondary mt-2" for="email">Email*</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-
-                        <label class="text-secondary mt-2" for="password">Adgangskode*</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-
-                        <label class="text-secondary mt-2" for="full_name">Fulde navn*</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="full_name" name="full_name" required>
-                        </div>
-
-                        <label class="text-secondary mt-2" for="phone_number">Telefon</label>
-                        <div class="input-group">
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number">
-                        </div>
-
-
-                        <div class="row justify-content-center">
-                            <div class="col-auto w-100">
-                                <button class="mt-4 btn action-button w-100 text-white p-2" type="submit">Opret
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="login" class="view">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div style="max-width: 500px">
-                    <h1>Login</h1>
-                    <form id="loginForm" novalidate>
-                        <label class="text-secondary" for="login-email">Email</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="login-email" name="email" required>
-                        </div>
-
-                        <label class="text-secondary mt-2" for="login-password">Adgangskode</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="login-password" name="password" required>
-                        </div>
-
-                        <div class="row justify-content-center">
-                            <div class="col-auto w-100">
-                                <button class="mt-4 btn action-button w-100 text-white p-2" type="submit">Login
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div id="profile" class="view">
         <div class="container">
             <div class="row justify-content-center">
@@ -622,6 +554,7 @@
             </div>
         </div>
     </div>
+
     <div id="map" class="view">
         <div class="container-fluid">
             <div class="row">
@@ -631,6 +564,7 @@
             </div>
         </div>
     </div>
+
     <!--  Agent View  -->
     <div class="view container mt-4" id="agent">
         <!-- Title and Button on one line (flex) -->
@@ -682,8 +616,8 @@
 </div>
 
 
-<!--Modals-->
-<!-- Login Modal/Popup -->
+<!--Modals / Popup-->
+<!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -692,22 +626,70 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="loginModalForm" novalidate>
+                <form id="modalLoginForm" novalidate>
                     <label class="text-secondary" for="modal-login-email">Email</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="modal-login-email" required>
                     </div>
+
                     <label class="text-secondary mt-2" for="modal-login-password">Adgangskode</label>
                     <div class="input-group">
                         <input type="password" class="form-control" id="modal-login-password" required>
                     </div>
-                    <div class="row justify-content-center mt-3">
+
+                    <div class="row justify-content-center">
                         <div class="col-auto w-100">
-                            <button type="button" class="btn action-button w-100 text-white p-2" id="loginModalSubmit">Log ind</button>
+                            <button class="mt-4 btn action-button w-100 text-white p-2" type="button" id="loginModalSubmit">
+                                Log ind
+                            </button>
                         </div>
                     </div>
-                    <div class="text-center mt-3">
-                        <p class="text-secondary">Har du ikke en konto? <a href="#" data-bs-dismiss="modal" onclick="showView('register')">Opret en her</a></p>
+                </form>
+                <hr class="mt-3">
+                <div class="text-center mt-3">
+                    <span>Har du ikke en konto? <a href="#" id="showRegisterModalLink">Opret en her</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Opret Din Bruger</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalRegisterForm">
+                    <label class="text-secondary mt-2" for="modal-register-email">Email*</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="modal-register-email" required>
+                    </div>
+
+                    <label class="text-secondary mt-2" for="modal-register-password">Adgangskode*</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="modal-register-password" required>
+                    </div>
+
+                    <label class="text-secondary mt-2" for="modal-register-fullname">Fulde navn*</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="modal-register-fullname" required>
+                    </div>
+
+                    <label class="text-secondary mt-2" for="modal-register-phone">Telefon</label>
+                    <div class="input-group">
+                        <input type="tel" class="form-control" id="modal-register-phone">
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-auto w-100">
+                            <button class="mt-4 btn action-button w-100 text-white p-2" type="button" id="registerModalSubmit">
+                                Opret bruger
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
