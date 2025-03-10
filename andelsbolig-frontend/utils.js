@@ -1,6 +1,4 @@
 import {updateStripePaymentElements} from "./login/login.js";
-import {authFetch} from "./auth/auth.js";
-import {displayAdvertisements} from "./advertisement_list/advertisement_list.js";
 
 
 export function displayErrorMessage(message, ms = 5000) {

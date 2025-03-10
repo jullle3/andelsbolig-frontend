@@ -28,14 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
     SetupAgentView();
     SetupAgentEditView();
     SetupAgentCreateView();
-    showView('advertisement_list');
 
+
+    // showView('advertisement_list');
+    handleRouting();
+
+    // Handle back and forward navigation
+    window.addEventListener('popstate', handleRouting);
 
     // Call on page load
-    sendSearchData()
+    // sendSearchData()
 
     // Check the initial URL and show the corresponding view
-    const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
-    showView(initialView);
+    // const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
+    // showView(initialView);
 });
 

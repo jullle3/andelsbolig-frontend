@@ -1,7 +1,7 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
-import {loadSellerProfileView} from "../seller_profile/profile.js";
+import {loadSellerProfileView} from "../seller_profile/seller_profile.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');

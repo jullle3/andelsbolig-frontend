@@ -1,5 +1,6 @@
 import {loadAgentView} from "../agent/agent.js";
 import {displayErrorMessage, isLoggedIn} from "../utils.js";
+import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 
 // Setup click events for all views
 const views = {
@@ -19,23 +20,24 @@ const views = {
     map: document.getElementById('map'),
 };
 
+
 // Starting view
 let currentView = 'advertisement_list';
 // All views that require login
-const protectedViews = ["agent", "login", "create"];
+const protectedViews = ["agent", "login", "create", "seller_profile"];
 // Store requested view if not logged in
 export let viewAfterLogin = null;
+export let viewParamsAfterLogin = null;
 
 export function resetViewAfterLogin() {
     viewAfterLogin = null;
+    viewParamsAfterLogin = null;
 }
 
-// TODO: Endpoints that need to load config upon requests should be called from here
-export function showView(view) {
-    // Check user is logged in
+export function showView(view, params = null) {
     if (protectedView(view) && !isLoggedIn()) {
-        displayLoginModal(view)
-        return
+        displayLoginModal(view, params);
+        return;
     }
 
     if (!views[view]) {
@@ -54,11 +56,35 @@ export function showView(view) {
     closeNavbar();
     currentView = view;
 
-    history.pushState({ view: view }, '', `#${view}`);
+    // Update URL depending on view
+    let urlPath = view;
+    if (view === 'detail' && params && params.id) {
+        urlPath = `/detail/${params.id}`;
+        loadDetail(params.id);
+    } else {
+        urlPath = `/${view}`;
+    }
+
+    history.pushState({ view: view, params: params }, '', urlFor(view, params));
 }
 
-function displayLoginModal(requestedView) {
+// Helper function to generate URLs
+function urlFor(view, params) {
+    switch(view) {
+        case 'detail':
+            return `/detail/${params ? params.id : ''}`;
+        default:
+            return `/${view}`;
+    }
+}
+
+
+function displayLoginModal(requestedView, viewParams) {
+    // Need to store in global variables since showView is called after a successful login
     viewAfterLogin = requestedView;  // Remember the original view
+    viewParamsAfterLogin = viewParams;  // Remember the original view params
+
+    console.log(viewParamsAfterLogin)
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
     loginModal.show();
 }
@@ -85,6 +111,20 @@ export function setupViews() {
             }
         });
     });
+}
+
+
+// TODO: Endpoints that need to load config upon requests should be called from here
+// Load content for a given view
+async function loadViewData(view) {
+    switch (view) {
+        case "seller_profile":
+            await loadSellerProfile()
+            break;
+        default:
+            console.log("Default :)")
+    }
+
 }
 
 function protectedView(viewName) {
@@ -115,5 +155,19 @@ window.addEventListener('popstate', (event) => {
     }
 });
 
+function handleRouting() {
+    const path = window.location.pathname.split('/');
+    const view = path[1];
+    const param = path[2];
 
+    console.log(view)
+    console.log(param)
+    if (view === 'detail' && param) {
+        showView('detail', { id: param });
+    } else {
+        showView(view || 'advertisement_list');
+    }
+}
+
+window.handleRouting = handleRouting;
 window.showView = showView;
