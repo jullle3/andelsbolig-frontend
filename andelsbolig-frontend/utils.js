@@ -103,15 +103,9 @@ export function removeDots(inputString) {
     return inputString.replace(/\./g, '');
 }
 
-export async function fetchAndDisplayAdvertisements(searchTerm = "") {
-    // Fetch the advertisements
-    const response = await authFetch('/advertisement?text=' + searchTerm);
-    displayAdvertisements(await response.json());
-}
 
 export function parseFormattedInteger(value) {
     // Helper function to convert formatted string with delimiters to integer
-    console.log(value)
     return parseInt(value.replace(/\./g, ''), 10);
 }
 

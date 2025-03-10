@@ -5,12 +5,13 @@ import {
     displayErrorMessage,
     cleanParams,
     removeDots,
-    fetchAndDisplayAdvertisements,
     parseFormattedInteger, displaySuccessMessage
 } from "../utils.js";
 import {loadAgents} from "../agent/agent.js";
 import {showView} from "../views/viewManager.js";
 
+
+let page = 0;
 
 export function setupAdvertisementListView() {
     // Debounce function to delay the search
@@ -24,13 +25,9 @@ export function setupAdvertisementListView() {
 
     // Add debounce to search input
     document.getElementById('advertisement-list-search').addEventListener('input', debounce(async (e) => {
-        const searchTerm = e.target.value;
-        fetchAndDisplayAdvertisements(searchTerm);
+        sendSearchData()
     }, 500));
 
-
-    // document.getElementById('error-message-remove').addEventListener('click', () => hideErrorMessage());
-    // document.getElementById('success-message-remove').addEventListener('click', () => hideSuccessMessage());
 
     setupPriceSliders()
     setupMonthlyFeeSliders()
@@ -41,6 +38,15 @@ export function setupAdvertisementListView() {
 
 
 function sendSearchData(append=false) {
+
+    if (append){
+        page += 1;
+    } else {
+        page = 0
+    }
+
+    console.log(page)
+
     // Extract values and construct the query parameters
     const params = new URLSearchParams(cleanParams({
         text: document.getElementById('advertisement-list-search').value,
@@ -54,7 +60,8 @@ function sendSearchData(append=false) {
         rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
         postal_number: $("#postal-number").val(),
         city: $("#city").val(),
-        radius: $("#radius").val()
+        radius: $("#radius").val(),
+        page: page.toString()
     })).toString();
 
     // Fetch API to send the data to your backend
@@ -75,7 +82,7 @@ function sendSearchData(append=false) {
 function setupPriceSliders() {
     // Common configuration for both sliders
     const sliderConfig = {
-        start: [0, 7_000_000], // Starting handles
+        start: [0, 10_000_000], // Starting handles
         connect: true,
         range: {
             min: 0,
@@ -115,7 +122,7 @@ function setupPriceSliders() {
 function setupMonthlyFeeSliders() {
     // Common configuration for both monthly-fee sliders
     const monthlyFeeConfig = {
-        start: [0, 28_500],
+        start: [0, 40_000],
         connect: true,
         range: {
             min: 0,
@@ -157,7 +164,7 @@ function setupMonthlyFeeSliders() {
 function setupSquareMetersSliders() {
     // Common configuration for both square-meters sliders
     const squareMetersConfig = {
-        start: [50, 100],
+        start: [0, 400],
         connect: true,
         range: {
             min: 0,
@@ -199,7 +206,7 @@ function setupSquareMetersSliders() {
 function setupRoomsSliders() {
     // Common configuration for both rooms sliders
     const roomsConfig = {
-        start: [2, 5],
+        start: [1, 10],
         connect: true,
         range: {
             min: 1,
@@ -292,7 +299,6 @@ function setupPostalAutocomplete(suffix, postalData) {
 
 
 function setupAllAutoCompletes() {
-    // TODO: i dont like this...
     // Main View
     setupPostalAutocomplete("", postalData);
     setupCityAutocomplete("", cityData);
@@ -341,10 +347,10 @@ export async function displayAdvertisements(response, append=false, triggerPopup
         });
     }
 
-    updateSearchResultsCount(listingsContainer.children.length);
+    updateSearchResultsCount(response.total_object_count);
 
     // Display Next Page button only if more results are available
-    if (response.total_object_count > response.count) {
+    if (response.total_object_count > listingsContainer.children.length) {
         $("#next-page-button").removeClass('d-none')
     } else {
         $("#next-page-button").addClass('d-none')

@@ -3,7 +3,6 @@ import {
     decodeJwt,
     displayErrorMessage,
     displaySuccessMessage,
-    fetchAndDisplayAdvertisements,
     showConfirmationModal
 } from "../utils.js";
 import {showView} from "../views/viewManager.js";
@@ -88,9 +87,9 @@ export async function setupCreateAdvertisementView() {
             // Show some success animation
         }
 
-        displaySuccessMessage("Ændringer godkendt")
+        displaySuccessMessage("Annoncen blev oprettet")
         await populateCreateAdvertisementForm();
-        await fetchAndDisplayAdvertisements();
+        sendSearchData()
         showView('advertisement_list');
     });
 
@@ -315,7 +314,7 @@ async function deleteAdvertisement(advertisementId) {
         return
     }
     displaySuccessMessage('Annonce slettet, du kan nu oprette en ny');
-    await fetchAndDisplayAdvertisements();
+    sendSearchData()
     showView('advertisement_list');
 }
 

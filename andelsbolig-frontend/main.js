@@ -1,4 +1,4 @@
-import {fetchAndDisplayAdvertisements, setupUtils} from "./utils.js";
+import {setupUtils} from "./utils.js";
 import {setupViews, showView} from "./views/viewManager.js";
 import {setupProfileView} from "./profile/profile.js";
 import {populateCreateAdvertisementForm, setupCreateAdvertisementView} from "./create-advertisement/create-advertisement.js";
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Call on page load
-    fetchAndDisplayAdvertisements();
+    sendSearchData()
 
     // Check the initial URL and show the corresponding view
     const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
