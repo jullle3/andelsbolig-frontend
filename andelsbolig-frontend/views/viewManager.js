@@ -31,7 +31,7 @@ export function resetViewAfterLogin() {
 }
 
 // TODO: Endpoints that need to load config upon requests should be called from here
-export function showView(view) {
+export function showView(view, viewParams = new URLSearchParams()) {
     // Check user is logged in
     if (protectedView(view) && !isLoggedIn()) {
         displayLoginModal(view)
