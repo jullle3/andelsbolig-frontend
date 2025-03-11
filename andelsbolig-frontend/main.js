@@ -28,14 +28,22 @@ document.addEventListener('DOMContentLoaded', () => {
     SetupAgentView();
     SetupAgentEditView();
     SetupAgentCreateView();
-    showView('advertisement_list');
-
 
     // Call on page load
+    // TODO Should be handled in showView
     sendSearchData()
 
-    // Check the initial URL and show the corresponding view
-    const initialView = window.location.hash.replace('#', '') || 'advertisement_list';
-    showView(initialView);
+    handleRouting()
 });
+
+// Change route accordingly whenver user pastes a new URL into the browser
+window.addEventListener('hashchange', handleRouting);
+
+// Centralized function to handle routing
+function handleRouting() {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get("view")
+    console.log(view)
+    showView(view, params);
+}
 

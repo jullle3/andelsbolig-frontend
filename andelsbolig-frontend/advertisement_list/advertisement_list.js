@@ -45,8 +45,6 @@ function sendSearchData(append=false) {
         page = 0
     }
 
-    console.log(page)
-
     // Extract values and construct the query parameters
     const params = new URLSearchParams(cleanParams({
         text: document.getElementById('advertisement-list-search').value,

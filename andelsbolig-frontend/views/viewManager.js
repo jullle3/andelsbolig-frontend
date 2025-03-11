@@ -39,7 +39,7 @@ export function showView(view) {
     }
 
     if (!views[view]) {
-        console.error(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
+        console.log(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
         view = 'advertisement_list';
     }
 
