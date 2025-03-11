@@ -95,23 +95,20 @@ export function setupViews() {
     clickableElements.forEach(element => {
         element.addEventListener('click', function(e) {
             e.preventDefault();
-            // Remove 'active' class from all clickable elements
             clickableElements.forEach(el => el.classList.remove('active'));
-            // Add 'active' class to the clicked element if it's not the logo (handled separately if needed)
             if (this !== document.querySelector('.navbar-brand')) {
                 this.classList.add('active');
             }
             const viewName = this.getAttribute('data-view');
-            if (viewName === 'advertisement_list' && currentView === 'advertisement_list') {
-                scrollDownToHideNavbar(); // Scroll down if already on the advertisement_list view
-            } else if (viewName === 'agent') {
-                loadAgentView()
-            } else {
-                showView(viewName);
-            }
+            const id = this.getAttribute('data-id');
+
+            const params = id ? { id } : null;
+
+            showView(viewName, params);
         });
     });
 }
+
 
 
 // TODO: Endpoints that need to load config upon requests should be called from here
@@ -151,17 +148,18 @@ function scrollDownToHideNavbar() {
 // Handle the popstate event to navigate back
 window.addEventListener('popstate', (event) => {
     if (event.state && event.state.view) {
-        showView(event.state.view);
+        showView(event.state.view, event.state.params);
+    } else {
+        showView('advertisement_list');
     }
 });
+
 
 function handleRouting() {
     const path = window.location.pathname.split('/');
     const view = path[1];
     const param = path[2];
 
-    console.log(view)
-    console.log(param)
     if (view === 'detail' && param) {
         showView('detail', { id: param });
     } else {
