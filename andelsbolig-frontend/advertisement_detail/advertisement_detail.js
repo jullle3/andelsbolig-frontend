@@ -1,7 +1,6 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
-import {loadSellerProfileView} from "../seller_profile/profile.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
@@ -141,7 +140,8 @@ export async function loadAdvertisementDetail(advertisement_id) {
             ` : `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="loadSellerProfileView('${advertisement.created_by}')">
+<!--                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="loadSellerProfileView('${advertisement.created_by}')">-->
+                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}'}))">
                             Kontakt sælger
                         </button>
                     </div>
@@ -154,9 +154,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
     
     
         `;
-    showView('detail');
 }
 
-window.loadAdvertisementDetail = loadAdvertisementDetail;
 window.setFullImageSrc = setFullImageSrc;
 

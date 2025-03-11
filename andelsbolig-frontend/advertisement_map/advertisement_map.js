@@ -1,7 +1,6 @@
 // Function to initialize the Google Map
 import {authFetch} from "../auth/auth.js";
 import {displayErrorMessage} from "../utils.js";
-import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 
 let infowindow;
 
@@ -100,7 +99,7 @@ function buildContent(advertisement) {
 <!--        <i aria-hidden="true"></i>-->
 <!--        <span class="fa-sr-only">advertisement_list</span>-->
     </div>
-    <div class="details" onclick="loadAdvertisementDetail('${advertisement._id}')">
+    <div class="details" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
     <div class="details">
         <div class="price">${advertisement.price}</div>
         <div class="address">${advertisement.address}</div>

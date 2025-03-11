@@ -1,5 +1,4 @@
 import {authFetch} from "../auth/auth.js";
-import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {cityData, postalData} from "../config/hardcoded_data.js";
 import {
     displayErrorMessage,
@@ -329,7 +328,7 @@ export async function displayAdvertisements(response, append=false, triggerPopup
         advertisements.forEach(advertisement => {
             listingsContainer.innerHTML += `
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
-                <div class="card advertisement-card" onclick="loadAdvertisementDetail('${advertisement._id}')">
+                <div class="card advertisement-card" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
                     <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
                     <div class="card-body">
                         <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>

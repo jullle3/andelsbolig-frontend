@@ -40,10 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('hashchange', handleRouting);
 
 // Centralized function to handle routing
-function handleRouting() {
+async function handleRouting() {
     const params = new URLSearchParams(window.location.search);
     const view = params.get("view")
-    console.log(view)
-    showView(view, params);
+    await showView(view, params);
 }
 

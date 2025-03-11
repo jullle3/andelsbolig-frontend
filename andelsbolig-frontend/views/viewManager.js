@@ -1,5 +1,7 @@
 import {loadAgentView} from "../agent/agent.js";
 import {displayErrorMessage, isLoggedIn} from "../utils.js";
+import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
+import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 
 // Setup click events for all views
 const views = {
@@ -31,7 +33,9 @@ export function resetViewAfterLogin() {
 }
 
 // TODO: Endpoints that need to load config upon requests should be called from here
-export function showView(view, viewParams = new URLSearchParams()) {
+// All views are to be accessed via this method. It authorizes the user (if needed), loads required data and shows the
+// view afterward
+export async function showView(view, viewParams = new URLSearchParams()) {
     // Check user is logged in
     if (protectedView(view) && !isLoggedIn()) {
         displayLoginModal(view)
@@ -42,6 +46,8 @@ export function showView(view, viewParams = new URLSearchParams()) {
         console.log(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
         view = 'advertisement_list';
     }
+
+    await loadViewData(view, viewParams)
 
     Object.values(views).forEach(v => {
         v.classList.remove('active');
@@ -54,13 +60,30 @@ export function showView(view, viewParams = new URLSearchParams()) {
     closeNavbar();
     currentView = view;
 
-    history.pushState({ view: view }, '', `#${view}`);
+    // Store relevant params in URL such that users can share them with friends.
+    viewParams.set("view", view)
+    history.pushState({ view: view }, '', `${window.location.pathname}?${viewParams.toString()}`);
 }
 
 function displayLoginModal(requestedView) {
     viewAfterLogin = requestedView;  // Remember the original view
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
     loginModal.show();
+}
+
+// TODO: Endpoints that need to load config upon requests should be called from here
+// Load content for a given view
+async function loadViewData(view, viewParams) {
+    switch (view) {
+        case "detail":
+            await loadAdvertisementDetail(viewParams.get("id"))
+            break;
+        case "seller_profile":
+            await loadSellerProfile(viewParams.get("id"))
+            break;
+        default:
+            break;
+    }
 }
 
 export function setupViews() {
