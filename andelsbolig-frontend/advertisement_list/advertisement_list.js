@@ -26,22 +26,22 @@ export function setupAdvertisementListView() {
     document.getElementById('advertisement-list-search-list').addEventListener('input', debounce(async (e) => {
         sendSearchData('list')
     }, 500));
-    // document.getElementById('advertisement-list-search-map').addEventListener('input', debounce(async (e) => {
-    //     sendSearchData('advertisement_map')
-    // }, 500));
+    document.getElementById('advertisement-list-search-map').addEventListener('input', debounce(async (e) => {
+        sendSearchData('advertisement_map')
+    }, 500));
 
 
     setupPriceSliders()
-    // setupMonthlyFeeSliders()
-    // setupSquareMetersSliders()
-    // setupRoomsSliders()
+    setupMonthlyFeeSliders()
+    setupSquareMetersSliders()
+    setupRoomsSliders()
     setupAllAutoCompletes()
 }
 
 
+// TODO: Integrate such that it CAN query both map and list data
+//  fetchLocationsAndDisplay()
 function sendSearchData(advertisementView, append=false) {
-
-    console.log(advertisementView)
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
     if (advertisementView === 'list'){
@@ -57,14 +57,14 @@ function sendSearchData(advertisementView, append=false) {
     // Extract values and construct the query parameters
     const params = new URLSearchParams(cleanParams({
         text: document.getElementById(`advertisement-list-search-${advertisementView}`).value,
-        // price_from: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
-        // price_to: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
-        // monthly_fee_from: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
-        // monthly_fee_to: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
-        // square_meter_from: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[0],
-        // square_meter_to: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[1],
-        // rooms_from: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[0],
-        // rooms_to: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[1],
+        price_from: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
+        price_to: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
+        monthly_fee_from: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
+        monthly_fee_to: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
+        square_meter_from: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[0],
+        square_meter_to: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[1],
+        rooms_from: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[0],
+        rooms_to: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[1],
         postal_number: $(`#postal-number-${advertisementView}`).val(),
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
@@ -152,9 +152,16 @@ function setupMonthlyFeeSliders() {
     };
 
     // Main view slider
-    const monthlyFeeSlider = document.getElementById('monthly-price-range-slider');
-    noUiSlider.create(monthlyFeeSlider, monthlyFeeConfig);
-    monthlyFeeSlider.noUiSlider.on('update', (values) => {
+    const monthlyFeeSliderAdvertisementList = document.getElementById('monthly-price-range-slider-list');
+    noUiSlider.create(monthlyFeeSliderAdvertisementList, monthlyFeeConfig);
+    monthlyFeeSliderAdvertisementList.noUiSlider.on('update', (values) => {
+        $('#min-monthly-fee').text(values[0]);
+        $('#max-monthly-fee').text(values[1]);
+    });
+
+    const monthlyFeeSliderAdvertisementMap = document.getElementById('monthly-price-range-slider-map');
+    noUiSlider.create(monthlyFeeSliderAdvertisementMap, monthlyFeeConfig);
+    monthlyFeeSliderAdvertisementMap.noUiSlider.on('update', (values) => {
         $('#min-monthly-fee').text(values[0]);
         $('#max-monthly-fee').text(values[1]);
     });
@@ -194,9 +201,16 @@ function setupSquareMetersSliders() {
     };
 
     // Main view slider
-    const squareMetersSlider = document.getElementById('square-meters-range-slider');
-    noUiSlider.create(squareMetersSlider, squareMetersConfig);
-    squareMetersSlider.noUiSlider.on('update', (values) => {
+    const squareMetersSliderAdvertisementList = document.getElementById('square-meters-range-slider-list');
+    noUiSlider.create(squareMetersSliderAdvertisementList, squareMetersConfig);
+    squareMetersSliderAdvertisementList.noUiSlider.on('update', (values) => {
+        $('#min-square-meters').text(values[0]);
+        $('#max-square-meters').text(values[1]);
+    });
+
+    const squareMetersSliderAdvertisementMap = document.getElementById('square-meters-range-slider-map');
+    noUiSlider.create(squareMetersSliderAdvertisementMap, squareMetersConfig);
+    squareMetersSliderAdvertisementMap.noUiSlider.on('update', (values) => {
         $('#min-square-meters').text(values[0]);
         $('#max-square-meters').text(values[1]);
     });
@@ -236,9 +250,16 @@ function setupRoomsSliders() {
     };
 
     // Main view slider
-    const roomsSlider = document.getElementById('rooms-range-slider');
-    noUiSlider.create(roomsSlider, roomsConfig);
-    roomsSlider.noUiSlider.on('update', (values) => {
+    const roomsSliderAdvertisementList = document.getElementById('rooms-range-slider-list');
+    noUiSlider.create(roomsSliderAdvertisementList, roomsConfig);
+    roomsSliderAdvertisementList.noUiSlider.on('update', (values) => {
+        $('#min-rooms').text(values[0]);
+        $('#max-rooms').text(values[1]);
+    });
+
+    const roomsSliderAdvertisementMap = document.getElementById('rooms-range-slider-map');
+    noUiSlider.create(roomsSliderAdvertisementMap, roomsConfig);
+    roomsSliderAdvertisementMap.noUiSlider.on('update', (values) => {
         $('#min-rooms').text(values[0]);
         $('#max-rooms').text(values[1]);
     });
@@ -619,10 +640,7 @@ function generateSearchComponents(suffix) {
                                                 <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr"></div>
                                         </div>
                                     </div>
-
-
-                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData(${suffix})">Søg</button>
-
+                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData('${suffix}')">Søg</button>
                                 </div>
                             </div>
                         </div>
@@ -637,7 +655,7 @@ function generateSearchComponents(suffix) {
                 <div class="col-8">
                     <div class="d-flex justify-content-start">
                     <span class="badge rounded-pill bg-light text-dark border">
-                        <span id="search-result-count">0</span><span> Resultater</span>
+                        <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
                     </span>
                     </div>
                 </div>

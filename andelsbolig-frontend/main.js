@@ -11,7 +11,7 @@ import {SetupAgentView} from "./agent/agent.js";
 import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
 import {insertSharedComponents, SetupAgentCreateView} from "./agent_create/agent_create.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     SetupHeader();
     setupUtils();
     setupViews();
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // TODO Should be handled in showView
     sendSearchData('list')
 
-    handleRouting()
+    await handleRouting()
 });
 
 // Change route accordingly whenver user pastes a new URL into the browser

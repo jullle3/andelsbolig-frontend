@@ -1,4 +1,3 @@
-// Function to initialize the Google Map
 import {authFetch} from "../auth/auth.js";
 import {displayErrorMessage} from "../utils.js";
 
@@ -14,7 +13,7 @@ export function initMap() {
         center: new google.maps.LatLng(56.26392, 9.501785), // Center on Denmark
         mapId: '9df01a95f0b6f4d6' // Custom map style
     };
-    window.map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+    window.googlemap = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
     infowindow = new google.maps.InfoWindow();
 
     fetchLocationsAndDisplay(); // Fetch locations after initializing the map
@@ -63,7 +62,7 @@ async function fetchLocationsAndDisplay() {
         const marker = new google.maps.marker.AdvancedMarkerElement({
             position: new google.maps.LatLng(ad.location.coordinates[0], ad.location.coordinates[1]),
             // collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
-            map: window.map,
+            map: window.googlemap,
             title: ad.title,
             content: svgElement,
 
@@ -77,7 +76,7 @@ async function fetchLocationsAndDisplay() {
             const content = buildContent(ad);  // Build content dynamically on click
             // Assuming infowindow is a global or previously defined variable
             infowindow.setContent(content);
-            infowindow.open(window.map, marker);
+            infowindow.open(window.googlemap, marker);
         });
 
         return marker;
