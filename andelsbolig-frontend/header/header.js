@@ -13,7 +13,7 @@ export function SetupHeader() {
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#" data-view="map">Kort</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-view="advertisement_map">Kort</a></li>
             <li class="nav-item"><a class="nav-link" href="#" data-view="create">Din Annonce</a></li>
             <li class="nav-item"><a class="nav-link" href="#" data-view="agent">Annonceagenter</a></li>
             <li class="nav-item dropdown">

@@ -6,7 +6,7 @@ import {setupLogoutView} from "./logout/logout.js";
 import {setupLoginView} from "./login/login.js";
 import {SetupHeader} from "./header/header.js";
 import {setupMapView} from "./advertisement_map/advertisement_map.js";
-import {setupAdvertisementListView} from "./advertisement_list/advertisement_list.js";
+import {insertSearchComponents, setupAdvertisementListView} from "./advertisement_list/advertisement_list.js";
 import {SetupAgentView} from "./agent/agent.js";
 import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
 import {insertSharedComponents, SetupAgentCreateView} from "./agent_create/agent_create.js";
@@ -16,9 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupUtils();
     setupViews();
     setupProfileView();
+
     insertSharedComponents()
+    insertSearchComponents()
 
     setupAdvertisementListView();
+
     setupCreateAdvertisementView();
     populateCreateAdvertisementForm();
 
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call on page load
     // TODO Should be handled in showView
-    sendSearchData()
+    sendSearchData('list')
 
     handleRouting()
 });

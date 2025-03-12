@@ -6,6 +6,7 @@ import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 // Setup click events for all views
 const views = {
     advertisement_list: document.getElementById('advertisement_list'),
+    advertisement_map: document.getElementById('advertisement_map'),
     // Hack to redirect users to that page when completing login
     login: document.getElementById('advertisement_list'),
     detail: document.getElementById('detail'),
@@ -18,7 +19,6 @@ const views = {
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment2'),
     faq: document.getElementById('faq'),
-    map: document.getElementById('map'),
 };
 
 // Starting view

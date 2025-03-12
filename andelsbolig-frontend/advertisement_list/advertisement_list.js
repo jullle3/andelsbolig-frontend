@@ -23,41 +23,51 @@ export function setupAdvertisementListView() {
     }
 
     // Add debounce to search input
-    document.getElementById('advertisement-list-search').addEventListener('input', debounce(async (e) => {
-        sendSearchData()
+    document.getElementById('advertisement-list-search-list').addEventListener('input', debounce(async (e) => {
+        sendSearchData('list')
     }, 500));
+    // document.getElementById('advertisement-list-search-map').addEventListener('input', debounce(async (e) => {
+    //     sendSearchData('advertisement_map')
+    // }, 500));
 
 
     setupPriceSliders()
-    setupMonthlyFeeSliders()
-    setupSquareMetersSliders()
-    setupRoomsSliders()
+    // setupMonthlyFeeSliders()
+    // setupSquareMetersSliders()
+    // setupRoomsSliders()
     setupAllAutoCompletes()
 }
 
 
-function sendSearchData(append=false) {
+function sendSearchData(advertisementView, append=false) {
 
-    if (append){
-        page += 1;
+    console.log(advertisementView)
+    // TODO Map view might not scale to 10_000 advertisements
+    // Pagination is only really implemented for list view
+    if (advertisementView === 'list'){
+        if (append){
+            page += 1;
+        } else {
+            page = 0
+        }
     } else {
-        page = 0
+        page = 10_000
     }
 
     // Extract values and construct the query parameters
     const params = new URLSearchParams(cleanParams({
-        text: document.getElementById('advertisement-list-search').value,
-        price_from: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[0]),
-        price_to: removeDots(document.getElementById('price-range-slider').noUiSlider.get()[1]),
-        monthly_fee_from: removeDots(document.getElementById('monthly-price-range-slider').noUiSlider.get()[0]),
-        monthly_fee_to: removeDots(document.getElementById('monthly-price-range-slider').noUiSlider.get()[1]),
-        square_meter_from: document.getElementById('square-meters-range-slider').noUiSlider.get()[0],
-        square_meter_to: document.getElementById('square-meters-range-slider').noUiSlider.get()[1],
-        rooms_from: document.getElementById('rooms-range-slider').noUiSlider.get()[0],
-        rooms_to: document.getElementById('rooms-range-slider').noUiSlider.get()[1],
-        postal_number: $("#postal-number").val(),
-        city: $("#city").val(),
-        radius: $("#radius").val(),
+        text: document.getElementById(`advertisement-list-search-${advertisementView}`).value,
+        // price_from: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
+        // price_to: removeDots(document.getElementById(`price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
+        // monthly_fee_from: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[0]),
+        // monthly_fee_to: removeDots(document.getElementById(`monthly-price-range-slider-${advertisementView}`).noUiSlider.get()[1]),
+        // square_meter_from: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[0],
+        // square_meter_to: document.getElementById(`square-meters-range-slider-${advertisementView}`).noUiSlider.get()[1],
+        // rooms_from: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[0],
+        // rooms_to: document.getElementById(`rooms-range-slider-${advertisementView}`).noUiSlider.get()[1],
+        postal_number: $(`#postal-number-${advertisementView}`).val(),
+        city: $(`#city-${advertisementView}`).val(),
+        radius: $(`#radius-${advertisementView}`).val(),
         page: page.toString()
     })).toString();
 
@@ -93,23 +103,31 @@ function setupPriceSliders() {
         tooltips: true
     };
 
-    const slider1 = document.getElementById('price-range-slider');
+    const slider1 = document.getElementById('price-range-slider-list');
     noUiSlider.create(slider1, sliderConfig);
     slider1.noUiSlider.on('update', (values) => {
         $('#min-price').text(values[0]);
         $('#max-price').text(values[1]);
     });
 
-    const slider2 = document.getElementById('price-range-slider-agenteditview');
+    const slider2 = document.getElementById('price-range-slider-map');
     noUiSlider.create(slider2, sliderConfig);
     slider2.noUiSlider.on('update', (values) => {
+        $('#min-price').text(values[0]);
+        $('#max-price').text(values[1]);
+    });
+
+    const slider3 = document.getElementById('price-range-slider-agenteditview');
+    noUiSlider.create(slider3, sliderConfig);
+    slider3.noUiSlider.on('update', (values) => {
+        // TODO: er det et problem at den hedder det samme som slider4
         $('#min-price-edit').text(values[0]);
         $('#max-price-edit').text(values[1]);
     });
 
-    const slider3 = document.getElementById('price-range-slider-agentcreateview');
-    noUiSlider.create(slider3, sliderConfig);
-    slider3.noUiSlider.on('update', (values) => {
+    const slider4 = document.getElementById('price-range-slider-agentcreateview');
+    noUiSlider.create(slider4, sliderConfig);
+    slider4.noUiSlider.on('update', (values) => {
         $('#min-price-edit').text(values[0]);
         $('#max-price-edit').text(values[1]);
     });
@@ -297,8 +315,12 @@ function setupPostalAutocomplete(suffix, postalData) {
 
 function setupAllAutoCompletes() {
     // Main View
-    setupPostalAutocomplete("", postalData);
-    setupCityAutocomplete("", cityData);
+    setupPostalAutocomplete("-list", postalData);
+    setupCityAutocomplete("-list", cityData);
+
+    // Map view
+    setupPostalAutocomplete("-map", postalData);
+    setupCityAutocomplete("-map", cityData);
 
     // Agent Edit View
     setupPostalAutocomplete("-agenteditview", postalData);
@@ -494,5 +516,146 @@ export function createAnnonceagent(agentId, view) {
 function updateSearchResultsCount(count) {
     $('#search-result-count').text(count);
 }
+
+function generateSearchComponents(suffix) {
+    return `
+            <div class="container mt-4 pb-2">
+            <div class="row justify-content-center">
+                <div class="col-8 d-flex position-relative" style="min-width: 600px">
+
+                    <div class="input-group">
+                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
+                        <div class="input-group-text">
+
+                            <!-- Advanced Search dropdown bar -->
+                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+
+                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 10;">
+                                <div class="card card-body">
+
+                                    <!-- Price -->
+                                    <div class="mt-4 mb-1 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Pris kr</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <div id="price-range-slider-${suffix}" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Monthly fee-->
+                                    <div class="mt-3 m-0 p-0 pb-4">
+                                        <div class="row">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Mdl. ydelse kr</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <div id="monthly-price-range-slider-${suffix}" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Square meters in m2 -->
+                                    <div class="mt-3 m-0 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Størrelse m2</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <div id="square-meters-range-slider-${suffix}" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rooms -->
+                                    <div class="mt-3 m-0 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Værelser</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <div id="rooms-range-slider-${suffix}" class="slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Postal Number -->
+                                    <div class="m-0 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Postnr</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="text" id="postal-number-${suffix}" class="form-control" placeholder="Indtast postnummer">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- City -->
+                                    <div class="m-0 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">By</h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <input  type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Radius search -->
+                                    <div class="m-0 p-0 pb-4">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start"><h6 class="mb-0">Radius søgning</h6></div>
+                                            <div class="col-2">
+                                                <input type="text" id="radius-${suffix}" class="form-control">
+                                            </div>
+                                            <div class="col-2"><h6 class="mb-0">km fra</h6></div>
+                                            <div class="col-4">
+                                                <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData(${suffix})">Søg</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simplified and stylish results counter -->
+        <div class="container mt-0 pt-0">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div class="d-flex justify-content-start">
+                    <span class="badge rounded-pill bg-light text-dark border">
+                        <span id="search-result-count">0</span><span> Resultater</span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    `;
+}
+
+export function insertSearchComponents() {
+    document.querySelectorAll('.view[data-advertisement-view]').forEach(view => {
+        // For which view to load the search bar (list or map)
+        const advertisementViewType = view.getAttribute('data-advertisement-view');
+        const container = view.querySelector('.search-components-container');
+        container.innerHTML = generateSearchComponents(advertisementViewType);
+    });
+}
+
+
 
 window.sendSearchData = sendSearchData;

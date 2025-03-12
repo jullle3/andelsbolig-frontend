@@ -14,7 +14,7 @@ export function initMap() {
         center: new google.maps.LatLng(56.26392, 9.501785), // Center on Denmark
         mapId: '9df01a95f0b6f4d6' // Custom map style
     };
-    window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    window.map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
     infowindow = new google.maps.InfoWindow();
 
     fetchLocationsAndDisplay(); // Fetch locations after initializing the map
