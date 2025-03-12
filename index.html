@@ -52,57 +52,6 @@
 
 <!-- VIEWS -->
 <div id="root">
-
-    <!-- Generic Confirmation Modal -->
-    <div class="modal fade" id="genericConfirmationModal" tabindex="-1" aria-labelledby="genericConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="genericConfirmationModalLabel">Confirm Action</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to perform this action?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nej</button>
-                    <button type="button" class="btn btn-danger" id="confirmActionButton">Ja</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div id="successModal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Success</h5>
-                </div>
-                <div class="modal-body">
-                    <p>Din annonce er oprettet & synlig for andre!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Success Message Container -->
-    <div id="success-container" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;" onclick="hideSuccessMessage()">
-        <span id="success-message"></span>
-        <button id="success-message-remove" type="button" class="btn-close" aria-label="Close"></button>
-    </div>
-
-    <!-- Error Message Container -->
-    <div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;" onclick="hideErrorMessage()">
-        <span id="error-message"></span>
-        <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
-    </div>
-
-
-
-
     <div id="advertisement_list" class="view active p-3">
         <!-- Search bar -->
         <div class="container mt-4 pb-2">
@@ -691,6 +640,58 @@
         </div>
     </div>
 </div>
+
+<!-- Generic Confirmation Modal -->
+<div class="modal fade" id="genericConfirmationModal" tabindex="-1" aria-labelledby="genericConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="genericConfirmationModalLabel">Confirm Action</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to perform this action?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nej</button>
+                <button type="button" class="btn btn-danger" id="confirmActionButton">Ja</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--TODO: Nogle af nedenstående må være unused-->
+<div id="successModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Success</h5>
+            </div>
+            <div class="modal-body">
+                <p>Din annonce er oprettet & synlig for andre!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Success Message Container -->
+<div id="success-container" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;" onclick="hideSuccessMessage()">
+    <span id="success-message"></span>
+    <button id="success-message-remove" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<!-- Error Message Container -->
+<div id="error-container" class="alert alert-danger alert-dismissible fade" role="alert" style="display: none;" onclick="hideErrorMessage()">
+    <span id="error-message"></span>
+    <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+
+
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
