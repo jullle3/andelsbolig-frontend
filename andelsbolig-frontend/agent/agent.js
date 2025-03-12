@@ -49,7 +49,7 @@ function setupDeleteConfirmation() {
 }
 
 
-async function editAgent(agentId) {
+export async function editAgent(agentId) {
     const response = await authFetch(`/agent/${agentId}`)
     const agent = await response.json();
     activeAgent._id = agent._id
@@ -72,8 +72,6 @@ async function editAgent(agentId) {
     $("#city-agenteditview").val((agent.criteria.cities && agent.criteria.cities.length > 0) ? agent.criteria.cities[0] : '');
     $("#name-agenteditview").val(agent.name);
     $("#active-agenteditview").prop('checked', agent.active);
-
-    showView("agent_edit")
 }
 
 function setSliderValue(sliderId, from, to) {
@@ -90,7 +88,7 @@ function createAgentRow(agent) {
                 <span class="badge ${agent.active ? 'bg-success' : 'bg-secondary'}">${agent.active ? 'Aktiv' : 'Inaktiv'}</span>
             </td>
             <td class="text-end">
-            <button class="btn" onclick="editAgent('${agent._id}')">
+            <button class="btn" onclick="showView('agent_edit', new URLSearchParams({id: '${agent._id}'}))">
                 <i class="bi bi-pen" ></i>
             </button>
 
@@ -121,4 +119,3 @@ function deleteAgent(agentId) {
 }
 
 
-window.editAgent = editAgent

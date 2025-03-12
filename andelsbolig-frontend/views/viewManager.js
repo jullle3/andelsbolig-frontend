@@ -1,4 +1,4 @@
-import {loadAgents} from "../agent/agent.js";
+import {editAgent, loadAgents} from "../agent/agent.js";
 import {isLoggedIn} from "../utils.js";
 import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {loadSellerProfile} from "../seller_profile/seller_profile.js";
@@ -84,6 +84,9 @@ async function loadViewData(view, viewParams) {
             break;
         case "agent":
             await loadAgents()
+            break;
+        case "agent_edit":
+            await editAgent(viewParams.get("id"))
             break;
         default:
             break;
