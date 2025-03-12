@@ -1,5 +1,5 @@
-import {loadAgentView} from "../agent/agent.js";
-import {displayErrorMessage, isLoggedIn} from "../utils.js";
+import {loadAgents} from "../agent/agent.js";
+import {isLoggedIn} from "../utils.js";
 import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 
@@ -62,7 +62,9 @@ export async function showView(view, viewParams = new URLSearchParams()) {
 
     // Store relevant params in URL such that users can share them with friends.
     viewParams.set("view", view)
-    history.pushState({ view: view }, '', `${window.location.pathname}?${viewParams.toString()}`);
+    const urlWithParams = `${window.location.pathname}?${viewParams.toString()}`;
+    history.pushState({ view, params: viewParams.toString() }, '', urlWithParams);
+
 }
 
 function displayLoginModal(requestedView) {
@@ -71,7 +73,6 @@ function displayLoginModal(requestedView) {
     loginModal.show();
 }
 
-// TODO: Endpoints that need to load config upon requests should be called from here
 // Load content for a given view
 async function loadViewData(view, viewParams) {
     switch (view) {
@@ -80,6 +81,9 @@ async function loadViewData(view, viewParams) {
             break;
         case "seller_profile":
             await loadSellerProfile(viewParams.get("id"))
+            break;
+        case "agent":
+            await loadAgents()
             break;
         default:
             break;
@@ -101,8 +105,6 @@ export function setupViews() {
             const viewName = this.getAttribute('data-view');
             if (viewName === 'advertisement_list' && currentView === 'advertisement_list') {
                 scrollDownToHideNavbar(); // Scroll down if already on the advertisement_list view
-            } else if (viewName === 'agent') {
-                loadAgentView()
             } else {
                 showView(viewName);
             }
@@ -131,12 +133,24 @@ function scrollDownToHideNavbar() {
 }
 
 
-// Handle the popstate event to navigate back
+// Support navigating back and forth between pages while preserving URL params
 window.addEventListener('popstate', (event) => {
     if (event.state && event.state.view) {
-        showView(event.state.view);
-    }
-});
+        const params = new URLSearchParams(event.state.params || '');
+        loadViewData(event.state.view, params).then(() => {
+            Object.values(views).forEach(v => {
+                v.classList.remove('active');
+                v.style.display = 'none';
+            });
+
+            views[event.state.view].style.display = 'block';
+            setTimeout(() => views[event.state.view].classList.add('active'), 10);
+
+            currentView = event.state.view;
+        }).catch(err => {
+            console.error("Error loading view on popstate:", err);
+        });
+}})
 
 
 window.showView = showView;

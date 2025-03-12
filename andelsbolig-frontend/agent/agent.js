@@ -7,11 +7,6 @@ export async function SetupAgentView() {
     setupDeleteConfirmation();
 }
 
-export async function loadAgentView() {
-    loadAgents()
-    showView("agent")
-}
-
 export async function loadAgents() {
     const response = await authFetch(`/agent`);
 
@@ -127,4 +122,3 @@ function deleteAgent(agentId) {
 
 
 window.editAgent = editAgent
-window.loadAgentView = loadAgentView
