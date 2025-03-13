@@ -89,7 +89,7 @@ export async function setupCreateAdvertisementView() {
 
         displaySuccessMessage("Annoncen blev oprettet")
         await populateCreateAdvertisementForm();
-        sendSearchData()
+        sendSearchData('list')
         showView('advertisement_list');
     });
 
@@ -314,7 +314,7 @@ async function deleteAdvertisement(advertisementId) {
         return
     }
     displaySuccessMessage('Annonce slettet, du kan nu oprette en ny');
-    sendSearchData()
+    sendSearchData('list')
     showView('advertisement_list');
 }
 

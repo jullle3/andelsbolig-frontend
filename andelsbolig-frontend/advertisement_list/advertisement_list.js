@@ -72,7 +72,7 @@ export async function sendSearchData(advertisementView, append=false) {
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
         page: page.toString(),
-        size: page.toString(),
+        size: size.toString(),
     })).toString();
 
     // Fetch API to send the data to your backend

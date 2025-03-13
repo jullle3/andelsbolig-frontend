@@ -1,5 +1,3 @@
-import {sendSearchData} from "../advertisement_list/advertisement_list.js";
-
 let infowindow;
 
 
@@ -46,7 +44,6 @@ export async function displayAdvertisementsOnMap(response_json) {
     let t1 = performance.now();
     const parser = new DOMParser();
 
-    console.log(response_json.count)
     // Create new markers and store them globally
     window.markers = response_json.objects.map(ad => {
         const customSVG = createCustomSVGIconWithPNG('pics/house_marker.png', 40, 40);
