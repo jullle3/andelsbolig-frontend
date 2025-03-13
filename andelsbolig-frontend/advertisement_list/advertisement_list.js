@@ -84,6 +84,10 @@ export async function sendSearchData(advertisementView, append=false) {
     }
     let response_json = await response.json()
 
+    // Update search result counter
+    $(`#search-result-count-${advertisementView}`).text(response_json.total_object_count)
+
+
     // Load results in either list or map view
     if (advertisementView === 'list') {
         displayAdvertisementsOnList(response_json, append, true);
@@ -394,8 +398,6 @@ export async function displayAdvertisementsOnList(response, append=false, trigge
         });
     }
 
-    updateSearchResultsCount(response.total_object_count);
-
     // Display Next Page button only if more results are available
     if (response.total_object_count > listingsContainer.children.length) {
         $("#next-page-button").removeClass('d-none')
@@ -538,11 +540,6 @@ export function createAnnonceagent(agentId, view) {
             console.error("Failed to create/update agent:", error);
         });
 
-}
-
-
-function updateSearchResultsCount(count) {
-    $('#search-result-count').text(count);
 }
 
 function generateSearchComponents(suffix) {
