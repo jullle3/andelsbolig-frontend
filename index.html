@@ -488,7 +488,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Opret Din Bruger</h5>
+                <h5 class="modal-title">Opret Bruger</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -500,7 +500,7 @@
 
                     <label class="text-secondary mt-2" for="modal-register-password">Adgangskode*</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="modal-register-password" required>
+                        <input type="password" class="form-control" id="modal-register-password" required minlength="8">
                     </div>
 
                     <label class="text-secondary mt-2" for="modal-register-fullname">Fulde navn*</label>
@@ -510,12 +510,12 @@
 
                     <label class="text-secondary mt-2" for="modal-register-phone">Telefon</label>
                     <div class="input-group">
-                        <input type="tel" class="form-control" id="modal-register-phone">
+                        <input type="tel" class="form-control" id="modal-register-phone" minlength="8" maxlength="8">
                     </div>
 
                     <div class="row justify-content-center">
                         <div class="col-auto w-100">
-                            <button class="mt-4 btn action-button w-100 text-white p-2" type="button" id="registerModalSubmit">
+                            <button class="mt-4 btn action-button w-100 text-white p-2" type="submit" id="registerModalSubmit">
                                 Opret bruger
                             </button>
                         </div>
@@ -525,6 +525,42 @@
         </div>
     </div>
 </div>
+
+
+<!--<div id="payment" class="view">-->
+<!--    <div class="container">-->
+<!--        <stripe-pricing-table-->
+<!--                id="stripePricingTable"-->
+<!--                pricing-table-id="prctbl_1PiNk0RwMNhLL1Z9hHVKL1gs"-->
+<!--                publishable-key="pk_test_51PhrGIRwMNhLL1Z9dUFZqpxKIZrfZr64BTyUmHwWdEUjWjm3XulkLuozpbOuFT7dmkzKYAQ1ePD2cV2HLEnD1yMC00Q95j5SB1">-->
+<!--        </stripe-pricing-table>-->
+<!--    </div>-->
+<!--</div>-->
+<!-- Payment Modal -->
+
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Using a larger modal dialog if needed -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Vælg betalingsløsning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <stripe-pricing-table
+                            id="stripePricingTable"
+                            pricing-table-id="prctbl_1PiNk0RwMNhLL1Z9hHVKL1gs"
+                            publishable-key="pk_test_51PhrGIRwMNhLL1Z9dUFZqpxKIZrfZr64BTyUmHwWdEUjWjm3XulkLuozpbOuFT7dmkzKYAQ1ePD2cV2HLEnD1yMC00Q95j5SB1">
+                    </stripe-pricing-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- Generic Confirmation Modal -->
 <div class="modal fade" id="genericConfirmationModal" tabindex="-1" aria-labelledby="genericConfirmationModalLabel" aria-hidden="true">

@@ -140,7 +140,6 @@ export async function loadAdvertisementDetail(advertisement_id) {
             ` : `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-<!--                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="loadSellerProfileView('${advertisement.created_by}')">-->
                         <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}'}))">
                             Kontakt sælger
                         </button>

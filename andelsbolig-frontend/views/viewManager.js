@@ -1,5 +1,5 @@
 import {editAgent, loadAgents} from "../agent/agent.js";
-import {isLoggedIn} from "../utils.js";
+import {isLoggedIn, isSubscribed} from "../utils.js";
 import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 
@@ -24,27 +24,40 @@ const views = {
 // Starting view
 let currentView = 'advertisement_list';
 // All views that require login
-const protectedViews = ["agent", "login", "create"];
-// Store requested view if not logged in
+const loginRequiredViews = ["agent", "login", "create", "seller_profile"];
+const payWalledViews = ["seller_profile"];
+
+// Store requested view to remember redirects after login popup
 export let viewAfterLogin = null;
+export let viewParamsAfterLogin = new URLSearchParams();
 
 export function resetViewAfterLogin() {
     viewAfterLogin = null;
+    viewParamsAfterLogin = new URLSearchParams();
 }
 
-// TODO: Endpoints that need to load config upon requests should be called from here
 // All views are to be accessed via this method. It authorizes the user (if needed), loads required data and shows the
-// view afterward
+// view afterwards
 export async function showView(view, viewParams = new URLSearchParams()) {
-    // Check user is logged in
-    if (protectedView(view) && !isLoggedIn()) {
-        displayLoginModal(view)
+    if (loginRequiredView(view) && !isLoggedIn()) {
+        displayLoginModal(view, viewParams)
+        return
+    }
+
+    if (payWalledView(view) && !(await isSubscribed())) {
+        // Show payment popup, if successful users are redirected to our homepage
+        new bootstrap.Modal(document.getElementById('paymentModal')).show();
         return
     }
 
     if (!views[view]) {
         console.log(`Invalid view: "${view}". Defaulting to 'advertisement_list'.`);
         view = 'advertisement_list';
+    }
+
+    // Restore params in case the user was redirected to a view after navigating through the login modal
+    if (viewParams.toString() === "") {
+        viewParams = viewParamsAfterLogin
     }
 
     await loadViewData(view, viewParams)
@@ -67,8 +80,10 @@ export async function showView(view, viewParams = new URLSearchParams()) {
 
 }
 
-function displayLoginModal(requestedView) {
+// Store values that will be needede after successful login
+function displayLoginModal(requestedView, viewParams) {
     viewAfterLogin = requestedView;  // Remember the original view
+    viewParamsAfterLogin = viewParams;  // Remember the original params
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
     loginModal.show();
 }
@@ -115,8 +130,12 @@ export function setupViews() {
     });
 }
 
-function protectedView(viewName) {
-    return protectedViews.includes(viewName);
+function loginRequiredView(viewName) {
+    return loginRequiredViews.includes(viewName);
+}
+
+function payWalledView(viewName) {
+    return payWalledViews.includes(viewName);
 }
 
 

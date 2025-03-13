@@ -137,6 +137,15 @@ export function isLoggedIn() {
     return localStorage.getItem('jwt') !== null;
 }
 
+/**
+ *
+ * @returns {boolean} True if the user is still subscribed, false otherwise.
+ */
+export async function isSubscribed() {
+    let response = await authFetch("/is-subscribed")
+    return response.ok
+}
+
 
 window.formatNumber = formatNumber;
 window.hideSuccessMessage = hideSuccessMessage;

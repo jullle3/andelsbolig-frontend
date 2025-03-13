@@ -81,7 +81,6 @@ export async function setupCreateAdvertisementView() {
         });
         if (!response.ok) {
             displayErrorMessage(response.message);
-            console.log(response)
             throw new Error('Failed to create advertisement');
         } else {
             // Show some success animation

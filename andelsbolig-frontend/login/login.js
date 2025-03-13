@@ -1,6 +1,6 @@
 import {authFetch} from "../auth/auth.js";
 import {resetViewAfterLogin, showView, viewAfterLogin} from "../views/viewManager.js";
-import {decodeJwt, displayErrorMessage} from "../utils.js";
+import {decodeJwt, displayErrorMessage, displaySuccessMessage} from "../utils.js";
 import {setupProfileView} from "../profile/profile.js";
 import {updateNavbar} from "../header/header.js";
 
@@ -59,14 +59,11 @@ export function setupLoginView() {
         const response_json = await response.json();
 
         if (!response.ok) {
-            console.log(response_json)
             displayErrorMessage(response_json.detail)
             return
         }
 
-        updateJWT(response_json.jwt);
-        registerForm.reset();
-        showView('advertisement_list');
+        updateAfterLogin(response_json.jwt, "registerModal")
     });
 
 
@@ -101,22 +98,28 @@ async function handleLogin(email, password) {
 
     if (response.ok) {
         const result = await response.json();
-        updateJWT(result.jwt);
-        // TODO: setupProfileView() skal rykkes til showView()
-        setupProfileView();
-        updateNavbar()
-
-        // Close the login modal after successful login
-        const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-        loginModal.hide();
-
-        showView(viewAfterLogin);
-        resetViewAfterLogin();
-
+        updateAfterLogin(result.jwt, "loginModal")
+        displaySuccessMessage("Du er nu logget ind")
     } else {
         displayErrorMessage('Login mislykkedes. Tjek dine oplysninger.');
     }
 }
+
+
+// Updates that are to be ran after user logged in
+export async function updateAfterLogin(jwt, modalToHideID) {
+    updateJWT(jwt);
+    setupProfileView();
+    updateNavbar()
+
+    // Close the modal after successful login
+    bootstrap.Modal.getInstance(document.getElementById(modalToHideID)).hide();
+
+    // Important that this awaits, since the values reset in resetViewAfterLogin() are used in showView()
+    await showView(viewAfterLogin);
+    resetViewAfterLogin();
+}
+
 
 export function updateJWT(jwt) {
     localStorage.setItem('jwt', jwt);
