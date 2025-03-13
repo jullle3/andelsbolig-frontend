@@ -8,9 +8,12 @@ import {
 } from "../utils.js";
 import {loadAgents} from "../agent/agent.js";
 import {showView} from "../views/viewManager.js";
+import {displayAdvertisementsOnMap} from "../advertisement_map/advertisement_map.js";
 
 
 let page = 0;
+let size = 20;
+
 
 export function setupAdvertisementListView() {
     // Debounce function to delay the search
@@ -27,7 +30,7 @@ export function setupAdvertisementListView() {
         sendSearchData('list')
     }, 500));
     document.getElementById('advertisement-list-search-map').addEventListener('input', debounce(async (e) => {
-        sendSearchData('advertisement_map')
+        sendSearchData('map')
     }, 500));
 
 
@@ -39,19 +42,19 @@ export function setupAdvertisementListView() {
 }
 
 
-// TODO: Integrate such that it CAN query both map and list data
-//  fetchLocationsAndDisplay()
-function sendSearchData(advertisementView, append=false) {
+export async function sendSearchData(advertisementView, append=false) {
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
     if (advertisementView === 'list'){
+        size = 20
         if (append){
             page += 1;
         } else {
             page = 0
         }
-    } else {
-        page = 10_000
+    } else if (advertisementView === 'map') {
+        page = 0
+        size = 10_000
     }
 
     // Extract values and construct the query parameters
@@ -68,21 +71,25 @@ function sendSearchData(advertisementView, append=false) {
         postal_number: $(`#postal-number-${advertisementView}`).val(),
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
-        page: page.toString()
+        page: page.toString(),
+        size: page.toString(),
     })).toString();
 
     // Fetch API to send the data to your backend
-    authFetch('/advertisement?' + params).then(response => {
-        if (!response.ok) {
-            displayErrorMessage("Noget gik galt");
-            return;
-        }
-        return response.json();
-    }).then(data => {
-        displayAdvertisements(data, append, true);
-    }).catch(error => {
-        console.error('Error:', error);
-    });
+    let response = await authFetch('/advertisement?' + params)
+
+    if (!response.ok) {
+        displayErrorMessage("Noget gik galt");
+        return;
+    }
+    let response_json = await response.json()
+
+    // Load results in either list or map view
+    if (advertisementView === 'list') {
+        displayAdvertisementsOnList(response_json, append, true);
+    } else if (advertisementView === 'map') {
+        displayAdvertisementsOnMap(response_json)
+    }
 }
 
 
@@ -354,7 +361,7 @@ function setupAllAutoCompletes() {
 }
 
 
-export async function displayAdvertisements(response, append=false, triggerPopup=false) {
+export async function displayAdvertisementsOnList(response, append=false, triggerPopup=false) {
     const advertisements = response.objects;
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');

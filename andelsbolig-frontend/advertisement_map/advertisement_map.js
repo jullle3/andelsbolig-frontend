@@ -1,5 +1,4 @@
-import {authFetch} from "../auth/auth.js";
-import {displayErrorMessage} from "../utils.js";
+import {sendSearchData} from "../advertisement_list/advertisement_list.js";
 
 let infowindow;
 
@@ -16,7 +15,6 @@ export function initMap() {
     window.googlemap = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
     infowindow = new google.maps.InfoWindow();
 
-    fetchLocationsAndDisplay(); // Fetch locations after initializing the map
 }
 
 
@@ -39,42 +37,31 @@ function createCustomSVGIconWithPNG(imageUrl, width, height) {
     </svg>`;
 }
 
-
-async function fetchLocationsAndDisplay() {
-    let t1 = performance.now();
-    const response = await authFetch('/advertisement?size=10000');
-    if (!response.ok) {
-        let body = await response.json();
-        displayErrorMessage(body.detail);
-        return;
+export async function displayAdvertisementsOnMap(response_json) {
+    // Remove existing markers if they exist
+    if (window.markers && window.markers.length) {
+        window.markers.forEach(marker => marker.setMap(null));
     }
 
+    let t1 = performance.now();
     const parser = new DOMParser();
 
-    const advertisements = await response.json();
-    window.markers = advertisements.objects.map(ad => {
-        // const svgString = createCustomSVGIcon("#7837FF", "Test");
-        // const svgElement = parser.parseFromString(svgString, "image/svg+xml").documentElement;
+    console.log(response_json.count)
+    // Create new markers and store them globally
+    window.markers = response_json.objects.map(ad => {
         const customSVG = createCustomSVGIconWithPNG('pics/house_marker.png', 40, 40);
         const svgElement = parser.parseFromString(customSVG, "image/svg+xml").documentElement;
 
-
         const marker = new google.maps.marker.AdvancedMarkerElement({
-            position: new google.maps.LatLng(ad.location.coordinates[0], ad.location.coordinates[1]),
-            // collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
+            position: new google.maps.LatLng(ad.location.coordinates[1], ad.location.coordinates[0]),
             map: window.googlemap,
             title: ad.title,
             content: svgElement,
-
-            // very CPU intensive to build HTML content for all markers
-            // content: buildContent(ad),
         });
 
-        // Attach the click event listener
-        // Attach click event listener to build and display content only when needed
+        // Attach the click event listener to build and display content dynamically
         marker.addListener('click', function() {
-            const content = buildContent(ad);  // Build content dynamically on click
-            // Assuming infowindow is a global or previously defined variable
+            const content = buildContent(ad);
             infowindow.setContent(content);
             infowindow.open(window.googlemap, marker);
         });
@@ -84,8 +71,8 @@ async function fetchLocationsAndDisplay() {
 
     let t2 = performance.now(); // End timing after all markers are set up
     console.log(`Added markers ${Math.round(t2 - t1)} milliseconds`);
-
 }
+
 
 function buildContent(advertisement) {
     const content = document.createElement("div");

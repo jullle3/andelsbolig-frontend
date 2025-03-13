@@ -32,9 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     SetupAgentEditView();
     SetupAgentCreateView();
 
-    // Call on page load
-    // TODO Should be handled in showView
     sendSearchData('list')
+    sendSearchData('map')
 
     await handleRouting()
 });
