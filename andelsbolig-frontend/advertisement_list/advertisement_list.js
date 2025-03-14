@@ -4,7 +4,7 @@ import {
     displayErrorMessage,
     cleanParams,
     removeDots,
-    parseFormattedInteger, displaySuccessMessage
+    parseFormattedInteger, displaySuccessMessage, currentUser, favoriteAdvertisement
 } from "../utils.js";
 import {loadAgents} from "../agent/agent.js";
 import {showView} from "../views/viewManager.js";
@@ -358,14 +358,13 @@ function setupAllAutoCompletes() {
 }
 
 
-export async function displayAdvertisementsOnList(response, append=false, triggerPopup=false) {
+export async function displayAdvertisementsOnList(response, append = false, triggerPopup = false) {
     const advertisements = response.objects;
     const listingsContainer = document.getElementById('listings-container');
     const noResultsContainer = document.getElementById('no-results');
 
-    // Clear previous listings
-    if (!append)
-        listingsContainer.innerHTML = '';
+    // Clear previous listings if not appending
+    if (!append) listingsContainer.innerHTML = '';
 
     // Check if advertisements are available
     if (advertisements.length === 0) {
@@ -373,9 +372,16 @@ export async function displayAdvertisementsOnList(response, append=false, trigge
     } else {
         noResultsContainer.style.display = 'none';
         advertisements.forEach(advertisement => {
+            const isFavorited = isAdvertisementFavorite(advertisement._id);
+            const heartIcon = isFavorited ? 'bi bi-heart-fill text-danger' : 'bi bi-heart';
+
             listingsContainer.innerHTML += `
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
-                <div class="card advertisement-card" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
+                <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
+                    <!-- Favorite Heart Icon -->
+                    <div class="favorite-icon position-absolute" style="top: 10px; right: 10px; z-index: 10;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
+                        <i class="${heartIcon}"></i>
+                    </div>
                     <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
                     <div class="card-body">
                         <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>
@@ -393,9 +399,9 @@ export async function displayAdvertisementsOnList(response, append=false, trigge
 
     // Display Next Page button only if more results are available
     if (response.total_object_count > listingsContainer.children.length) {
-        $("#next-page-button").removeClass('d-none')
+        $("#next-page-button").removeClass('d-none');
     } else {
-        $("#next-page-button").addClass('d-none')
+        $("#next-page-button").addClass('d-none');
     }
 
     if (triggerPopup) {
@@ -403,6 +409,10 @@ export async function displayAdvertisementsOnList(response, append=false, trigge
         setTimeout(showAnnonceagentPopup, 500);
     }
 }
+
+
+
+
 
 function showAnnonceagentPopup() {
     const popup = `
@@ -671,6 +681,13 @@ export function insertSearchComponents() {
     });
 }
 
+// Return true if the given advertisement is in the logged in users favorite list, else false
+function isAdvertisementFavorite(advertisement_id) {
+    if (currentUser === null){
+        return false
+    }
 
+    return currentUser.favorite_advertisements.includes(advertisement_id);
+}
 
 window.sendSearchData = sendSearchData;

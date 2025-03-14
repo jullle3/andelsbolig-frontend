@@ -1,6 +1,6 @@
 import {authFetch} from "../auth/auth.js";
 import {resetViewAfterLogin, showView, viewAfterLogin} from "../views/viewManager.js";
-import {decodeJwt, displayErrorMessage, displaySuccessMessage} from "../utils.js";
+import {decodeJwt, displayErrorMessage, displaySuccessMessage, loadUser} from "../utils.js";
 import {setupProfileView} from "../profile/profile.js";
 import {updateNavbar} from "../header/header.js";
 
@@ -111,6 +111,7 @@ export async function updateAfterLogin(jwt, modalToHideID) {
     updateJWT(jwt);
     setupProfileView();
     updateNavbar()
+    loadUser()
 
     // Close the modal after successful login
     bootstrap.Modal.getInstance(document.getElementById(modalToHideID)).hide();

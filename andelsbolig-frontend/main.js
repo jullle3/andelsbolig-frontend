@@ -1,4 +1,4 @@
-import {setupUtils} from "./utils.js";
+import {loadUser, setupUtils} from "./utils.js";
 import {setupViews, showView} from "./views/viewManager.js";
 import {setupProfileView} from "./profile/profile.js";
 import {populateCreateAdvertisementForm, setupCreateAdvertisementView} from "./create-advertisement/create-advertisement.js";
@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     sendSearchData('list')
     sendSearchData('map')
-
+    loadUser()
     await handleRouting()
+
 });
 
 // Change route accordingly whenver user pastes a new URL into the browser

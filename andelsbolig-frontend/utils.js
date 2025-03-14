@@ -1,6 +1,7 @@
 import {updateStripePaymentElements} from "./login/login.js";
 import {authFetch} from "./auth/auth.js";
-import {displayAdvertisementsOnList} from "./advertisement_list/advertisement_list.js";
+
+export let currentUser = null;
 
 
 export function displayErrorMessage(message, ms = 5000) {
@@ -146,7 +147,37 @@ export async function isSubscribed() {
     return response.ok
 }
 
+// Load and store info about the logged-in user
+export async function loadUser() {
+    if (!isLoggedIn()) {
+        return
+    }
+
+    const jwt = decodeJwt()
+    const response = await authFetch(`/user/${jwt.sub}`);
+
+    if (!response.ok) {
+        let body = await response.json()
+        displayErrorMessage(body.detail);
+        return;
+    }
+    currentUser = await response.json()
+}
+
+export function resetCurrentUser(){
+    currentUser = null;
+}
+
+// TODO: Denne skal tjekke om ID'et er i brugerens liste, og ud fra dette afgøres det om der skal sendes en ADD/REMOVE
+//  til backend
+export async function favoriteAdvertisement(advertisement_id) {
+    console.log("Favoriting")
+}
+
+
+
 
 window.formatNumber = formatNumber;
 window.hideSuccessMessage = hideSuccessMessage;
 window.hideErrorMessage = hideErrorMessage;
+window.favoriteAdvertisement = favoriteAdvertisement;
