@@ -75,7 +75,6 @@ export async function sendSearchData(advertisementView, append=false) {
         size: size.toString(),
     })).toString();
 
-    // Fetch API to send the data to your backend
     let response = await authFetch('/advertisement?' + params)
 
     if (!response.ok) {
@@ -292,9 +291,6 @@ function setupRoomsSliders() {
 }
 
 
-/*********************************************************
- * 1. CITY AUTOCOMPLETE
- *********************************************************/
 function setupCityAutocomplete(suffix, cityData) {
     $("#city" + suffix).autocomplete({
         source: cityData,
@@ -310,9 +306,6 @@ function setupCityAutocomplete(suffix, cityData) {
     });
 }
 
-/*********************************************************
- * 2. POSTAL AUTOCOMPLETE
- *********************************************************/
 function setupPostalAutocomplete(suffix, postalData) {
     // Example: selector could be "#postal-number" or "#postal-number-agenteditview"
     $("#postal-number" + suffix).autocomplete({
