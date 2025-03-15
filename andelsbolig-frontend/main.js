@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     SetupAgentEditView();
     SetupAgentCreateView();
 
+    // Important to await, since user is used in sendSearchData()
+    await loadUser()
     sendSearchData('list')
     sendSearchData('map')
-    loadUser()
     await handleRouting()
-
 });
 
 // Change route accordingly whenver user pastes a new URL into the browser

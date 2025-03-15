@@ -168,24 +168,52 @@ export function resetCurrentUser(){
     currentUser = null;
 }
 
-// TODO: Denne skal tjekke om ID'et er i brugerens liste, og ud fra dette afgøres det om der skal sendes en ADD/REMOVE
-//  til backend
 // Called when user clicks "favorite" icon on an advertisement, the to either favorite or unfavorite then depends on the isFavorited param
-export async function favoriteAdvertisement(advertisementId, isFavorited) {
+export async function favoriteAdvertisement(advertisementId) {
     if (currentUser === null) {
-        return
+        return;
     }
 
-    // If it was favorited, and the user clicked the "favorite" icon, the advertisement should be un-favorited
-    if (isFavorited) {
-        console.log("Removed from favorites")
-        currentUser.favorite_advertisements.filter(item => item !== advertisementId)
+    const isFavorited = currentUser.favorite_advertisements.includes(advertisementId);
+
+    // Update "favorite" icon for advertisement
+    const iconElement = document.querySelector(`.favorite-icon[data-advertisement-id-list="${advertisementId}"] i`);
+    if (!iconElement) {
+        console.warn(`Favorite icon for advertisement ${advertisementId} not found.`);
+        return;
+    }
+
+    // Determine the operation: if currently favorited, we want to remove it, otherwise add it.
+    const addOperation = !isFavorited;
+
+    if (addOperation) {
+        // Added to favorites
+        currentUser.favorite_advertisements.push(advertisementId);
+        iconElement.classList.remove("bi-heart");
+        iconElement.classList.add("bi-heart-fill", "text-danger");
     } else {
-        console.log("Added to favorites")
-        currentUser.favorite_advertisements.push(advertisementId)
+        // Removed from favorites
+        currentUser.favorite_advertisements = currentUser.favorite_advertisements.filter(item => item !== advertisementId);
+        iconElement.classList.remove("bi-heart-fill", "text-danger");
+        iconElement.classList.add("bi-heart");
+    }
+
+    // Query the backend to update the user's favorites
+    const response = await authFetch('/user', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            favorite_advertisement: advertisementId,
+            favorite_advertisement_add_operation: addOperation
+        })
+    });
+
+    if (!response.ok) {
+        displayErrorMessage("Noget gik galt");
     }
 }
-
 
 
 
