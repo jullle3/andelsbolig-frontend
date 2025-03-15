@@ -170,8 +170,20 @@ export function resetCurrentUser(){
 
 // TODO: Denne skal tjekke om ID'et er i brugerens liste, og ud fra dette afgøres det om der skal sendes en ADD/REMOVE
 //  til backend
-export async function favoriteAdvertisement(advertisement_id) {
-    console.log("Favoriting")
+// Called when user clicks "favorite" icon on an advertisement, the to either favorite or unfavorite then depends on the isFavorited param
+export async function favoriteAdvertisement(advertisementId, isFavorited) {
+    if (currentUser === null) {
+        return
+    }
+
+    // If it was favorited, and the user clicked the "favorite" icon, the advertisement should be un-favorited
+    if (isFavorited) {
+        console.log("Removed from favorites")
+        currentUser.favorite_advertisements.filter(item => item !== advertisementId)
+    } else {
+        console.log("Added to favorites")
+        currentUser.favorite_advertisements.push(advertisementId)
+    }
 }
 
 

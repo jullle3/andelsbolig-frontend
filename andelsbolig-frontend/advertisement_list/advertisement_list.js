@@ -379,7 +379,7 @@ export async function displayAdvertisementsOnList(response, append = false, trig
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
                 <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
                     <!-- Favorite Heart Icon -->
-                    <div class="favorite-icon position-absolute" style="top: 10px; right: 10px; z-index: 10;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
+                    <div class="favorite-icon position-absolute" style="top: 10px; right: 10px; z-index: 10;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}, ${isFavorited}');">
                         <i class="${heartIcon}"></i>
                     </div>
                     <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
