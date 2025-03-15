@@ -42,7 +42,6 @@ export function setupAdvertisementListView() {
 }
 
 
-// TODO add favorites only
 export async function sendSearchData(advertisementView, append=false) {
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
@@ -56,6 +55,12 @@ export async function sendSearchData(advertisementView, append=false) {
     } else if (advertisementView === 'map') {
         page = 0
         size = 10_000
+    }
+
+    let sortValue = "";
+    if (advertisementView === 'list') {
+        const sortSelect = document.getElementById(`sort-options-${advertisementView}`);
+        sortValue = sortSelect.value;
     }
 
     // Extract values and construct the query parameters
@@ -73,6 +78,7 @@ export async function sendSearchData(advertisementView, append=false) {
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
         favorites_only: document.getElementById(`favorites-only-${advertisementView}`).checked ? "true" : "",
+        sort: sortValue,
         page: page.toString(),
         size: size.toString(),
     })).toString();
@@ -548,14 +554,13 @@ export function createAnnonceagent(agentId, view) {
 
 function generateSearchComponents(suffix) {
     return `
-            <div class="container mt-4 pb-2">
+        <div class="container mt-4 pb-2">
+            <!-- First row: Search bar -->
             <div class="row justify-content-center">
                 <div class="col-8 d-flex position-relative" style="min-width: 600px">
-
                     <div class="input-group">
                         <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
                         <div class="input-group-text">
-
                             <!-- Advanced Search dropdown bar -->
                             <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
                                 <i class="bi bi-three-dots-vertical"></i>
@@ -563,7 +568,6 @@ function generateSearchComponents(suffix) {
 
                             <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
                                 <div class="card card-body">
-
                                     <!-- Price -->
                                     <div class="mt-4 mb-1 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -576,7 +580,7 @@ function generateSearchComponents(suffix) {
                                         </div>
                                     </div>
 
-                                    <!-- Monthly fee-->
+                                    <!-- Monthly fee -->
                                     <div class="mt-3 m-0 p-0 pb-4">
                                         <div class="row">
                                             <div class="col-4 text-start">
@@ -631,7 +635,7 @@ function generateSearchComponents(suffix) {
                                                 <h6 class="mb-0">By</h6>
                                             </div>
                                             <div class="col-8">
-                                                <input  type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by">
+                                                <input type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by">
                                             </div>
                                         </div>
                                     </div>
@@ -639,28 +643,34 @@ function generateSearchComponents(suffix) {
                                     <!-- Radius search -->
                                     <div class="m-0 p-0 pb-4">
                                         <div class="row align-items-center">
-                                            <div class="col-4 text-start"><h6 class="mb-0">Radius søgning</h6></div>
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Radius søgning</h6>
+                                            </div>
                                             <div class="col-2">
                                                 <input type="text" id="radius-${suffix}" class="form-control">
                                             </div>
-                                            <div class="col-2"><h6 class="mb-0">km fra</h6></div>
+                                            <div class="col-2">
+                                                <h6 class="mb-0">km fra</h6>
+                                            </div>
                                             <div class="col-4">
-                                                <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr"></div>
+                                                <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr">
+                                            </div>
                                         </div>
                                     </div>
-                                    
+
+                                    <!-- Favorites Only Switch -->
                                     <div class="m-0 p-0 pb-4">
-                                      <div class="row align-items-center">
-                                        <div class="col-4 text-start">
-                                          <h6 class="mb-0">Kun favoritter</h6>
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-start">
+                                                <h6 class="mb-0">Kun favoritter</h6>
+                                            </div>
+                                            <div class="col-1">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="favorites-only-${suffix}">
+                                                    <label class="form-check-label" for="favorites-only-${suffix}"></label>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-1">
-                                          <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="favorites-only-${suffix}">
-                                            <label class="form-check-label" for="favorites-only-${suffix}"></label>
-                                          </div>
-                                        </div>
-                                      </div>
                                     </div>
 
                                     <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData('${suffix}')">Søg</button>
@@ -670,41 +680,34 @@ function generateSearchComponents(suffix) {
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Simplified and stylish results counter -->
-        <div class="container mt-0 pt-0">
-          <div class="row justify-content-center">
-            <div class="col-8">
-              <div class="d-flex justify-content-start">
-                <span class="badge rounded-pill bg-light text-dark border">
-                  <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
-                </span>
-              </div>
-            </div>
-            
-            ${suffix==='list' ? `
-            <div class="col-4 d-flex justify-content-end align-items-center">
-              <select class="form-select w-auto" id="sort-options-${suffix}">
-                <option value="default">Sort by Default</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="date-desc">Newest First</option>
-                <option value="date-asc">Oldest First</option>
-                <option value="rooms-asc">Rooms: Ascending</option>
-                <option value="rooms-desc">Rooms: Descending</option>
-              </select>
-            </div>
-            ` : ``}
-            
-          </div>
-        </div>
-        
+            <!-- Second row: Results counter (left) and sort dropdown (right) -->
+            <div class="row justify-content-center mt-3">
+                <div class="col-8 d-flex align-items-center justify-content-between">
+                    <!-- Result counter -->
+                    <span class="badge rounded-pill bg-light text-dark border">
+                        <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
+                    </span>
 
-    
-    
+                    <!-- Sort dropdown (only visible if suffix === 'list') -->
+                    ${suffix === 'list' ? `
+                        <select class="form-select w-auto" id="sort-options-${suffix}">
+                            <option value="created-desc">Sorter nyeste først</option>
+                            <option value="created-asc">Ældste først</option>
+                            <option value="price-asc">Billigste først</option>
+                            <option value="price-desc">Dyreste først</option>
+                            <option value="monthly_fee-asc">Billigste husleje først</option>
+                            <option value="monthly_fee-desc">Dyreste husleje først</option>
+                            <option value="square_meters-asc">Mindste først</option>
+                            <option value="square_meters-desc">Største først</option>
+                        </select>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
     `;
 }
+
 
 export function insertSearchComponents() {
     document.querySelectorAll('.view[data-advertisement-view]').forEach(view => {
@@ -712,8 +715,18 @@ export function insertSearchComponents() {
         const advertisementViewType = view.getAttribute('data-advertisement-view');
         const container = view.querySelector('.search-components-container');
         container.innerHTML = generateSearchComponents(advertisementViewType);
+
+        // Attach event listener for sort dropdown
+        if (advertisementViewType === 'list') {
+            const sortSelect = container.querySelector(`#sort-options-${advertisementViewType}`);
+            sortSelect.addEventListener('change', () => {
+                // Trigger the method to update the results with new sorting.
+                sendSearchData('list');
+            });
+        }
     });
 }
+
 
 // Return true if the given advertisement is in the logged in users favorite list, else false
 export function isAdvertisementFavorite(advertisement_id) {
