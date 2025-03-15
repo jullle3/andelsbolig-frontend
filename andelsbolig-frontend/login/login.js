@@ -116,6 +116,10 @@ export async function updateAfterLogin(jwt, modalToHideID) {
     // Close the modal after successful login
     bootstrap.Modal.getInstance(document.getElementById(modalToHideID)).hide();
 
+    if (viewAfterLogin === null) {
+        return
+    }
+
     // Important that this awaits, since the values reset in resetViewAfterLogin() are used in showView()
     await showView(viewAfterLogin);
     resetViewAfterLogin();

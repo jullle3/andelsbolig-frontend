@@ -170,16 +170,16 @@ export function resetCurrentUser(){
 }
 
 // Called when user clicks "favorite" icon on an advertisement, the to either favorite or unfavorite then depends on the isFavorited param
-export async function favoriteAdvertisement(advertisementId) {
+export async function favoriteAdvertisement(id_to_update, advertisementId) {
     if (currentUser === null) {
-        displayLoginModal("list", null)
+        displayLoginModal(null, null)
         return;
     }
 
     const isFavorited = currentUser.favorite_advertisements.includes(advertisementId);
 
     // Update "favorite" icon for advertisement
-    const iconElement = document.querySelector(`.favorite-icon[data-advertisement-id-list="${advertisementId}"] i`);
+    const iconElement = document.querySelector(`.favorite-icon[${id_to_update}="${advertisementId}"] i`);
     if (!iconElement) {
         console.warn(`Favorite icon for advertisement ${advertisementId} not found.`);
         return;

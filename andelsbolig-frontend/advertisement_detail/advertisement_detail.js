@@ -1,6 +1,7 @@
 import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
+import {isAdvertisementFavorite} from "../advertisement_list/advertisement_list.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
@@ -18,6 +19,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
 
     let isAdvertisementCreatedByUser;
     const advertisement = await response.json();
+    const isFavorited = isAdvertisementFavorite(advertisement._id);
     const detail_view = document.getElementById('detail');
     const decodedJwt = decodeJwt();
     if (decodedJwt === null) {
@@ -80,7 +82,17 @@ export async function loadAdvertisementDetail(advertisement_id) {
         </div>
         
         <div class="col-lg-6 vertical-line p-4">
-            <form class="read-only-form">
+        
+                    <!-- 
+                    <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
+                    -->
+                    <div class="favorite-icon text-end p-0 m-0" data-advertisement-id-detail="${advertisement._id}" onclick="favoriteAdvertisement('data-advertisement-id-detail', '${advertisement._id}');">
+                        <i class="${isFavorited ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
+                         Gem
+                    </div>
+                    
+                    
+            <form class="read-only-form  pt-0 mt-0">
                 <label class="text-secondary" for="display_price">Pris</label>
                 <div class="input-group">
                     <input class="form-control" value="${advertisement.price.toLocaleString('da-DK')}" type="text"  id="display_price" name="display_price" required readonly
