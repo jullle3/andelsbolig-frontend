@@ -378,8 +378,8 @@ export async function displayAdvertisementsOnList(response, append = false, trig
             listingsContainer.innerHTML += `
             <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
                 <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
-                    <!-- Favorite Heart Icon -->
-                    <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
+                    <!-- Favorite Heart Icon with background for better contrast -->
+                    <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
                         <i class="${isFavorited ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
                     </div>
                     <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
@@ -409,6 +409,7 @@ export async function displayAdvertisementsOnList(response, append = false, trig
         setTimeout(showAnnonceagentPopup, 500);
     }
 }
+
 
 
 
