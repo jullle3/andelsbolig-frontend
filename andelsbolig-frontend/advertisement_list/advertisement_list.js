@@ -42,6 +42,7 @@ export function setupAdvertisementListView() {
 }
 
 
+// TODO add favorites only
 export async function sendSearchData(advertisementView, append=false) {
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
@@ -71,6 +72,7 @@ export async function sendSearchData(advertisementView, append=false) {
         postal_number: $(`#postal-number-${advertisementView}`).val(),
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
+        favorites_only: document.getElementById(`favorites-only-${advertisementView}`).checked ? "true" : "",
         page: page.toString(),
         size: size.toString(),
     })).toString();
@@ -550,7 +552,7 @@ function generateSearchComponents(suffix) {
                 <div class="col-8 d-flex position-relative" style="min-width: 600px">
 
                     <div class="input-group">
-                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel">
+                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
                         <div class="input-group-text">
 
                             <!-- Advanced Search dropdown bar -->
@@ -645,6 +647,21 @@ function generateSearchComponents(suffix) {
                                                 <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr"></div>
                                         </div>
                                     </div>
+                                    
+                                    <div class="m-0 p-0 pb-4">
+                                      <div class="row align-items-center">
+                                        <div class="col-4 text-start">
+                                          <h6 class="mb-0">Kun favoritter</h6>
+                                        </div>
+                                        <div class="col-1">
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="favorites-only-${suffix}">
+                                            <label class="form-check-label" for="favorites-only-${suffix}"></label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
                                     <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData('${suffix}')">Søg</button>
                                 </div>
                             </div>

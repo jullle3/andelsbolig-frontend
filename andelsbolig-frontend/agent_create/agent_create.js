@@ -66,7 +66,7 @@ function generateSharedComponents(viewType) {
                 <h1 class="pb-4">${viewType === "edit" ? "Rediger din Annonceagent" : "Opret Din Annonceagent"}</h1>
                 <div class="col-8 d-flex position-relative" style="min-width: 600px">
                     <div class="input-group w-100 pb-1">
-                        <input class="form-control" type="text" id="advertisement-list-search-${searchIdSuffix}" placeholder="Fritekst, vej, by, postnr, kommune eller landsdel" />
+                        <input class="form-control" type="text" id="advertisement-list-search-${searchIdSuffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst" />
                     </div>
                 </div>
             </div>
