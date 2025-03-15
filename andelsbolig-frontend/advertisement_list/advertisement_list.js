@@ -674,16 +674,34 @@ function generateSearchComponents(suffix) {
 
         <!-- Simplified and stylish results counter -->
         <div class="container mt-0 pt-0">
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <div class="d-flex justify-content-start">
-                    <span class="badge rounded-pill bg-light text-dark border">
-                        <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
-                    </span>
-                    </div>
-                </div>
+          <div class="row justify-content-center">
+            <div class="col-8">
+              <div class="d-flex justify-content-start">
+                <span class="badge rounded-pill bg-light text-dark border">
+                  <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
+                </span>
+              </div>
             </div>
+            
+            ${suffix==='list' ? `
+            <div class="col-4 d-flex justify-content-end align-items-center">
+              <select class="form-select w-auto" id="sort-options-${suffix}">
+                <option value="default">Sort by Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="rooms-asc">Rooms: Ascending</option>
+                <option value="rooms-desc">Rooms: Descending</option>
+              </select>
+            </div>
+            ` : ``}
+            
+          </div>
         </div>
+        
+
+    
     
     `;
 }
