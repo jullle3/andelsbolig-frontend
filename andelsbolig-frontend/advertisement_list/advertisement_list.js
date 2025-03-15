@@ -558,7 +558,7 @@ function generateSearchComponents(suffix) {
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
 
-                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 10;">
+                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
                                 <div class="card card-body">
 
                                     <!-- Price -->
