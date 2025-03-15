@@ -1,5 +1,6 @@
 import {updateStripePaymentElements} from "./login/login.js";
 import {authFetch} from "./auth/auth.js";
+import {displayLoginModal} from "./views/viewManager.js";
 
 export let currentUser = null;
 
@@ -171,6 +172,7 @@ export function resetCurrentUser(){
 // Called when user clicks "favorite" icon on an advertisement, the to either favorite or unfavorite then depends on the isFavorited param
 export async function favoriteAdvertisement(advertisementId) {
     if (currentUser === null) {
+        displayLoginModal("list", null)
         return;
     }
 

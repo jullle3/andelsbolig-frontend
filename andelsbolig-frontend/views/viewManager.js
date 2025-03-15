@@ -45,7 +45,7 @@ export async function showView(view, viewParams = new URLSearchParams()) {
     }
 
     if (payWalledView(view) && !(await isSubscribed())) {
-        // Show payment popup, if successful users are redirected to our homepage
+        // Show payment popup, successful users are redirected to our homepage
         new bootstrap.Modal(document.getElementById('paymentModal')).show();
         return
     }
@@ -81,7 +81,7 @@ export async function showView(view, viewParams = new URLSearchParams()) {
 }
 
 // Store values that will be needede after successful login
-function displayLoginModal(requestedView, viewParams) {
+export function displayLoginModal(requestedView, viewParams) {
     viewAfterLogin = requestedView;  // Remember the original view
     viewParamsAfterLogin = viewParams;  // Remember the original params
     const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
