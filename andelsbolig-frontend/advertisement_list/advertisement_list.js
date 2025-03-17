@@ -554,21 +554,21 @@ export function createAnnonceagent(agentId, view) {
 
 function generateSearchComponents(suffix) {
     return `
-                <div class="container mt-4 pb-2">
-                  <div class="row justify-content-center">
-                    <!-- Common container column for both rows -->
-                    <div class="col-12 col-md-8">
-                      <!-- First row: Search bar -->
-                      <div class="row">
-                        <div class="col d-flex position-relative">
-                          <div class="input-group">
-                            <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
-                            <div class="input-group-text">
-                              <!-- Advanced Search dropdown bar -->
-                              <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
-                                <i class="bi bi-three-dots-vertical"></i>
-                              </button>
-                              <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
+<div class="container mt-4 pb-2">
+    <div class="row justify-content-center">
+        <!-- Common container column for both rows -->
+        <div class="col-12 col-md-8">
+            <!-- First row: Search bar -->
+            <div class="row">
+                <div class="col d-flex position-relative">
+                    <div class="input-group">
+                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
+                        <div class="input-group-text">
+                            <!-- Advanced Search dropdown bar -->
+                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
+                            <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
                                 <div class="card card-body">
                                     <!-- Price -->
                                     <div class="mt-4 mb-1 p-0 pb-4">
@@ -581,7 +581,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Monthly fee -->
                                     <div class="mt-3 m-0 p-0 pb-4">
                                         <div class="row">
@@ -593,7 +592,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Square meters in m2 -->
                                     <div class="mt-3 m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -605,7 +603,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Rooms -->
                                     <div class="mt-3 m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -617,7 +614,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Postal Number -->
                                     <div class="m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -629,7 +625,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- City -->
                                     <div class="m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -641,7 +636,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Radius search -->
                                     <div class="m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -659,7 +653,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Favorites Only Switch -->
                                     <div class="m-0 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -674,7 +667,6 @@ function generateSearchComponents(suffix) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData('${suffix}')">Søg</button>
                                 </div>
                             </div>
@@ -682,35 +674,33 @@ function generateSearchComponents(suffix) {
                     </div>
                 </div>
             </div>
-
-
-              <!-- Second row: Results counter and sort dropdown -->
-              <div class="row mt-3">
+            <!-- Second row: Results counter and sort dropdown -->
+            <div class="row mt-3">
                 <div class="col-6 d-flex align-items-center">
-                  <!-- Result counter -->
-                  <span class="badge rounded-pill bg-light text-dark border">
+                    <!-- Result counter -->
+                    <span class="badge rounded-pill bg-light text-dark border">
                     <span id="search-result-count-${suffix}">0</span> Resultater
-                  </span>
+                    </span>
                 </div>
                 <div class="col-6 d-flex align-items-center justify-content-end">
-                  <!-- Sort dropdown (only visible if suffix === 'list') -->
-                  ${suffix === 'list' ? `
+                    <!-- Sort dropdown (only visible if suffix === 'list') -->
+                    ${suffix === 'list' ? `
                     <select class="form-select w-auto" id="sort-options-${suffix}">
-                      <option value="created-desc">Sorter nyeste først</option>
-                      <option value="created-asc">Ældste først</option>
-                      <option value="price-asc">Billigste først</option>
-                      <option value="price-desc">Dyreste først</option>
-                      <option value="monthly_fee-asc">Billigste husleje først</option>
-                      <option value="monthly_fee-desc">Dyreste husleje først</option>
-                      <option value="square_meters-asc">Mindste først</option>
-                      <option value="square_meters-desc">Største først</option>
+                        <option value="created-desc">Sorter nyeste først</option>
+                        <option value="created-asc">Ældste først</option>
+                        <option value="price-asc">Billigste først</option>
+                        <option value="price-desc">Dyreste først</option>
+                        <option value="monthly_fee-asc">Billigste husleje først</option>
+                        <option value="monthly_fee-desc">Dyreste husleje først</option>
+                        <option value="square_meters-asc">Mindste først</option>
+                        <option value="square_meters-desc">Største først</option>
                     </select>
-                  ` : ''}
+                    ` : ''}
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
+</div>
     `;
 }
 
