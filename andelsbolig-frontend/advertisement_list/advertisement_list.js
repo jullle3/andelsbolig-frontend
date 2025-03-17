@@ -554,19 +554,21 @@ export function createAnnonceagent(agentId, view) {
 
 function generateSearchComponents(suffix) {
     return `
-        <div class="container mt-4 pb-2">
-            <!-- First row: Search bar -->
-            <div class="row justify-content-center">
-                <div class="col-8 d-flex position-relative" style="min-width: 600px">
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
-                        <div class="input-group-text">
-                            <!-- Advanced Search dropdown bar -->
-                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
+                <div class="container mt-4 pb-2">
+                  <div class="row justify-content-center">
+                    <!-- Common container column for both rows -->
+                    <div class="col-12 col-md-8">
+                      <!-- First row: Search bar -->
+                      <div class="row">
+                        <div class="col d-flex position-relative">
+                          <div class="input-group">
+                            <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
+                            <div class="input-group-text">
+                              <!-- Advanced Search dropdown bar -->
+                              <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
                                 <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-
-                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
+                              </button>
+                              <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
                                 <div class="card card-body">
                                     <!-- Price -->
                                     <div class="mt-4 mb-1 p-0 pb-4">
@@ -681,29 +683,33 @@ function generateSearchComponents(suffix) {
                 </div>
             </div>
 
-            <!-- Second row: Results counter (left) and sort dropdown (right) -->
-            <div class="row justify-content-center mt-3">
-                <div class="col-8 d-flex align-items-center justify-content-between">
-                    <!-- Result counter -->
-                    <span class="badge rounded-pill bg-light text-dark border">
-                        <span id="search-result-count-${suffix}">0</span><span> Resultater</span>
-                    </span>
 
-                    <!-- Sort dropdown (only visible if suffix === 'list') -->
-                    ${suffix === 'list' ? `
-                        <select class="form-select w-auto" id="sort-options-${suffix}">
-                            <option value="created-desc">Sorter nyeste først</option>
-                            <option value="created-asc">Ældste først</option>
-                            <option value="price-asc">Billigste først</option>
-                            <option value="price-desc">Dyreste først</option>
-                            <option value="monthly_fee-asc">Billigste husleje først</option>
-                            <option value="monthly_fee-desc">Dyreste husleje først</option>
-                            <option value="square_meters-asc">Mindste først</option>
-                            <option value="square_meters-desc">Største først</option>
-                        </select>
-                    ` : ''}
+              <!-- Second row: Results counter and sort dropdown -->
+              <div class="row mt-3">
+                <div class="col-6 d-flex align-items-center">
+                  <!-- Result counter -->
+                  <span class="badge rounded-pill bg-light text-dark border">
+                    <span id="search-result-count-${suffix}">0</span> Resultater
+                  </span>
                 </div>
+                <div class="col-6 d-flex align-items-center justify-content-end">
+                  <!-- Sort dropdown (only visible if suffix === 'list') -->
+                  ${suffix === 'list' ? `
+                    <select class="form-select w-auto" id="sort-options-${suffix}">
+                      <option value="created-desc">Sorter nyeste først</option>
+                      <option value="created-asc">Ældste først</option>
+                      <option value="price-asc">Billigste først</option>
+                      <option value="price-desc">Dyreste først</option>
+                      <option value="monthly_fee-asc">Billigste husleje først</option>
+                      <option value="monthly_fee-desc">Dyreste husleje først</option>
+                      <option value="square_meters-asc">Mindste først</option>
+                      <option value="square_meters-desc">Største først</option>
+                    </select>
+                  ` : ''}
+                </div>
+              </div>
             </div>
+          </div>
         </div>
     `;
 }
