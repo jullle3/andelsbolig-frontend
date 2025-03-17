@@ -57,37 +57,44 @@ async function getAnnonceagentMatchCount() {
 
 
 function generateSharedComponents(viewType) {
+    // Simplified suffix calculation using a ternary operator
     const searchIdSuffix = viewType === "edit" ? "agenteditview" : "agentcreateview";
+    const headingText = viewType === "edit" ? "Rediger din Annonceagent" : "Opret Din Annonceagent";
+    const buttonText = headingText; // same text as heading
+    const buttonId = viewType === "edit" ? "editAnnonceagentBtn" : "createAnnonceagentBtn";
 
     return `
         <!-- Text search bar -->
         <div class="container">
             <div class="row justify-content-center">
-                <h1 class="pb-4">${viewType === "edit" ? "Rediger din Annonceagent" : "Opret Din Annonceagent"}</h1>
-                <div class="col-8 d-flex position-relative" style="min-width: 600px">
+                <div class="col-12 col-md-8">
+                    <h1 class="pb-4">${headingText}</h1>
                     <div class="input-group w-100 pb-1">
-                        <input class="form-control" type="text" id="advertisement-list-search-${searchIdSuffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst" />
+                        <input class="form-control" type="text" id="advertisement-list-search-${searchIdSuffix}" 
+                               placeholder="Vej, by, postnr, kommune, landsdel eller fritekst" />
                     </div>
                 </div>
             </div>
 
             <!-- Results Counter -->
             <div class="row justify-content-center mt-2">
-                <div class="col-12 col-md-auto d-flex justify-content-center">
-                    <span class="badge rounded-pill bg-light text-dark border">
-                        <span id="search-result-count-${searchIdSuffix}">0</span>
-                        <span> Resultater</span>
-                    </span>
+                <div class="col-12 col-md-8">
+                    <div class="text-start">
+                        <span class="badge rounded-pill bg-light text-dark border">
+                            <span id="search-result-count-${searchIdSuffix}">0</span>
+                            <span> Resultater</span>
+                        </span>
+                    </div>
                 </div>
             </div>
 
             <!-- Advanced Search Fields & Search button -->
             <div class="row justify-content-center mt-3">
-                <div class="col-8" style="min-width: 600px">
+                <div class="col-12 col-md-8">
                     <div class="card card-body">
                         ${generateAdvancedSearchFields(searchIdSuffix)}
-                        <button id="${viewType === "edit" ? "editAnnonceagentBtn" : "createAnnonceagentBtn"}" type="button" class="btn action-button w-100 text-white mt-3">
-                            ${viewType === "edit" ? "Rediger Annonceagent" : "Opret Annonceagent"}
+                        <button id="${buttonId}" type="button" class="btn action-button w-100 text-white mt-3">
+                            ${buttonText}
                         </button>
                     </div>
                 </div>
@@ -95,6 +102,7 @@ function generateSharedComponents(viewType) {
         </div>
     `;
 }
+
 
 function generateAdvancedSearchFields(suffix) {
     return `
