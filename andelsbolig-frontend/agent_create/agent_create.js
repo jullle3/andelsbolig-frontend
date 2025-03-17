@@ -57,17 +57,16 @@ async function getAnnonceagentMatchCount() {
 
 
 function generateSharedComponents(viewType) {
-    // Simplified suffix calculation using a ternary operator
     const searchIdSuffix = viewType === "edit" ? "agenteditview" : "agentcreateview";
     const headingText = viewType === "edit" ? "Rediger din Annonceagent" : "Opret Din Annonceagent";
-    const buttonText = headingText; // same text as heading
+    const buttonText = headingText;
     const buttonId = viewType === "edit" ? "editAnnonceagentBtn" : "createAnnonceagentBtn";
 
     return `
         <!-- Text search bar -->
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-8 mx-auto">
                     <h1 class="pb-4">${headingText}</h1>
                     <div class="input-group w-100 pb-1">
                         <input class="form-control" type="text" id="advertisement-list-search-${searchIdSuffix}" 
@@ -77,8 +76,8 @@ function generateSharedComponents(viewType) {
             </div>
 
             <!-- Results Counter -->
-            <div class="row justify-content-center mt-2">
-                <div class="col-12 col-md-8">
+            <div class="row mt-2">
+                <div class="col-12 col-md-8 mx-auto">
                     <div class="text-start">
                         <span class="badge rounded-pill bg-light text-dark border">
                             <span id="search-result-count-${searchIdSuffix}">0</span>
@@ -89,8 +88,8 @@ function generateSharedComponents(viewType) {
             </div>
 
             <!-- Advanced Search Fields & Search button -->
-            <div class="row justify-content-center mt-3">
-                <div class="col-12 col-md-8">
+            <div class="row mt-3">
+                <div class="col-12 col-md-8 mx-auto">
                     <div class="card card-body">
                         ${generateAdvancedSearchFields(searchIdSuffix)}
                         <button id="${buttonId}" type="button" class="btn action-button w-100 text-white mt-3">
