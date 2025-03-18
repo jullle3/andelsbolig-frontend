@@ -81,7 +81,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
             <p>${advertisement.description}</p>
         </div>
         
-        <div class="col-lg-6 vertical-line p-4">
+        <div class="col-lg-6 vertical-line horizontal-line p-4">
         
                     <!-- 
                     <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisement._id}');">
@@ -91,7 +91,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
                          Gem
                     </div>
                     
-                    
+            
             <form class="read-only-form  pt-0 mt-0">
                 <label class="text-secondary" for="display_price">Pris</label>
                 <div class="input-group">

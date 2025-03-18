@@ -22,9 +22,20 @@
 .vertical-line {
     border-left: none; /* Optional: Explicitly no border on smaller screens */
 }
+.horizontal-line {
+    border-top: none; /* Optional: Explicitly no border on smaller screens */
+}
 
 @media (min-width: 992px) {
     .vertical-line {
         border-left: 1px solid #ccc; /* Change #ccc to whatever color suits your design */
+    }
+}
+
+
+@media (max-width: 992px) {
+    .horizontal-line {
+        border-top: 1px solid #ccc; /* or your chosen style */
+        margin: 20px 0;
     }
 }
