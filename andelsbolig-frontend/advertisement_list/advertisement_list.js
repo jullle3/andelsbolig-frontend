@@ -381,8 +381,9 @@ export async function displayAdvertisementsOnList(response, append = false, trig
         noResultsContainer.style.display = 'none';
         advertisements.forEach(advertisement => {
             const isFavorited = isAdvertisementFavorite(advertisement._id);
+            // Larger screens have more cols
             listingsContainer.innerHTML += `
-            <div class="col-sm-6 col-md-4 col-lg-3 p-3 pb-3">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-sm-0 p-0 p-sm-3 p-md-3 p-lg-3 p-xl-3 p-xxl-3 pt-4">
                 <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
                     <!-- Favorite Heart Icon with background for better contrast -->
                     <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('data-advertisement-id-list', '${advertisement._id}');">

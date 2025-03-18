@@ -1,13 +1,4 @@
-.advertisement-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for transform and shadow */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Initial mild shadow */
-    cursor: default; /* Dont change cursor on card, since the card itself will be hovering */
-}
 
-.advertisement-card:hover {
-    transform: translateY(-5px) scale(1.03); /* Lift and slightly scale up the card */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Deeper shadow for lifted effect */
-}
 
 .card-img-top {
     height: 200px;
@@ -165,13 +156,38 @@
 }
 
 
-/* Hide the favorite icon by default */
-.advertisement-card .favorite-icon {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+
+/*Small screens*/
+@media (min-width: 576px) {
+    .advertisement-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for transform and shadow */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Initial mild shadow */
+        cursor: default; /* Dont change cursor on card, since the card itself will be hovering */
+    }
+
+    .advertisement-card:hover {
+        transform: translateY(-5px) scale(1.03); /* Lift and slightly scale up the card */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Deeper shadow for lifted effect */
+    }
+
+
+    /* Hide the favorite icon by default */
+    .advertisement-card .favorite-icon {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Show the favorite icon when the card is hovered */
+    .advertisement-card:hover .favorite-icon {
+        opacity: 1;
+    }
+
 }
 
-/* Show the favorite icon when the card is hovered */
-.advertisement-card:hover .favorite-icon {
-    opacity: 1;
+/*Large screens and up*/
+@media (max-width: 576px ) {
+    .advertisement-card:hover .favorite-icon {
+        opacity: 1;
+    }
 }
+
