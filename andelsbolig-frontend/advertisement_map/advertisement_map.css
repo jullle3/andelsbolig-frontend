@@ -19,7 +19,7 @@
 .property {
     align-items: center;
     background-color: #FFFFFF;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
     color: #263238;
     display: flex;
     font-size: 14px;
@@ -185,4 +185,14 @@
 
 .property:not(.highlight):has(.fa-shop)::after {
     border-top: 9px solid var(--shop-color);
+}
+
+
+.popup-content {
+    width: auto;
+    max-width: 90vw;
+    height: auto;
+    max-height: 80vh;
+    overflow: auto;
+    padding: 1rem;
 }

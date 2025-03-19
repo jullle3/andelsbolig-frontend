@@ -384,21 +384,7 @@ export async function displayAdvertisementsOnList(response, append = false, trig
             // Larger screens have more cols
             listingsContainer.innerHTML += `
             <div class="col-sm-6 col-md-4 col-lg-3 p-sm-0 p-0 p-sm-3 p-md-3 p-lg-3 p-xl-3 p-xxl-3 pt-4">
-                <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
-                    <!-- Favorite Heart Icon with background for better contrast -->
-                    <div class="favorite-icon position-absolute" data-advertisement-id-list="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('data-advertisement-id-list', '${advertisement._id}');">
-                        <i class="${isFavorited ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
-                    </div>
-                    <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
-                    <div class="card-body">
-                        <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>
-                        <p class="card-text">${advertisement.description.length > 50 ? advertisement.description.substring(0, 50) + '...' : advertisement.description}</p>
-                        <p class="card-text"><strong>Pris</strong> ${advertisement.price.toLocaleString('da-DK')} DKK</p>
-                        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>
-                        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
-                        <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
-                    </div>
-                </div>
+                ${generateAdvertisementCard(advertisement, "data-advertisement-id-list")}
             </div>
             `;
         });
@@ -732,6 +718,25 @@ export function isAdvertisementFavorite(advertisement_id) {
     }
 
     return currentUser.favorite_advertisements.includes(advertisement_id);
+}
+
+export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
+    return `
+<div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
+    <div class="favorite-icon position-absolute" ${advertisementHTMLId}="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisementHTMLId}', '${advertisement._id}');">
+        <i class="${isAdvertisementFavorite(advertisement._id) ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
+    </div>
+    <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
+    <div class="card-body">
+        <h5 class="card-text">${advertisement.title.length > 40 ? advertisement.title.substring(0, 40) + '...' : advertisement.title}</h5>
+        <p class="card-text">${advertisement.description.length > 50 ? advertisement.description.substring(0, 50) + '...' : advertisement.description}</p>
+        <p class="card-text"><strong>Pris</strong> ${advertisement.price.toLocaleString('da-DK')} DKK</p>
+        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>
+        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
+        <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
+    </div>
+</div>
+`;
 }
 
 window.sendSearchData = sendSearchData;

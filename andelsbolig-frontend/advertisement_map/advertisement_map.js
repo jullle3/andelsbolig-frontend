@@ -1,3 +1,5 @@
+import {generateAdvertisementCard} from "../advertisement_list/advertisement_list.js";
+
 let infowindow;
 
 
@@ -61,6 +63,18 @@ export async function displayAdvertisementsOnMap(response_json) {
             const content = buildContent(ad);
             infowindow.setContent(content);
             infowindow.open(window.googlemap, marker);
+
+            // Delay adding the listener until the InfoWindow's DOM is rendered.
+            google.maps.event.addListenerOnce(infowindow, 'domready', function() {
+                // Add document click handler to close the popup if click is outside
+                setTimeout(() => {
+                    document.addEventListener('pointerdown', handleOutsideClick);
+                }, 0);
+            });
+
+            // Prevent the click on the marker from propagating to the document
+            event.stopPropagation();
+
         });
 
         return marker;
@@ -70,43 +84,31 @@ export async function displayAdvertisementsOnMap(response_json) {
     console.log(`Added markers ${Math.round(t2 - t1)} milliseconds`);
 }
 
+// Clicks outside popups closes the card
+function handleOutsideClick(event) {
+    // Try to get the popup container element
+    const popupCard = document.getElementById('popup-card');
+    // If the popup exists and the click target is not inside it, close the InfoWindow
+    if (popupCard && !popupCard.contains(event.target)) {
+        infowindow.close();
+        document.removeEventListener('click', handleOutsideClick);
+    }
+}
+
 
 function buildContent(advertisement) {
     const content = document.createElement("div");
-
-    content.classList.add("property");
+    content.classList.add("property", "popup-content"); // Added responsive class
+    // Attack ID so we can attach clickHandler
     content.innerHTML = `
-    <div class="icon">
-        <i aria-hidden="true" class="fa fa-icon fa-advertisement_list" title="advertisement_list"></i>
-<!--        <i aria-hidden="true" class="bi bi-clock-history"></i>-->
-<!--        <i aria-hidden="true"></i>-->
-<!--        <span class="fa-sr-only">advertisement_list</span>-->
-    </div>
-    <div class="details" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
-    <div class="details">
-        <div class="price">${advertisement.price}</div>
-        <div class="address">${advertisement.address}</div>
-        <div class="features">
-        <div>
-<!--            <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>-->
-<!--            <span class="fa-sr-only">bedroom</span>-->
-            <span>1</span>
-        </div>
-        <div>
-<!--            <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>-->
-<!--            <span class="fa-sr-only">bathroom</span>-->
-            <span>1</span>
-        </div>
-        <div>
-<!--            <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>-->
-<!--            <span class="fa-sr-only">size</span>-->
-            <span>10<sup>2</sup></span>
-        </div>
-        </div>
-    </div>
-    `;
+<div id="popup-card">
+    ${generateAdvertisementCard(advertisement, "data-advertisement-id-map")}
+</div>`;
+
     return content;
 }
+
+
 
 
 
