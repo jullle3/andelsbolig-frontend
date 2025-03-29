@@ -130,9 +130,21 @@ export async function loadAdvertisementDetail(advertisement_id) {
                     <input class="form-control" value="${advertisement.address}" type="text" id="address" name="address" required readonly>
                 </div>
 
-                <div class="form-check form-switch mt-2">
-                    <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top" disabled ${advertisement.located_at_top ? 'checked' : ''}>
-                    <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top" disabled ${advertisement.located_at_top ? 'checked' : ''}>
+                        <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
+                    </div>
+                    
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" id="balcony" name="balcony" disabled ${advertisement.balcony ? 'checked' : ''}>
+                        <label class="form-check-label text-secondary" for="balcony">Altan</label>
+                    </div>
+                    
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input" type="checkbox" id="elevator" name="elevator" disabled ${advertisement.elevator ? 'checked' : ''}>
+                        <label class="form-check-label text-secondary" for="elevator">Elevator</label>
+                    </div>
                 </div>
             </form>
 

@@ -43,7 +43,6 @@ export async function setupCreateAdvertisementView() {
         }
     });
 
-    // TODO: Handle new fields
     // Create advertisement form submission
     document.getElementById('createForm').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -69,6 +68,8 @@ export async function setupCreateAdvertisementView() {
             square_meters: parseInt(formData.get('square_meters')),
             rooms: parseInt(formData.get('rooms')),
             located_at_top: formData.get('located_at_top') ? true : false,
+            balcony: formData.get('balcony') ? true : false,
+            elevator: formData.get('elevator') ? true : false,
             datafordeler_id: datafordeler_id,
         };
 
@@ -127,6 +128,8 @@ export async function populateCreateAdvertisementForm() {
         document.getElementById('square_meters').value = advertisement.square_meters || '';
         document.getElementById('rooms').value = advertisement.rooms || '';
         document.getElementById('located_at_top').checked = advertisement.located_at_top || false;
+        document.getElementById('balcony').checked = advertisement.balcony || false;
+        document.getElementById('elevator').checked = advertisement.elevator || false;
 
         // Display existing images
         const imagePreview = document.getElementById('imagePreview');
