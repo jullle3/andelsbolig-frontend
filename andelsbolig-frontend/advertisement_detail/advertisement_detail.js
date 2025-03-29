@@ -2,6 +2,7 @@ import {showView} from "../views/viewManager.js";
 import {authFetch} from "../auth/auth.js";
 import {decodeJwt, displayErrorMessage} from "../utils.js";
 import {isAdvertisementFavorite} from "../advertisement_list/advertisement_list.js";
+import {basePath} from "../config/config.js";
 
 function setFullImageSrc(src) {
     const modalImage = document.querySelector('#fullImageModal .modal-body img');
@@ -31,11 +32,18 @@ export async function loadAdvertisementDetail(advertisement_id) {
     // Start of the image carousel
     // tmp disable
     //<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
-    let carouselInnerHtml = advertisement.images.map((img, index) => `
+    let carouselInnerHtml = advertisement.images.length > 0
+        ? advertisement.images.map((img, index) => `
     <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
-        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
+      <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
     </div>
-`).join('');
+  `).join('')
+        : `
+    <div class="advertisement-image carousel-item active">
+      <img src="../${basePath}/pics/no_image_available.webp" class="d-block w-100" alt="Billede kommer snart">
+    </div>
+  `;
+
 
 
     detail_view.innerHTML = `

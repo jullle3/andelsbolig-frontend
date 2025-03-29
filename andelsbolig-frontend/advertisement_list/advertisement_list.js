@@ -9,6 +9,7 @@ import {
 import {loadAgents} from "../agent/agent.js";
 import {showView} from "../views/viewManager.js";
 import {displayAdvertisementsOnMap} from "../advertisement_map/advertisement_map.js";
+import {basePath} from "../config/config.js";
 
 
 let page = 0;
@@ -380,10 +381,9 @@ export async function displayAdvertisementsOnList(response, append = false, trig
     } else {
         noResultsContainer.style.display = 'none';
         advertisements.forEach(advertisement => {
-            const isFavorited = isAdvertisementFavorite(advertisement._id);
             // Larger screens have more cols
             listingsContainer.innerHTML += `
-            <div class="col-sm-6 col-md-4 col-lg-3 p-sm-0 p-0 p-sm-3 p-md-3 p-lg-3 p-xl-3 p-xxl-3 pt-4">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-sm-3 p-md-3 p-lg-3 p-xl-3 p-xxl-3 pt-4">
                 ${generateAdvertisementCard(advertisement, "data-advertisement-id-list")}
             </div>
             `;
@@ -665,7 +665,7 @@ function generateSearchComponents(suffix) {
             <div class="row mt-3">
                 <div class="col-6 d-flex align-items-center">
                     <!-- Result counter -->
-                    <span class="badge rounded-pill bg-light text-dark border">
+                    <span class="badge rounded-pill bg-light text-muted border">
                     <span id="search-result-count-${suffix}">0</span> Resultater
                     </span>
                 </div>
@@ -726,27 +726,48 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
     <div class="favorite-icon position-absolute" ${advertisementHTMLId}="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisementHTMLId}', '${advertisement._id}');">
         <i class="${isAdvertisementFavorite(advertisement._id) ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
     </div>
-    <img class="card-img-top" src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : ''}" alt="Billede kommer snart" />
-    <div class="card-body">
-<h5 class="card-text">
-  ${advertisement.title
-        ? (advertisement.title.length > 40
-            ? advertisement.title.substring(0, 40) + '...'
-            : advertisement.title)
-        : ''}
-</h5>
-<p class="card-text">
-  ${advertisement.description
-        ? (advertisement.description.length > 50
-            ? advertisement.description.substring(0, 50) + '...'
-            : advertisement.description)
-        : ''}
-</p>
+    <img class="card-img-top" 
+         src="${advertisement.images.length > 0 ? advertisement.images[0].thumbnail_url : `${basePath}/pics/no_image_available.webp`}" 
+         alt="Billede kommer snart" />
 
-        <p class="card-text"><strong>Pris</strong> ${advertisement.price.toLocaleString('da-DK')} DKK</p>
-        <p class="card-text"><strong>Månedlig ydelse</strong> ${advertisement.monthly_fee.toLocaleString('da-DK')} DKK</p>
-        <p class="card-text"><strong>Størrelse</strong> ${advertisement.square_meters} m², ${advertisement.rooms} værelser</p>
-        <p class="card-text"><strong>Adresse</strong> ${advertisement.address}, ${advertisement.city} ${advertisement.postal_code}</p>
+     
+    <div class="card-body">
+    
+    <!-- Allow title and description to be None -->
+    <h5 class="card-text">
+      ${advertisement.title
+            ? (advertisement.title.length > 40
+                ? advertisement.title.substring(0, 40) + '...'
+                : advertisement.title)
+            : ''}
+    </h5>
+    <p class="card-text">
+      ${advertisement.description
+            ? (advertisement.description.length > 50
+                ? advertisement.description.substring(0, 50) + '...'
+                : advertisement.description)
+            : ''}
+    </p>
+
+    <p class="card-text text-muted">
+      <i class="bi bi-tag" data-bs-toggle="tooltip" data-bs-placement="top" title="Pris - samlet pris for ejendommen"></i>
+      ${advertisement.price.toLocaleString('da-DK')} kr.
+    </p>
+    <p class="card-text text-muted">
+      <i class="bi bi-calendar" data-bs-toggle="tooltip" data-bs-placement="top" title="Månedlig ydelse - de månedlige omkostninger"></i>
+      ${advertisement.monthly_fee.toLocaleString('da-DK')} kr./mdn
+    </p>
+    <p class="card-text text-muted">
+      <i class="bi bi-rulers" data-bs-toggle="tooltip" data-bs-placement="top" title="Størrelse - boligens areal og antal værelser"></i>
+      ${advertisement.square_meters} m², ${advertisement.rooms} værelser
+    </p>
+    <p class="card-text text-muted">
+      <i class="bi bi-geo-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Adresse - ejendommens placering"></i>
+      ${advertisement.address && advertisement.city && advertisement.postal_number
+            ? `${advertisement.address}, ${advertisement.city}`
+            : "Ikke angivet"}
+    </p>
+    
     </div>
 </div>
 `;
