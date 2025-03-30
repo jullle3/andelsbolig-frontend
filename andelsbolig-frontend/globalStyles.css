@@ -44,9 +44,14 @@ h1 {
     z-index: 1000; /* Ensure it is above other elements */
 }
 
-.read-only-form .form-control,
-.read-only-form .form-check-input {
+.read-only-form .form-control {
     background-color: #e9ecef; /* Light grey background */
+    cursor: not-allowed; /* Change cursor to indicate non-editable */
+    pointer-events: none; /* Disable all pointer events */
+}
+
+.read-only-form .form-check-input {
+    /*background-color: #2779ca; !* Light grey background *!*/
     cursor: not-allowed; /* Change cursor to indicate non-editable */
     pointer-events: none; /* Disable all pointer events */
 }

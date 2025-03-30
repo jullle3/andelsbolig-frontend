@@ -47,7 +47,10 @@ export async function displayAdvertisementsOnMap(response_json) {
     const parser = new DOMParser();
 
     // Create new markers and store them globally
-    window.markers = response_json.objects.map(ad => {
+    window.markers = response_json.objects
+        .filter(ad => ad.location)
+        .map(ad => {
+
         const customSVG = createCustomSVGIconWithPNG('pics/house_marker.png', 40, 40);
         const svgElement = parser.parseFromString(customSVG, "image/svg+xml").documentElement;
 

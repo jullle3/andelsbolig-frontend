@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andelsboliger Portal</title>
+    <title>Andelsbolig Basen</title>
 
     <!--Bootstrap CSS -->
     <!--TODO Download disse og store lokalt? -->
@@ -106,113 +106,113 @@
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Opret & Rediger Din Annonce</h1>
-                    <form id="createForm">
+                    <form id="form-create">
 
-                        <label class="text-secondary form-label" for="title">Titel</label>
-                        <textarea class="form-control" name="title" id="title" rows="1"></textarea>
+                        <label class="text-secondary form-label" for="title_create">Titel</label>
+                        <textarea class="form-control" name="title_create" id="title_create" rows="1"></textarea>
 
-                        <label class="text-secondary mt-2" for="description">Beskrivelse</label>
-                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                        <label class="text-secondary mt-2" for="description_create">Beskrivelse</label>
+                        <textarea class="form-control" name="description_create" id="description_create" rows="3"></textarea>
 
-                        <label class="text-secondary mt-2" for="display_price">Pris / Andelskrone</label>
+                        <label class="text-secondary mt-2" for="display_price_create">Pris / Andelskrone</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="display_price" name="display_price" required
-                                   oninput="formatNumber(this, 'price');">
+                            <input type="text" class="form-control" id="display_price_create" name="display_price_create" required min="1" max="10_000_000"
+                                   oninput="formatNumber(this, 'price_create');">
                             <div class="input-group-text">kr</div>
-                            <input type="hidden" id="price" name="price">
+                            <input type="hidden" id="price_create" name="price_create">
                         </div>
 
-                        <label class="text-secondary mt-2" for="display_improvements_price">Hvor meget udgør forbedringer?</label>
+                        <label class="text-secondary mt-2" for="display_improvements_price_create">Hvor meget udgør forbedringer?</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="display_improvements_price" name="display_improvements_price" required
-                                   oninput="formatNumber(this, 'price');">
+                            <input type="text" class="form-control" id="display_improvements_price_create" name="display_improvements_price_create" required
+                                   oninput="formatNumber(this, 'improvements_price_create');">
                             <div class="input-group-text">kr</div>
-                            <input type="hidden" id="improvements" name="improvements">
+                            <input type="hidden" id="improvements_price_create" name="improvements_price_create">
                         </div>
 
 
-                        <label class="text-secondary mt-2" for="display_monthly_fee">Månedlig ydelse</label>
+                        <label class="text-secondary mt-2" for="display_monthly_fee_create">Månedlig ydelse</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" id="display_monthly_fee" name="display_monthly_fee"
-                                   required oninput="formatNumber(this, 'monthly_fee');">
+                            <input class="form-control" type="text" id="display_monthly_fee_create" name="display_monthly_fee_create"
+                                   required oninput="formatNumber(this, 'monthly_fee_create');">
                             <span class="input-group-text">kr</span>
-                            <input type="hidden" id="monthly_fee" name="monthly_fee">
+                            <input type="hidden" id="monthly_fee_create" name="monthly_fee_create">
                         </div>
 
-                        <label class="text-secondary mt-2" for="square_meters">Størrelse</label>
+                        <label class="text-secondary mt-2" for="square_meters_create">Størrelse</label>
                         <div class="input-group">
-                            <input class="form-control" type="number" id="square_meters" name="square_meters" required>
+                            <input class="form-control" type="number" id="square_meters_create" name="square_meters_create" required>
                             <span class="input-group-text">m²</span>
                         </div>
 
-                        <label class="text-secondary mt-2" for="rooms">Antal værelser</label>
+                        <label class="text-secondary mt-2" for="rooms_create">Antal værelser</label>
                         <div class="input-group">
-                            <input class="form-control" type="number" id="rooms" name="rooms" required min=1 max="10">
+                            <input class="form-control" type="number" id="rooms_create" name="rooms_create" required min=1 max="10">
                         </div>
 
-                        <label class="text-secondary mt-2" for="address">Adresse</label>
+                        <label class="text-secondary mt-2" for="address_create">Adresse</label>
                         <div class="dropdown">
-                            <input class="form-control dropdown-toggle" type="text" id="address" name="address" required aria-expanded="false" autocomplete="off" placeholder="Skriv vejnavn her">
+                            <input class="form-control dropdown-toggle" type="text" id="address_create" name="address_create" required aria-expanded="false" autocomplete="off" placeholder="Skriv vejnavn her">
                             <div class="dropdown-menu w-100" id="address-list">
                                 <!-- Nested dropdowns will be inserted here -->
                             </div>
                         </div>
 
 
-                        <label class="text-secondary mt-3" for="building_year">Byggeår for ejendommen</label>
+                        <label class="text-secondary mt-3" for="construction_year_create">Byggeår for ejendommen</label>
                         <div class="input-group">
-                            <input class="form-control" type="number"  id="building_year" name="building_year" min=1600 max="2030">
+                            <input class="form-control" type="number"  id="construction_year_create" name="construction_year_create" min=1600 max="2030">
                         </div>
 
-                        <label class="text-secondary mt-2" for="debt_factor">Friværdi i ejendommen</label>
+                        <label class="text-secondary mt-2" for="equity_percentage_create">Friværdi i ejendommen</label>
                         <div class="input-group">
-                            <input class="form-control" type="number" id="debt_factor" name="debt_factor" min="0" max="100">
+                            <input class="form-control" type="number" id="equity_percentage_create" name="equity_percentage_create" min="0" max="100">
                             <span class="input-group-text">%</span>
                         </div>
 
 
                         <div class="mt-2 text-secondary">
-                            <label for="energimaerke" class="form-label">Energimærkning</label>
+                            <label for="energy_label_create" class="form-label">Energimærkning</label>
                             <select
-                                    id="energimaerke"
-                                    name="energimaerke"
+                                    id="energy_label_create"
+                                    name="energy_label_create"
                                     class="form-select"
                             >
                                 <option value="" disabled selected></option>
                                 <!-- A 2020 (Darkest Green) -->
-                                <option value="A2020" style="background-color: #007800; color: #fff;">
+                                <option value="a2020" style="background-color: #007800; color: #fff;">
                                     A2020
                                 </option>
                                 <!-- A 2015 (Darker Green) -->
-                                <option value="A2015" style="background-color: #239a3b; color: #fff;">
+                                <option value="a2015" style="background-color: #239a3b; color: #fff;">
                                     A2015
                                 </option>
                                 <!-- A 2010 (Lighter Green) -->
-                                <option value="A2010" style="background-color: #5bbf47; color: #fff;">
+                                <option value="a2010" style="background-color: #5bbf47; color: #fff;">
                                     A2010
                                 </option>
                                 <!-- B (Greenish) -->
-                                <option value="B" style="background-color: #b7d75d; color: #000;">
+                                <option value="b" style="background-color: #b7d75d; color: #000;">
                                     B
                                 </option>
                                 <!-- C (Yellow) -->
-                                <option value="C" style="background-color: #f2d71a; color: #000;">
+                                <option value="c" style="background-color: #f2d71a; color: #000;">
                                     C
                                 </option>
                                 <!-- D (Orange) -->
-                                <option value="D" style="background-color: #f2a127; color: #000;">
+                                <option value="d" style="background-color: #f2a127; color: #000;">
                                     D
                                 </option>
                                 <!-- E (Reddish-Orange) -->
-                                <option value="E" style="background-color: #e86726; color: #fff;">
+                                <option value="e" style="background-color: #e86726; color: #fff;">
                                     E
                                 </option>
                                 <!-- F (Red) -->
-                                <option value="F" style="background-color: #b52424; color: #fff;">
+                                <option value="f" style="background-color: #b52424; color: #fff;">
                                     F
                                 </option>
                                 <!-- G (Purple) -->
-                                <option value="G" style="background-color: #68386c; color: #fff;">
+                                <option value="g" style="background-color: #68386c; color: #fff;">
                                     G
                                 </option>
                             </select>
@@ -221,23 +221,23 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check form-switch mt-2">
-                                <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top">
-                                <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
+                                <input class="form-check-input" type="checkbox" id="located_at_top_create" name="located_at_top_create">
+                                <label class="form-check-label text-secondary" for="located_at_top_create">Øverste etage</label>
                             </div>
                             <div class="form-check form-switch mt-2">
-                                <input class="form-check-input" type="checkbox" id="balcony" name="balcony">
-                                <label class="form-check-label text-secondary" for="balcony">Altan</label>
+                                <input class="form-check-input" type="checkbox" id="balcony_create" name="balcony_create">
+                                <label class="form-check-label text-secondary" for="balcony_create">Altan</label>
                             </div>
                             <div class="form-check form-switch mt-2">
-                                <input class="form-check-input" type="checkbox" id="elevator" name="elevator">
-                                <label class="form-check-label text-secondary" for="elevator">Elevator</label>
+                                <input class="form-check-input" type="checkbox" id="elevator_create" name="elevator_create">
+                                <label class="form-check-label text-secondary" for="elevator_create">Elevator</label>
                             </div>
                         </div>
 
                         <div class="mt-2">
-                            <label class="form-label text-secondary" for="create-images">Billeder</label>
-                            <input class="form-control" type="file" id="create-images" multiple>
-                            <div id="imagePreview"></div>
+                            <label class="form-label text-secondary" for="create-images_create">Billeder</label>
+                            <input class="form-control" type="file" id="create-images_create" multiple>
+                            <div id="imagePreview_create"></div>
                         </div>
 
                         <div class="row justify-content-center">
@@ -300,7 +300,7 @@
     </div>
 
     <div id="seller_profile" class="view">
-        <div class="container">
+        <div class="container mt-4">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
 

@@ -10,6 +10,10 @@ import {showView} from "../views/viewManager.js";
 let datafordeler_id = null;
 
 
+// Convert empty strings or null objects into null, since optional fields arent allowed to be of type str
+const normalizeValue = (value) => (value === "" || value === null ? null : value);
+
+
 export async function setupCreateAdvertisementView() {
     addressIntegration();
     setupDeleteAdvertisementConfirmation();
@@ -17,9 +21,9 @@ export async function setupCreateAdvertisementView() {
     createAdvertisementView.style.display = 'none'; // Hide the view by default
 
     // Handle image uploads
-    document.getElementById('create-images').addEventListener('change', async (event) => {
+    document.getElementById('create-images_create').addEventListener('change', async (event) => {
         const files = event.target.files;
-        const imagePreview = document.getElementById('imagePreview');
+        const imagePreview_create = document.getElementById('imagePreview_create');
 
 
         for (const file of files) {
@@ -35,7 +39,7 @@ export async function setupCreateAdvertisementView() {
             if (response.ok) {
                 // Display thumbnail
                 const imgElement = createImageElement(result);
-                imagePreview.appendChild(imgElement);
+                imagePreview_create.appendChild(imgElement);
             } else {
                 displayErrorMessage(result.detail);
                 console.error('Failed to upload image:', file.name);
@@ -44,13 +48,14 @@ export async function setupCreateAdvertisementView() {
     });
 
     // Create advertisement form submission
-    document.getElementById('createForm').addEventListener('submit', async (event) => {
+    document.getElementById('form-create').addEventListener('submit', async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
 
         // Format the price and monthly_fee fields
-        const priceInput = document.getElementById('display_price');
-        const monthlyFeeInput = document.getElementById('display_monthly_fee');
+        const priceInput = document.getElementById('display_price_create');
+        const improvementsPriceInput = document.getElementById('display_improvements_price_create');
+        const monthlyFeeInput = document.getElementById('display_monthly_fee_create');
 
         const formatNumber = (input) => {
             let with_dots = input.value;
@@ -59,17 +64,24 @@ export async function setupCreateAdvertisementView() {
         };
 
         const formattedPrice = formatNumber(priceInput);
+        const formattedImprovementsPrice = formatNumber(improvementsPriceInput);
         const formattedMonthlyFee = formatNumber(monthlyFeeInput);
+
+
         const newAdvertisement = {
-            title: formData.get('title'),
-            description: formData.get('description'),
+            title: formData.get('title_create'),
+            description: formData.get('description_create'),
             price: parseInt(formattedPrice),
+            improvements_price: parseInt(formattedImprovementsPrice),
             monthly_fee: parseInt(formattedMonthlyFee),
-            square_meters: parseInt(formData.get('square_meters')),
-            rooms: parseInt(formData.get('rooms')),
-            located_at_top: formData.get('located_at_top') ? true : false,
-            balcony: formData.get('balcony') ? true : false,
-            elevator: formData.get('elevator') ? true : false,
+            square_meters: parseInt(formData.get('square_meters_create')),
+            rooms: parseInt(formData.get('rooms_create')),
+            construction_year: normalizeValue(formData.get('construction_year_create')),
+            equity_percentage: normalizeValue(formData.get('equity_percentage_create')),
+            energy_label: normalizeValue(formData.get('energy_label_create')),
+            located_at_top: formData.get('located_at_top_create') ? true : false,
+            balcony: formData.get('balcony_create') ? true : false,
+            elevator: formData.get('elevator_create') ? true : false,
             datafordeler_id: datafordeler_id,
         };
 
@@ -97,7 +109,6 @@ export async function setupCreateAdvertisementView() {
 
 
 
-// TODO: Handle new fields
 export async function populateCreateAdvertisementForm() {
     /**
      * Populates the create advertisement form with existing advertisement data if available.
@@ -120,22 +131,27 @@ export async function populateCreateAdvertisementForm() {
 
     // Populate form fields if advertisement exists
     if (advertisement) {
-        document.getElementById('title').value = advertisement.title || '';
-        document.getElementById('description').value = advertisement.description || '';
-        document.getElementById('price').value = advertisement.price || '';
-        document.getElementById('monthly_fee').value = advertisement.monthly_fee || '';
-        document.getElementById('address').value = advertisement.address || '';
-        document.getElementById('square_meters').value = advertisement.square_meters || '';
-        document.getElementById('rooms').value = advertisement.rooms || '';
-        document.getElementById('located_at_top').checked = advertisement.located_at_top || false;
-        document.getElementById('balcony').checked = advertisement.balcony || false;
-        document.getElementById('elevator').checked = advertisement.elevator || false;
+        datafordeler_id = advertisement.datafordeler_id
+        document.getElementById('title_create').value = advertisement.title || '';
+        document.getElementById('description_create').value = advertisement.description || '';
+        document.getElementById('display_price_create').value = advertisement.price || '';
+        document.getElementById('display_improvements_price_create').value = advertisement.improvements_price || '';
+        document.getElementById('display_monthly_fee_create').value = advertisement.monthly_fee || '';
+        document.getElementById('address_create').value = advertisement.address || '';
+        document.getElementById('construction_year_create').value = advertisement.construction_year || '';
+        document.getElementById('equity_percentage_create').value = advertisement.equity_percentage || '';
+        document.getElementById('energy_label_create').value = advertisement.energy_label|| '';
+        document.getElementById('square_meters_create').value = advertisement.square_meters || '';
+        document.getElementById('rooms_create').value = advertisement.rooms || '';
+        document.getElementById('located_at_top_create').checked = advertisement.located_at_top || false;
+        document.getElementById('balcony_create').checked = advertisement.balcony || false;
+        document.getElementById('elevator_create').checked = advertisement.elevator || false;
 
         // Display existing images
-        const imagePreview = document.getElementById('imagePreview');
+        const imagePreview_create = document.getElementById('imagePreview_create');
         advertisement.images.forEach(img => {
             const imgElement = createImageElement(img);
-            imagePreview.appendChild(imgElement);
+            imagePreview_create.appendChild(imgElement);
         });
 
         // SHOW the button & assign the relevant ID
@@ -206,7 +222,7 @@ function createImageElement(img) {
 
 function addressIntegration() {
     const dropdownMenu = document.getElementById('address-list');
-    const addressInput = document.getElementById('address');
+    const addressInput = document.getElementById('address_create');
 
     // Function to hide dropdown
     function hideDropdown() {
@@ -268,7 +284,7 @@ function addressIntegration() {
                             nestedItem.textContent = address.adressebetegnelse;
                             nestedItem.addEventListener('click', (ne) => {
                                 ne.preventDefault();
-                                document.getElementById('address').value = address.adressebetegnelse;
+                                document.getElementById('address_create').value = address.adressebetegnelse;
                                 datafordeler_id = address.id_lokalId;
                                 hideDropdown(); // Close the dropdown
                             });

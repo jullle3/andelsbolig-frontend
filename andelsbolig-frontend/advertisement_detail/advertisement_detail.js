@@ -98,12 +98,20 @@ export async function loadAdvertisementDetail(advertisement_id) {
                     
             
             <form class="read-only-form  pt-0 mt-0">
-                <label class="text-secondary" for="display_price">Pris</label>
+                <label class="text-secondary" for="display_price">Pris inkl. forbedringer</label>
                 <div class="input-group">
                     <input class="form-control" value="${advertisement.price.toLocaleString('da-DK')}" type="text"  id="display_price" name="display_price" required readonly
                            oninput="formatNumber(this, 'price');">
                     <div class="input-group-text">kr</div>
                     <input type="hidden" id="price" name="price">
+                </div>
+                
+                <label class="text-secondary mt-2" for="display_improvements_price">Forbedringer udgør</label>
+                <div class="input-group">
+                    <input class="form-control" value="${advertisement.improvements_price.toLocaleString('da-DK')}" type="text"  id="display_improvements_price" name="display_improvements_price" required readonly
+                           oninput="formatNumber(this, 'improvements_price');">
+                    <div class="input-group-text">kr</div>
+                    <input type="hidden" id="improvements_price" name="improvements_price">
                 </div>
 
                 <label class="text-secondary mt-2" for="display_monthly_fee">Månedlig ydelse</label>
@@ -127,22 +135,45 @@ export async function loadAdvertisementDetail(advertisement_id) {
 
                 <label class="text-secondary mt-2" for="address">Addresse</label>
                 <div class="input-group">
-                    <input class="form-control" value="${advertisement.address}" type="text" id="address" name="address" required readonly>
+                    <input class="form-control" value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}" type="text" id="address" name="address" required readonly>
+                </div>
+
+                <label class="text-secondary mt-2" for="construction_year">Byggeår for ejendommen</label>
+                <div class="input-group">
+                    <input class="form-control" 
+                           value="${(advertisement.construction_year === null || advertisement.construction_year === '') ? '' : advertisement.construction_year}" 
+                           type="text" 
+                           id="construction_year" 
+                           name="construction_year" 
+                           readonly>
+                </div>
+                
+                <label class="text-secondary mt-2" for="equity_percentage">Friværdi i ejendommen</label>
+                <div class="input-group">
+                    <input class="form-control" 
+                           value="${(advertisement.equity_percentage === null || advertisement.equity_percentage === '') ? '' : advertisement.equity_percentage}" 
+                           type="number" 
+                           id="equity_percentage" 
+                           name="equity_percentage" 
+                           min="0" 
+                           max="100" 
+                           readonly>
+                    <span class="input-group-text">%</span>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="form-check form-switch mt-2">
-                        <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top" disabled ${advertisement.located_at_top ? 'checked' : ''}>
+                        <input class="form-check-input" type="checkbox" id="located_at_top" name="located_at_top" ${advertisement.located_at_top ? 'checked' : ''}>
                         <label class="form-check-label text-secondary" for="located_at_top">Øverste etage</label>
                     </div>
                     
                     <div class="form-check form-switch mt-2">
-                        <input class="form-check-input" type="checkbox" id="balcony" name="balcony" disabled ${advertisement.balcony ? 'checked' : ''}>
+                        <input class="form-check-input" type="checkbox" id="balcony" name="balcony" ${advertisement.balcony ? 'checked' : ''}>
                         <label class="form-check-label text-secondary" for="balcony">Altan</label>
                     </div>
                     
                     <div class="form-check form-switch mt-2">
-                        <input class="form-check-input" type="checkbox" id="elevator" name="elevator" disabled ${advertisement.elevator ? 'checked' : ''}>
+                        <input class="form-check-input" type="checkbox" id="elevator" name="elevator" ${advertisement.elevator ? 'checked' : ''}>
                         <label class="form-check-label text-secondary" for="elevator">Elevator</label>
                     </div>
                 </div>
@@ -157,6 +188,13 @@ export async function loadAdvertisementDetail(advertisement_id) {
               <i class="bi bi-eye"></i> <strong>Visninger</strong>
               ${advertisement.views}
             </p>
+            
+            ${ advertisement.energy_label ? `
+              <div class="label-container">
+                <img src="../${basePath}/pics/energy/${advertisement.energy_label}.webp" style="width: 80px; height: 80px" alt="Energy Label ${advertisement.energy_label}">
+              </div>
+            ` : '' }
+
 
             ${isAdvertisementCreatedByUser ? `
                 <div class="row justify-content-center">
@@ -169,7 +207,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
             ` : `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}'}))">
+                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}', scraped_realtor_url: '${advertisement.scraped_realtor_url}'}))">
                             Kontakt sælger
                         </button>
                     </div>

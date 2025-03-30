@@ -37,7 +37,7 @@ export function resetViewAfterLogin() {
 }
 
 // All views are to be accessed via this method. It authorizes the user (if needed), loads required data and shows the
-// view afterwards
+// view afterward
 export async function showView(view, viewParams = new URLSearchParams()) {
     if (loginRequiredView(view) && !isLoggedIn()) {
         displayLoginModal(view, viewParams)
@@ -95,7 +95,7 @@ async function loadViewData(view, viewParams) {
             await loadAdvertisementDetail(viewParams.get("id"))
             break;
         case "seller_profile":
-            await loadSellerProfile(viewParams.get("id"))
+            await loadSellerProfile(viewParams.get("id"), viewParams.get("scraped_realtor_url"))
             break;
         case "agent":
             await loadAgents()
