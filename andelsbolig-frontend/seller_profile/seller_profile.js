@@ -1,15 +1,7 @@
 import {authFetch} from "../auth/auth.js";
 import {displayErrorMessage} from "../utils.js";
 
-export async function loadSellerProfile(profile_id, scraped_realtor_url) {
-
-
-    // If scraped_realtor_url is a non-empty string, redirect to that URL
-    if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
-        window.open(scraped_realtor_url, '_blank');
-        return;
-    }
-
+export async function loadSellerProfile(profile_id) {
     const response = await authFetch(`/user/${profile_id}`);
     if (!response.ok) {
         let body = await response.json()

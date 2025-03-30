@@ -16,6 +16,7 @@ const views = {
     agent_edit: document.getElementById('agent_edit'),
     profile: document.getElementById('profile'),
     seller_profile: document.getElementById('seller_profile'),
+    successful_redirect: document.getElementById('successful_redirect'),
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment2'),
     faq: document.getElementById('faq'),
@@ -25,7 +26,7 @@ const views = {
 let currentView = 'advertisement_list';
 // All views that require login
 const loginRequiredViews = ["agent", "login", "create", "seller_profile"];
-const payWalledViews = ["seller_profile"];
+const payWalledViews = ["seller_profile", "successful_redirect"];
 
 // Store requested view to remember redirects after login popup
 export let viewAfterLogin = null;
@@ -95,7 +96,13 @@ async function loadViewData(view, viewParams) {
             await loadAdvertisementDetail(viewParams.get("id"))
             break;
         case "seller_profile":
-            await loadSellerProfile(viewParams.get("id"), viewParams.get("scraped_realtor_url"))
+            await loadSellerProfile(viewParams.get("id"))
+            break;
+        case "successful_redirect":
+            let scraped_realtor_url = viewParams.get("scraped_realtor_url")
+            if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
+                window.open(scraped_realtor_url, '_blank');
+            }
             break;
         case "agent":
             await loadAgents()

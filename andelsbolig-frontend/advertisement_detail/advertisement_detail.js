@@ -207,9 +207,17 @@ export async function loadAdvertisementDetail(advertisement_id) {
             ` : `
                 <div class="row justify-content-center">
                     <div class="col-auto w-100">
-                        <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}', scraped_realtor_url: '${advertisement.scraped_realtor_url}'}))">
+                        <!-- Contact button depend on the advertisement type. Some require a redirect-->
+                        ${ advertisement.scraped_realtor_url && typeof advertisement.scraped_realtor_url === 'string' ? `
+                          <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('successful_redirect', new URLSearchParams({scraped_realtor_url: '${advertisement.scraped_realtor_url}'}))">
                             Kontakt sælger
-                        </button>
+                          </button>
+                        ` : `
+                          <button class="mt-4 btn action-button w-100 text-white p-2" onclick="showView('seller_profile', new URLSearchParams({id: '${advertisement.created_by}'}))">
+                            Kontakt sælger
+                          </button>
+                        ` }
+
                     </div>
                 </div>
             `}
