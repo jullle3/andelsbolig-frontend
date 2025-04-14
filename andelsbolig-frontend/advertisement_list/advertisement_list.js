@@ -397,10 +397,11 @@ export async function displayAdvertisementsOnList(response, append = false, trig
         $("#next-page-button").addClass('d-none');
     }
 
-    if (triggerPopup) {
+    // TODO: Bugged, it always shows up
+    // if (triggerPopup) {
         // Show popup after a short delay
-        setTimeout(showAnnonceagentPopup, 500);
-    }
+        // setTimeout(showAnnonceagentPopup, 500);
+    // }
 }
 
 

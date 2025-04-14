@@ -51,7 +51,7 @@ export async function displayAdvertisementsOnMap(response_json) {
         .filter(ad => ad.location)
         .map(ad => {
 
-        const customSVG = createCustomSVGIconWithPNG('pics/house_marker.png', 40, 40);
+        const customSVG = createCustomSVGIconWithPNG('pics/house_marker.webp', 40, 40);
         const svgElement = parser.parseFromString(customSVG, "image/svg+xml").documentElement;
 
         const marker = new google.maps.marker.AdvancedMarkerElement({

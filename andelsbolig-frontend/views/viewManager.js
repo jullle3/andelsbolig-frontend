@@ -20,12 +20,13 @@ const views = {
     // payment1: document.getElementById('payment-view1'),
     payment2: document.getElementById('payment2'),
     faq: document.getElementById('faq'),
+    terms_and_conditions: document.getElementById('terms_and_conditions'),
 };
 
 // Starting view
 let currentView = 'advertisement_list';
 // All views that require login
-const loginRequiredViews = ["agent", "login", "create", "seller_profile"];
+const loginRequiredViews = ["agent", "login", "create", "seller_profile", "successful_redirect"];
 const payWalledViews = ["seller_profile", "successful_redirect"];
 
 // Store requested view to remember redirects after login popup
