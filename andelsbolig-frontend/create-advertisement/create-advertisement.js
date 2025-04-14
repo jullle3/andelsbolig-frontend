@@ -67,11 +67,12 @@ export async function setupCreateAdvertisementView() {
         const formattedImprovementsPrice = formatNumber(improvementsPriceInput);
         const formattedMonthlyFee = formatNumber(monthlyFeeInput);
 
-
+        let title = formData.get('title_create')
+        let price = parseInt(formattedPrice)
         const newAdvertisement = {
-            title: formData.get('title_create'),
+            title: title,
             description: formData.get('description_create'),
-            price: parseInt(formattedPrice),
+            price: price,
             improvements_price: parseInt(formattedImprovementsPrice),
             monthly_fee: parseInt(formattedMonthlyFee),
             square_meters: parseInt(formData.get('square_meters_create')),
@@ -99,10 +100,9 @@ export async function setupCreateAdvertisementView() {
             // Show some success animation
         }
 
-        displaySuccessMessage("Annoncen blev oprettet")
+        displaySuccessMessage("Annonce oprettet & offentliggjort", 8000)
         await populateCreateAdvertisementForm();
         sendSearchData('list')
-        showView('advertisement_list');
     });
 
 }

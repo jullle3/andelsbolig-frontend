@@ -4,7 +4,7 @@ import {
     displayErrorMessage,
     cleanParams,
     removeDots,
-    parseFormattedInteger, displaySuccessMessage, currentUser, favoriteAdvertisement
+    parseFormattedInteger, displaySuccessMessage, currentUser, favoriteAdvertisement, decodeJwt
 } from "../utils.js";
 import {loadAgents} from "../agent/agent.js";
 import {showView} from "../views/viewManager.js";
@@ -43,12 +43,12 @@ export function setupAdvertisementListView() {
 }
 
 
-export async function sendSearchData(advertisementView, append=false) {
+export async function sendSearchData(advertisementView, append = false) {
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
-    if (advertisementView === 'list'){
+    if (advertisementView === 'list') {
         size = 20
-        if (append){
+        if (append) {
             page += 1;
         } else {
             page = 0
@@ -305,11 +305,11 @@ function setupCityAutocomplete(suffix, cityData) {
         source: cityData,
         delay: 0,
         minLength: 0,
-        select: function(event, ui) {
+        select: function (event, ui) {
             console.log(ui.item.value);
             $("#city" + suffix).val(ui.item.value);
         }
-    }).focus(function() {
+    }).focus(function () {
         // Trigger the search to show all entries when the field is focused
         $(this).autocomplete("search", "");
     });
@@ -320,15 +320,15 @@ function setupPostalAutocomplete(suffix, postalData) {
     $("#postal-number" + suffix).autocomplete({
         delay: 0,
         minLength: 0,
-        source: function(request, response) {
-            const matches = $.map(postalData, function(cityName, postalCode) {
+        source: function (request, response) {
+            const matches = $.map(postalData, function (cityName, postalCode) {
                 if (postalCode.startsWith(request.term)) {
                     return `${postalCode} - ${cityName}`;
                 }
             });
             response(matches);
         },
-        select: function(event, ui) {
+        select: function (event, ui) {
             // Split the string "postalcode - cityName"
             const parts = ui.item.value.split(" - ");
 
@@ -340,7 +340,7 @@ function setupPostalAutocomplete(suffix, postalData) {
             // Prevent the widget from overwriting the input field value
             return false;
         }
-    }).focus(function() {
+    }).focus(function () {
         // Trigger the search to show all entries when the field is focused
         $(this).autocomplete("search", "");
     });
@@ -399,14 +399,10 @@ export async function displayAdvertisementsOnList(response, append = false, trig
 
     // TODO: Bugged, it always shows up
     // if (triggerPopup) {
-        // Show popup after a short delay
-        // setTimeout(showAnnonceagentPopup, 500);
+    // Show popup after a short delay
+    // setTimeout(showAnnonceagentPopup, 500);
     // }
 }
-
-
-
-
 
 
 function showAnnonceagentPopup() {
@@ -429,7 +425,7 @@ function showAnnonceagentPopup() {
     $('body').append(popup);
 
     // Add event listener to the button
-    $('#create-annonceagent-button').on('click', function() {
+    $('#create-annonceagent-button').on('click', function () {
         createAnnonceagent(crypto.randomUUID(), "advertisement_list");
     });
 
@@ -449,7 +445,7 @@ export function createAnnonceagent(agentId, view) {
         radius = $("#radius").val();
         name = null;
         active = true;
-     } else if (view === 'agent-create') {
+    } else if (view === 'agent-create') {
         cityInput = $("#city-agentcreateview").val();
         postalNumber = $("#postal-number-agentcreateview").val();
         priceRange = $("#price-range-slider-agentcreateview")[0].noUiSlider.get();
@@ -557,7 +553,6 @@ function generateSearchComponents(suffix) {
                             <i class="bi bi-three-dots-vertical"></i>
                             </button>
                             <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
-                                <div class="card card-body">
                                     <!-- Price -->
                                     <div class="mt-4 mb-1 p-0 pb-4">
                                         <div class="row align-items-center">
@@ -714,16 +709,24 @@ export function insertSearchComponents() {
 
 // Return true if the given advertisement is in the logged in users favorite list, else false
 export function isAdvertisementFavorite(advertisement_id) {
-    if (currentUser === null){
+    if (currentUser === null) {
         return false
     }
 
     return currentUser.favorite_advertisements.includes(advertisement_id);
 }
 
+// TODO her
 export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
+    let jwt = decodeJwt()
+
     return `
 <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
+  <!-- Conditionally add badge -->
+  ${advertisement.created_by === jwt.sub
+        ? `<span class="position-absolute top-0 start-0 badge bg-primary m-2">Din Annonce</span>`
+        : ''}
+
     <div class="favorite-icon position-absolute" ${advertisementHTMLId}="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisementHTMLId}', '${advertisement._id}');">
         <i class="${isAdvertisementFavorite(advertisement._id) ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
     </div>
@@ -737,17 +740,17 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
     <!-- Allow title and description to be None -->
     <h5 class="card-text">
       ${advertisement.title
-            ? (advertisement.title.length > 40
-                ? advertisement.title.substring(0, 40) + '...'
-                : advertisement.title)
-            : ''}
+    ? (advertisement.title.length > 40
+    ? advertisement.title.substring(0, 40) + '...'
+    : advertisement.title)
+    : ''}
     </h5>
     <p class="card-text">
       ${advertisement.description
-            ? (advertisement.description.length > 50
-                ? advertisement.description.substring(0, 50) + '...'
-                : advertisement.description)
-            : ''}
+    ? (advertisement.description.length > 50
+    ? advertisement.description.substring(0, 50) + '...'
+    : advertisement.description)
+    : ''}
     </p>
 
     <p class="card-text text-muted">
@@ -765,8 +768,8 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
     <p class="card-text text-muted">
       <i class="bi bi-geo-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Adresse - ejendommens placering"></i>
       ${advertisement.address && advertisement.city && advertisement.postal_number
-            ? `${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}`
-            : "Ikke angivet"}
+    ? `${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}`
+    : "Ikke angivet"}
     </p>
     
     </div>
@@ -774,4 +777,4 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
 `;
 }
 
-window.sendSearchData = sendSearchData;
+    window.sendSearchData = sendSearchData;

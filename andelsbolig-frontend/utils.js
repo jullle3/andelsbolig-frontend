@@ -27,12 +27,17 @@ export function displayErrorMessage(message, ms = 5000) {
 }
 
 export function displaySuccessMessage(message, ms = 5000) {
+    const animation = document.getElementById("success-animation");
+    // Reset animation
+    animation.stop();
+
     let successContainer = document.getElementById('success-container');
     let successMessage = document.getElementById('success-message');
 
     successMessage.innerHTML = message.replace(/\n/g, '<br>');
     successContainer.style.display = 'block';
     successContainer.classList.add('show');
+    animation.play();
 
     if (successContainer.timeoutId) {
         clearTimeout(successContainer.timeoutId);

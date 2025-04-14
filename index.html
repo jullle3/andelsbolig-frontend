@@ -698,8 +698,24 @@
 
 <!-- Success Message Container -->
 <div id="success-container" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;" onclick="hideSuccessMessage()">
-    <span id="success-message"></span>
-    <button id="success-message-remove" type="button" class="btn-close" aria-label="Close"></button>
+
+    <!-- Alert with Lottie animation -->
+    <!-- Animation placed inline on the left -->
+    <!-- lottie-player style is applied in a weird way since scaling doesnt just work out of the box   -->
+    <div class="d-flex align-items-center">
+        <lottie-player
+                id="success-animation"
+                src="animations/success_animation.json"
+                background="transparent"
+                speed="0.8"
+                style="width: 50px; height: 50px; transform: scale(2.0); transform-origin: center;"
+                autoplay="false">
+        </lottie-player>
+
+        <!-- Text content -->
+        <span id="success-message" class="me-auto"></span>
+        <button id="success-message-remove" type="button" class="btn-close ms-3" aria-label="Close"></button>
+    </div>
 </div>
 
 <!-- Error Message Container -->
@@ -707,9 +723,6 @@
     <span id="error-message"></span>
     <button id="error-message-remove" type="button" class="btn-close" aria-label="Close"></button>
 </div>
-
-
-
 
 
 
@@ -728,6 +741,9 @@
 <!-- Slider lib-->
 <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/wnumb/wNumb.js"></script>
+
+<!--Lottie animations-->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 </body>
 </html>
