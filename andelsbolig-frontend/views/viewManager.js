@@ -17,8 +17,6 @@ const views = {
     profile: document.getElementById('profile'),
     seller_profile: document.getElementById('seller_profile'),
     successful_redirect: document.getElementById('successful_redirect'),
-    // payment1: document.getElementById('payment-view1'),
-    payment2: document.getElementById('payment2'),
     faq: document.getElementById('faq'),
     terms_and_conditions: document.getElementById('terms_and_conditions'),
 };
