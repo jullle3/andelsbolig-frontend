@@ -716,16 +716,15 @@ export function isAdvertisementFavorite(advertisement_id) {
     return currentUser.favorite_advertisements.includes(advertisement_id);
 }
 
-// TODO her
 export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
     let jwt = decodeJwt()
+    // Only consider the ad owner if jwt is present
+    const isOwner = jwt && advertisement.created_by === jwt.sub;
 
     return `
 <div class="card advertisement-card position-relative" onclick="showView('detail', new URLSearchParams({id: '${advertisement._id}'}))">
   <!-- Conditionally add badge -->
-  ${advertisement.created_by === jwt.sub
-        ? `<span class="position-absolute top-0 start-0 badge bg-primary m-2">Din Annonce</span>`
-        : ''}
+  ${isOwner ? `<span class="position-absolute top-0 start-0 badge bg-primary m-2">Din Annonce</span>` : ''}
 
     <div class="favorite-icon position-absolute" ${advertisementHTMLId}="${advertisement._id}" style="top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.5); border-radius: 40%; padding: 5px;" onclick="event.stopPropagation(); favoriteAdvertisement('${advertisementHTMLId}', '${advertisement._id}');">
         <i class="${isAdvertisementFavorite(advertisement._id) ? 'bi bi-heart-fill text-danger' : 'bi bi-heart'}"></i>
