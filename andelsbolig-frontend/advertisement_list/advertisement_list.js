@@ -603,6 +603,8 @@ function generateSearchComponents(suffix) {
   `;
 }
 
+
+// TODO: mangler favorites only param her!!
 function generateAdvancedSearchFieldsForSearch(suffix) {
     return `
     <!-- Price -->
