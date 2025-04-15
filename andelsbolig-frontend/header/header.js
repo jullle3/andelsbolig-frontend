@@ -6,7 +6,7 @@ export function SetupHeader() {
     <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-shadow">
       <div class="container">
         <a class="navbar-brand" href="#" data-view="advertisement_list">
-          <img src="../${basePath}/favicon/android-chrome-512x512.png" alt="Logo" style="height: 40px;"> Andelsbolig Basen
+          <img src="../${basePath}/favicon/android-chrome-512x512.webp" alt="Logo" style="height: 40px;"> Andelsbolig Basen
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <span class="navbar-toggler-icon"></span>

@@ -776,4 +776,4 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
 `;
 }
 
-    window.sendSearchData = sendSearchData;
+window.sendSearchData = sendSearchData;

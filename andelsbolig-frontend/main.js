@@ -10,9 +10,12 @@ import {insertSearchComponents, setupAdvertisementListView} from "./advertisemen
 import {SetupAgentView} from "./agent/agent.js";
 import {SetupAgentEditView} from "./agent_edit/agent_edit.js";
 import {insertSharedComponents, SetupAgentCreateView} from "./agent_create/agent_create.js";
+import {SetupFooter} from "./footer/footer.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     SetupHeader();
+    SetupFooter();
+
     setupUtils();
     setupViews();
     setupProfileView();
