@@ -605,6 +605,7 @@ function generateSearchComponents(suffix) {
 
 
 // TODO: mangler favorites only param her!!
+// https://chatgpt.com/c/67fe4cd2-cfdc-8002-a6c3-773a824282f4
 function generateAdvancedSearchFieldsForSearch(suffix) {
     return `
     <!-- Price -->
