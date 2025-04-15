@@ -541,153 +541,132 @@ export function createAnnonceagent(agentId, view) {
 function generateSearchComponents(suffix) {
     return `
 <div class="container mt-4 pb-2">
-    <div class="row justify-content-center">
-        <!-- Common container column for both rows -->
-        <div class="col-12 col-md-8">
-            <!-- First row: Search bar -->
-            <div class="row">
-                <div class="col d-flex position-relative">
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
-                        <div class="input-group-text">
-                            <!-- Advanced Search dropdown bar -->
-                            <button class="btn ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advanced-search-${suffix}" aria-expanded="false" aria-controls="advanced-search">
-                            <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <div class="collapse position-absolute w-100 mt-1" id="advanced-search-${suffix}" style="top: 100%; left: 0; z-index: 100;">
-                                    <!-- Price -->
-                                    <div class="mt-4 mb-1 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Pris kr</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <div id="price-range-slider-${suffix}" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Monthly fee -->
-                                    <div class="mt-3 m-0 p-0 pb-4">
-                                        <div class="row">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Mdl. ydelse kr</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <div id="monthly-price-range-slider-${suffix}" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Square meters in m2 -->
-                                    <div class="mt-3 m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Størrelse m2</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <div id="square-meters-range-slider-${suffix}" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Rooms -->
-                                    <div class="mt-3 m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Værelser</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <div id="rooms-range-slider-${suffix}" class="slider"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Postal Number -->
-                                    <div class="m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Postnr</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="text" id="postal-number-${suffix}" class="form-control" placeholder="Indtast postnummer">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- City -->
-                                    <div class="m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">By</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Radius search -->
-                                    <div class="m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Radius søgning</h6>
-                                            </div>
-                                            <div class="col-2">
-                                                <input type="text" id="radius-${suffix}" class="form-control">
-                                            </div>
-                                            <div class="col-2">
-                                                <h6 class="mb-0">km fra</h6>
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Favorites Only Switch -->
-                                    <div class="m-0 p-0 pb-4">
-                                        <div class="row align-items-center">
-                                            <div class="col-4 text-start">
-                                                <h6 class="mb-0">Kun favoritter</h6>
-                                            </div>
-                                            <div class="col-1">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="favorites-only-${suffix}">
-                                                    <label class="form-check-label" for="favorites-only-${suffix}"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn action-button w-100 text-white" onclick="sendSearchData('${suffix}')">Søg</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="row justify-content-center">
+    <!-- Container for Search Bar -->
+    <div class="col-12 col-md-8">
+      <!-- First row: Search bar -->
+      <div class="row">
+        <div class="col">
+          <div class="input-group">
+            <input class="form-control" type="text" id="advertisement-list-search-${suffix}" 
+                   placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
+            <div class="input-group-text">
+              <!-- Toggle Advanced Search dropdown -->
+              <button class="btn ms-2" type="button" data-bs-toggle="collapse" 
+                      data-bs-target="#advanced-search-${suffix}" aria-expanded="false" 
+                      aria-controls="advanced-search">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
             </div>
-            <!-- Second row: Results counter and sort dropdown -->
-            <div class="row mt-3">
-                <div class="col-6 d-flex align-items-center">
-                    <!-- Result counter -->
-                    <span class="badge rounded-pill bg-light text-muted border">
-                    <span id="search-result-count-${suffix}">0</span> Resultater
-                    </span>
-                </div>
-                <div class="col-6 d-flex align-items-center justify-content-end">
-                    <!-- Sort dropdown (only visible if suffix === 'list') -->
-                    ${suffix === 'list' ? `
-                    <select class="form-select w-auto" id="sort-options-${suffix}">
-                        <option value="created-desc">Sorter nyeste først</option>
-                        <option value="created-asc">Ældste først</option>
-                        <option value="price-asc">Billigste først</option>
-                        <option value="price-desc">Dyreste først</option>
-                        <option value="monthly_fee-asc">Billigste husleje først</option>
-                        <option value="monthly_fee-desc">Dyreste husleje først</option>
-                        <option value="square_meters-asc">Mindste først</option>
-                        <option value="square_meters-desc">Største først</option>
-                    </select>
-                    ` : ''}
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      
+      <!-- Second row: Advanced Search Dropdown (using card design for unification) -->
+      <div class="row mt-3">
+        <div class="col">
+          <div class="collapse" id="advanced-search-${suffix}">
+            <div class="card card-body">
+              ${generateAdvancedSearchFieldsForSearch(suffix)}
+              <button type="button" class="btn action-button w-100 text-white mt-3" 
+                      onclick="sendSearchData('${suffix}')">Søg</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Third row: Results Counter and Sort Dropdown -->
+      <div class="row mt-3">
+        <div class="col-6 d-flex align-items-center">
+          <span class="badge rounded-pill bg-light text-muted border">
+            <span id="search-result-count-${suffix}">0</span> Resultater
+          </span>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-end">
+          ${suffix === 'list' ? `
+          <select class="form-select w-auto" id="sort-options-${suffix}">
+            <option value="created-desc">Sorter nyeste først</option>
+            <option value="created-asc">Ældste først</option>
+            <option value="price-asc">Billigste først</option>
+            <option value="price-desc">Dyreste først</option>
+            <option value="monthly_fee-asc">Billigste husleje først</option>
+            <option value="monthly_fee-desc">Dyreste husleje først</option>
+            <option value="square_meters-asc">Mindste først</option>
+            <option value="square_meters-desc">Største først</option>
+          </select>
+          ` : ''}
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-    `;
+  `;
 }
+
+function generateAdvancedSearchFieldsForSearch(suffix) {
+    return `
+    <!-- Price -->
+    <div class="mt-4 mb-1 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Pris kr</h6></div>
+        <div class="col-8"><div id="price-range-slider-${suffix}" class="slider"></div></div>
+      </div>
+    </div>
+    <!-- Monthly Fee -->
+    <div class="mt-3 m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Mdl. ydelse kr</h6></div>
+        <div class="col-8"><div id="monthly-price-range-slider-${suffix}" class="slider"></div></div>
+      </div>
+    </div>
+    <!-- Square Meters -->
+    <div class="mt-3 m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Størrelse m2</h6></div>
+        <div class="col-8"><div id="square-meters-range-slider-${suffix}" class="slider"></div></div>
+      </div>
+    </div>
+    <!-- Rooms -->
+    <div class="mt-3 m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Værelser</h6></div>
+        <div class="col-8"><div id="rooms-range-slider-${suffix}" class="slider"></div></div>
+      </div>
+    </div>
+    <!-- Postal Number -->
+    <div class="m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Postnr</h6></div>
+        <div class="col-8">
+          <input type="text" id="postal-number-${suffix}" class="form-control" placeholder="Indtast postnummer" />
+        </div>
+      </div>
+    </div>
+    <!-- City -->
+    <div class="m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">By</h6></div>
+        <div class="col-8">
+          <input type="text" id="city-${suffix}" class="form-control" placeholder="Indtast by" />
+        </div>
+      </div>
+    </div>
+    <!-- Radius Search -->
+    <div class="m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Radius søgning</h6></div>
+        <div class="col-2">
+          <input type="text" id="radius-${suffix}" class="form-control" />
+        </div>
+        <div class="col-2"><h6 class="mb-0">km fra</h6></div>
+        <div class="col-4">
+          <input type="text" id="radius-postalnumber-${suffix}" class="form-control" placeholder="Postnr" />
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 
 
 export function insertSearchComponents() {
