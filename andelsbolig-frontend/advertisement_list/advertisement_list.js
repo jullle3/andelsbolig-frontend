@@ -536,6 +536,8 @@ export function createAnnonceagent(agentId, view) {
 
 }
 
+// TODO: Fix transparent dropdown her
+//  måske med "card card-body" som dropdown har i Opret Din Annonceagent
 function generateSearchComponents(suffix) {
     return `
 <div class="container mt-4 pb-2">
