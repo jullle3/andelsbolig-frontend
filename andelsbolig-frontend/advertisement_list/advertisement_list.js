@@ -43,7 +43,7 @@ export function setupAdvertisementListView() {
 }
 
 
-export async function sendSearchData(advertisementView, append = false) {
+export async function sendSearchData(advertisementView, append = false, advertisement_id = null) {
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
     if (advertisementView === 'list') {
@@ -84,7 +84,13 @@ export async function sendSearchData(advertisementView, append = false) {
         size: size.toString(),
     })).toString();
 
-    let response = await authFetch('/advertisement?' + params)
+    let response;
+    if (advertisement_id === null){
+        response = await authFetch('/advertisement?' + params)
+    } else {
+        // Fetch af single advertisement
+        response = await authFetch(`/advertisement?_id=${advertisement_id}`)
+    }
 
     if (!response.ok) {
         displayErrorMessage("Noget gik galt");

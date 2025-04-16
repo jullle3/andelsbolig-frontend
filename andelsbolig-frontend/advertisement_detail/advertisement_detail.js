@@ -133,10 +133,33 @@ export async function loadAdvertisementDetail(advertisement_id) {
                     <input class="form-control" value="${advertisement.rooms}" type="number" id="rooms" name="rooms" required readonly min=1 max="10">
                 </div>
 
-                <label class="text-secondary mt-2" for="address">Addresse</label>
-                <div class="input-group">
-                    <input class="form-control" value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}" type="text" id="address" name="address" required readonly>
-                </div>
+<label class="text-secondary mt-2" for="address">Addresse</label>
+<div class="input-group">
+  <input 
+    class="form-control" 
+    value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}"
+    type="text" 
+    id="address" 
+    name="address" 
+    required 
+    readonly
+  >
+  <!-- Input group addon with text above the map icon -->
+  <span 
+    class="input-group-text" 
+    style="cursor: pointer" 
+    onclick="showView('advertisement_map', new URLSearchParams({id: '${advertisement._id}'}))"
+    aria-label="Vis på kort"
+  >
+    <div class="text-center">
+      <small class="d-block">Kort</small>
+      <i class="bi bi-geo-alt"></i>
+    </div>
+  </span>
+</div>
+
+
+
 
                 <label class="text-secondary mt-2" for="construction_year">Byggeår for ejendommen</label>
                 <div class="input-group">

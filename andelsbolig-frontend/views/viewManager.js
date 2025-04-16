@@ -2,6 +2,7 @@ import {editAgent, loadAgents} from "../agent/agent.js";
 import {isLoggedIn, isSubscribed} from "../utils.js";
 import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {loadSellerProfile} from "../seller_profile/seller_profile.js";
+import {sendSearchData} from "../advertisement_list/advertisement_list.js";
 
 // Setup click events for all views
 const views = {
@@ -108,6 +109,10 @@ async function loadViewData(view, viewParams) {
             break;
         case "agent_edit":
             await editAgent(viewParams.get("id"))
+            break;
+        case "advertisement_map":
+            let advertisement_id = viewParams.get("id")
+            sendSearchData('map', false, advertisement_id)
             break;
         default:
             break;

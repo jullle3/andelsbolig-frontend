@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Important to await, since user is used in sendSearchData()
     await loadUser()
     sendSearchData('list')
-    sendSearchData('map')
     await handleRouting()
 });
 
