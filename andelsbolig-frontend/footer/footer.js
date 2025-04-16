@@ -1,4 +1,4 @@
-import {basePath} from "../config/config.js";
+import {basePath, stripe_customer_portal} from "../config/config.js";
 
 export function SetupFooter() {
     const currentYear = new Date().getFullYear();
@@ -28,10 +28,10 @@ export function SetupFooter() {
             <a href="mailto:kontakt@andelsboligbasen.dk" class="nav-link px-2 text-muted">Kontakt</a>
           </li>
           <li class="nav-item">
-            <a href="/boligmarked" class="nav-link px-2 text-muted">Boligmarked</a>
+            <a href="${stripe_customer_portal}" target="_blank" class="nav-link px-2 text-muted">Kundeportal</a>
           </li>
           <li class="nav-item">
-            <a href="/about" class="nav-link px-2 text-muted">Om</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#aboutModal" class="nav-link px-2 text-muted">Om</a>
           </li>
         </ul>
       </div>
