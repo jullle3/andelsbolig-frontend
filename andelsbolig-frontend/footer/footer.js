@@ -10,8 +10,17 @@ export function SetupFooter() {
     <div class="row align-items-center">
       <!-- Left Column: Copyright -->
       <div class="col-4 text-start">
-        <small class="text-muted">&copy; ${currentYear} Andelsbolig Basen</small>
-<!--        <small class="text-muted">CVR 40606130</small>-->
+        <small
+            class="text-muted"
+            id="footer-cvr"
+            role="button"
+            style="cursor: pointer;"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="CVR: 40606130"
+        >
+            &copy; ${currentYear} Andelsbolig Basen
+        </small>
       </div>
       
       <!-- Middle Column: Logo -->
@@ -40,4 +49,28 @@ export function SetupFooter() {
 </footer>
 
   `);
+
+    // Setup Bootstrap tooltip
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+        new bootstrap.Tooltip(el);
+    });
+
+    const footerCvrEl = document.getElementById('footer-cvr');
+    const cvrNumber = '40606130';
+
+    if (footerCvrEl) {
+        const tooltip = bootstrap.Tooltip.getInstance(footerCvrEl);
+
+        footerCvrEl.addEventListener('click', () => {
+            navigator.clipboard.writeText(cvrNumber).then(() => {
+                // Temporarily change tooltip content
+                tooltip.setContent({ '.tooltip-inner': 'CVR kopieret' });
+                tooltip.show();
+
+                setTimeout(() => {
+                    tooltip.setContent({ '.tooltip-inner': 'CVR: 40606130' });
+                }, 2500);
+            });
+        });
+    }
 }

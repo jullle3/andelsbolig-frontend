@@ -14,7 +14,7 @@ export function SetupHeader() {
         <div class="collapse navbar-collapse" id="navbarContent">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#" data-view="advertisement_map">Kort</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-view="create">Din Annonce</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-view="create">Sælg din Andelsbolig</a></li>
             <li class="nav-item"><a class="nav-link" href="#" data-view="agent">Annonceagenter</a></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbar-name" role="button" data-bs-toggle="dropdown">Hej! Log ind her</a>
