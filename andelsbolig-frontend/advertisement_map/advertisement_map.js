@@ -9,12 +9,19 @@ export function setupMapView() {
 export function initMap() {
     const mapOptions = {
         zoom: 7, // Adjusted zoom to get a good view of Denmark
+        maxZoom: 14,
         center: new google.maps.LatLng(56.26392, 9.501785), // Center on Denmark
         mapId: '9df01a95f0b6f4d6' // Custom map style
     };
     window.googlemap = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
     infowindow = new google.maps.InfoWindow();
 
+    // Optional: Additional safeguard to enforce maxZoom when users try to override via gestures
+    window.googlemap.addListener('zoom_changed', function() {
+        if (window.googlemap.getZoom() > 14) {
+            window.googlemap.setZoom(14);
+        }
+    });
 }
 
 
@@ -112,18 +119,6 @@ function buildContent(advertisement) {
 }
 
 
-
-
-
-function toggleHighlight(markerView) {
-    if (markerView.content.classList.contains("highlight")) {
-        markerView.content.classList.remove("highlight");
-        markerView.zIndex = null;
-    } else {
-        markerView.content.classList.add("highlight");
-        markerView.zIndex = 1;
-    }
-}
 
 window.initMap = initMap;
 
