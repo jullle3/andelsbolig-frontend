@@ -536,46 +536,37 @@ export function createAnnonceagent(agentId, view) {
 
 }
 
-// TODO: Fix transparent dropdown her
-//  måske med "card card-body" som dropdown har i Opret Din Annonceagent
 function generateSearchComponents(suffix) {
     return `
 <div class="container mt-4 pb-2">
   <div class="row justify-content-center">
-    <!-- Container for Search Bar -->
-    <div class="col-12 col-md-8">
-      <!-- First row: Search bar -->
-      <div class="row">
-        <div class="col">
-          <div class="input-group">
-            <input class="form-control" type="text" id="advertisement-list-search-${suffix}" 
-                   placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
-            <div class="input-group-text">
-              <!-- Toggle Advanced Search dropdown -->
-              <button class="btn ms-2" type="button" data-bs-toggle="collapse" 
-                      data-bs-target="#advanced-search-${suffix}" aria-expanded="false" 
-                      aria-controls="advanced-search">
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-            </div>
-          </div>
+    <!-- Container for Search Bar and Advanced Dropdown -->
+    <div class="col-12 col-md-8 position-relative">
+      <!-- Search Bar Input Group -->
+      <div class="input-group">
+        <input class="form-control" type="text" id="advertisement-list-search-${suffix}" 
+               placeholder="Vej, by, postnr, kommune, landsdel eller fritekst">
+        <div class="input-group-text">
+          <!-- Toggle Advanced Search dropdown -->
+          <button class="btn ms-2" type="button" data-bs-toggle="collapse" 
+                  data-bs-target="#advanced-search-${suffix}" aria-expanded="false" 
+                  aria-controls="advanced-search">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
         </div>
       </div>
       
-      <!-- Second row: Advanced Search Dropdown (using card design for unification) -->
-      <div class="row mt-3">
-        <div class="col">
-          <div class="collapse" id="advanced-search-${suffix}">
-            <div class="card card-body">
-              ${generateAdvancedSearchFieldsForSearch(suffix)}
-              <button type="button" class="btn action-button w-100 text-white mt-3" 
-                      onclick="sendSearchData('${suffix}')">Søg</button>
-            </div>
-          </div>
+      <!-- Advanced Search Dropdown as an absolutely positioned overlay -->
+      <div class="collapse position-absolute w-100" id="advanced-search-${suffix}" 
+           style="top: 100%; left: 0; z-index: 100;">
+        <div class="card card-body">
+          ${generateAdvancedSearchFieldsForSearch(suffix)}
+          <button type="button" class="btn action-button w-100 text-white mt-3" 
+                  onclick="sendSearchData('${suffix}')">Søg</button>
         </div>
       </div>
       
-      <!-- Third row: Results Counter and Sort Dropdown -->
+      <!-- Results Counter and Sort Dropdown -->
       <div class="row mt-3">
         <div class="col-6 d-flex align-items-center">
           <span class="badge rounded-pill bg-light text-muted border">
@@ -597,15 +588,16 @@ function generateSearchComponents(suffix) {
           ` : ''}
         </div>
       </div>
+      
     </div>
   </div>
 </div>
   `;
 }
 
+// <!-- First part of below value is the actual field to sort by in mongo, second part is direction -->
 
-// TODO: mangler favorites only param her!!
-// https://chatgpt.com/c/67fe4cd2-cfdc-8002-a6c3-773a824282f4
+
 function generateAdvancedSearchFieldsForSearch(suffix) {
     return `
     <!-- Price -->
@@ -667,8 +659,21 @@ function generateAdvancedSearchFieldsForSearch(suffix) {
         </div>
       </div>
     </div>
+    <!-- Favorites Only Switch -->
+    <div class="m-0 p-0 pb-4">
+      <div class="row align-items-center">
+        <div class="col-4 text-start"><h6 class="mb-0">Kun favoritter</h6></div>
+        <div class="col-1">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="favorites-only-${suffix}">
+            <label class="form-check-label" for="favorites-only-${suffix}"></label>
+          </div>
+        </div>
+      </div>
+    </div>
   `;
 }
+
 
 
 
