@@ -1,8 +1,6 @@
-/* Make the map div fill the entire parent (map) */
 #googlemap {
-    height: 1000px;
-    /*height: 100%;*/
     width: 100%;
+    overscroll-behavior: contain;
 }
 
 .popup-content {

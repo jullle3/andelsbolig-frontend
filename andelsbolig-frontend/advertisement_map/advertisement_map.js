@@ -11,8 +11,12 @@ export function initMap() {
         zoom: 7, // Adjusted zoom to get a good view of Denmark
         maxZoom: 14,
         center: new google.maps.LatLng(56.26392, 9.501785), // Center on Denmark
-        mapId: '9df01a95f0b6f4d6' // Custom map style
+        mapId: '9df01a95f0b6f4d6', // Custom map style
+        gestureHandling: 'greedy',           // ← tell Google Maps to seize *all* touch gestures
+        zoomControl: true,                   // (optional) show +/- controls
+        disableDefaultUI: false              // keep default UI if you like
     };
+
     window.googlemap = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
     infowindow = new google.maps.InfoWindow();
 
@@ -117,6 +121,19 @@ function buildContent(advertisement) {
 
     return content;
 }
+
+// Ensure map is always entire remaining height
+function adjustMapHeight() {
+    const mapDiv = document.getElementById('googlemap');
+    // subtract the header’s computed height from the viewport height
+    const headerHeight = 188;
+    mapDiv.style.height = `${window.innerHeight - headerHeight}px`;
+}
+
+// call once on load…
+adjustMapHeight();
+// …and again whenever the window resizes
+window.addEventListener('resize', adjustMapHeight);
 
 
 
