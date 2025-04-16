@@ -13,7 +13,7 @@ import {basePath} from "../config/config.js";
 
 
 let page = 0;
-let size = 20;
+let size = 12;
 
 
 export function setupAdvertisementListView() {
@@ -47,7 +47,7 @@ export async function sendSearchData(advertisementView, append = false, advertis
     // TODO Map view might not scale to 10_000 advertisements
     // Pagination is only really implemented for list view
     if (advertisementView === 'list') {
-        size = 20
+        size = 12
         if (append) {
             page += 1;
         } else {
@@ -389,8 +389,8 @@ export async function displayAdvertisementsOnList(response, append = false, trig
         advertisements.forEach(advertisement => {
             // Larger screens have more cols
             listingsContainer.innerHTML += `
-            <div class="col-sm-6 col-md-4 col-lg-3 p-sm-3 p-md-3 p-lg-3 p-xl-3 p-xxl-3 pt-4">
-                ${generateAdvertisementCard(advertisement, "data-advertisement-id-list")}
+            <div class="col">
+              ${generateAdvertisementCard(advertisement, "data-advertisement-id-list")}
             </div>
             `;
         });
