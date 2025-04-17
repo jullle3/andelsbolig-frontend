@@ -40,14 +40,29 @@ export function resetViewAfterLogin() {
 // All views are to be accessed via this method. It authorizes the user (if needed), loads required data and shows the
 // view afterward
 export async function showView(view, viewParams = new URLSearchParams()) {
+    // Open a blank tab NOW *iff* we might need it
+    // or IOS to allow us to open new tabs, the tab creation needs to happen in the same callstack as the originating onclick event
+    let popup = null;
+    let scrapedUrl = null;
+
+    if (view === 'successful_redirect') {
+        scrapedUrl = viewParams.get('scraped_realtor_url')?.trim();
+        if (scrapedUrl) {
+            popup = window.open('', '_blank');
+            // popup is either a Window object (opened) or null (blocked)
+        }
+    }
+
     if (loginRequiredView(view) && !isLoggedIn()) {
         displayLoginModal(view, viewParams)
+        if (popup) popup.close();          // prevent stray blank tab
         return
     }
 
-    if (payWalledView(view) && !(isSubscribed())) {
-        // Show payment popup, successful users are redirected to our homepage
-        new bootstrap.Modal(document.getElementById('paymentModal')).show();
+    if (payWalledView(view) && !(await isSubscribed())) {
+        // user not subscribed → show pay‑wall, close the blank tab
+        new bootstrap.Modal('#paymentModal').show();
+        if (popup) popup.close();
         return
     }
 
@@ -61,15 +76,18 @@ export async function showView(view, viewParams = new URLSearchParams()) {
         viewParams = viewParamsAfterLogin
     }
 
-    // For IOS to allow us to open new tabs, the tab creation needs to happen in the same callstack as the originating onclick event
-    if (view === "successful_redirect") {
-        let scraped_realtor_url = viewParams.get("scraped_realtor_url")
-        if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
-            window.open(scraped_realtor_url, '_blank', 'noopener,noreferrer');
+    // Handle redirects for view "successful_redirect"
+    if (scrapedUrl) {
+        if (popup) {
+            // allowed & popup is open → navigate it
+            popup.location.href = scrapedUrl;
+        } else {
+            // popup was blocked → fall back to same‑tab navigation
+            window.location.href = scrapedUrl;
         }
-    } else {
-        await loadViewData(view, viewParams)
     }
+
+    await loadViewData(view, viewParams)
 
     Object.values(views).forEach(v => {
         v.classList.remove('active');
