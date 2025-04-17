@@ -45,7 +45,7 @@ export async function showView(view, viewParams = new URLSearchParams()) {
         return
     }
 
-    if (payWalledView(view) && !(await isSubscribed())) {
+    if (payWalledView(view) && !(isSubscribed())) {
         // Show payment popup, successful users are redirected to our homepage
         new bootstrap.Modal(document.getElementById('paymentModal')).show();
         return
@@ -65,7 +65,7 @@ export async function showView(view, viewParams = new URLSearchParams()) {
     if (view === "successful_redirect") {
         let scraped_realtor_url = viewParams.get("scraped_realtor_url")
         if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
-            openInNewTab(scraped_realtor_url)
+            window.open(scraped_realtor_url, '_blank', 'noopener,noreferrer');
         }
     } else {
         await loadViewData(view, viewParams)
