@@ -61,6 +61,7 @@ export async function showView(view, viewParams = new URLSearchParams()) {
         viewParams = viewParamsAfterLogin
     }
 
+    // For IOS to allow us to open new tabs, the tab creation needs to happen in the same callstack as the originating onclick event
     if (view === "successful_redirect") {
         let scraped_realtor_url = viewParams.get("scraped_realtor_url")
         if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
