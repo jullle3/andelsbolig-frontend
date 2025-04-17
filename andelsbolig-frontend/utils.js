@@ -222,6 +222,32 @@ export async function favoriteAdvertisement(id_to_update, advertisementId) {
     }
 }
 
+/**
+ * Opens the given URL in a new browser tab or window in a way
+ * that works reliably across desktop and mobile (iOS) browsers.
+ *
+ * Why this approach?
+ * 1. Mobile Safari (and many WebViews) will block pop‑ups that are not
+ *    initiated by a direct user gesture. Creating and “clicking” an
+ *    <a> tag in the same event handler satisfies that requirement.
+ * 2. Using an anchor with `target="_blank"` ensures the new page
+ *    opens separately, and `rel="noopener noreferrer"` prevents
+ *    the new tab from gaining access to your page via `window.opener`.
+ *
+ * @param {string} url
+ *   The destination URL to open. Must be a fully qualified URL
+ *   (including protocol), e.g. "https://home.dk/sag/6110007062".
+ */
+export function openInNewTab(url) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    // Must be inserted into the DOM for the click to work in some browsers
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
 
 window.formatNumber = formatNumber;

@@ -1,5 +1,5 @@
 import {editAgent, loadAgents} from "../agent/agent.js";
-import {isLoggedIn, isSubscribed} from "../utils.js";
+import {isLoggedIn, isSubscribed, openInNewTab} from "../utils.js";
 import {loadAdvertisementDetail} from "../advertisement_detail/advertisement_detail.js";
 import {loadSellerProfile} from "../seller_profile/seller_profile.js";
 import {sendSearchData} from "../advertisement_list/advertisement_list.js";
@@ -94,6 +94,8 @@ async function loadViewData(view, viewParams) {
     switch (view) {
         case "detail":
             await loadAdvertisementDetail(viewParams.get("id"))
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             break;
         case "seller_profile":
             await loadSellerProfile(viewParams.get("id"))
@@ -101,7 +103,7 @@ async function loadViewData(view, viewParams) {
         case "successful_redirect":
             let scraped_realtor_url = viewParams.get("scraped_realtor_url")
             if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
-                window.open(scraped_realtor_url, '_blank');
+                openInNewTab(scraped_realtor_url)
             }
             break;
         case "agent":
