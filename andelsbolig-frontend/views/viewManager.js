@@ -61,7 +61,14 @@ export async function showView(view, viewParams = new URLSearchParams()) {
         viewParams = viewParamsAfterLogin
     }
 
-    await loadViewData(view, viewParams)
+    if (view === "successful_redirect") {
+        let scraped_realtor_url = viewParams.get("scraped_realtor_url")
+        if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
+            openInNewTab(scraped_realtor_url)
+        }
+    } else {
+        await loadViewData(view, viewParams)
+    }
 
     Object.values(views).forEach(v => {
         v.classList.remove('active');
@@ -95,17 +102,16 @@ async function loadViewData(view, viewParams) {
         case "detail":
             await loadAdvertisementDetail(viewParams.get("id"))
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
             break;
         case "seller_profile":
             await loadSellerProfile(viewParams.get("id"))
             break;
-        case "successful_redirect":
-            let scraped_realtor_url = viewParams.get("scraped_realtor_url")
-            if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
-                openInNewTab(scraped_realtor_url)
-            }
-            break;
+        // case "successful_redirect":
+        //     let scraped_realtor_url = viewParams.get("scraped_realtor_url")
+        //     if (typeof scraped_realtor_url === 'string' && scraped_realtor_url.trim() !== '') {
+        //         openInNewTab(scraped_realtor_url)
+        //     }
+        //     break;
         case "agent":
             await loadAgents()
             break;
