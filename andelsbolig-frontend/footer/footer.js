@@ -5,7 +5,7 @@ export function SetupFooter() {
 
     document.body.insertAdjacentHTML('beforeend', `
 <!-- Example Static Footer -->
-<footer class="border-top py-3 mt-4" style="background-color: #fafafa;">
+<footer class="border-top py-3" style="background-color: #fafafa;">
   <div class="container">
     <div class="row align-items-center">
       <!-- Left Column: Copyright -->

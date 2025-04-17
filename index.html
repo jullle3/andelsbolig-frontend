@@ -73,7 +73,7 @@
         </div>
 
 
-        <div class="container pt-4">
+        <div class="container py-4 ">
             <div class="row">
                 <div class="col-12 text-center">
                     <button id="next-page-button" class="btn action-button text-white" onclick="sendSearchData('list', true)">
@@ -704,7 +704,55 @@
                     <strong>CVR:</strong> 40606130
                 </p>
             </div>
+        </div>
+    </div>
+</div>
 
+
+<!-- Full‑screen image modal for detail view -->
+<div
+        class="modal fade"
+        id="fullImageModal"
+        tabindex="-1"
+        aria-labelledby="fullImageModalLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-dark position-relative">
+            <button
+                    type="button"
+                    class="btn-close btn-close-white position-absolute"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    style="top:1rem; right:1rem; z-index:2;"
+            ></button>
+            <div class="modal-body p-0">
+                <div
+                        id="fullImageCarousel"
+                        class="carousel slide h-100"
+                        data-bs-ride="carousel"
+                >
+                    <div class="carousel-inner h-100">
+                        <!-- Slides will be injected here by JS -->
+                    </div>
+                    <button
+                            class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#fullImageCarousel"
+                            data-bs-slide="prev"
+                    >
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button
+                            class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#fullImageCarousel"
+                            data-bs-slide="next"
+                    >
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

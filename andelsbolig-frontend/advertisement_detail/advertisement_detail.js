@@ -29,15 +29,20 @@ export async function loadAdvertisementDetail(advertisement_id) {
         isAdvertisementCreatedByUser = advertisement.created_by === decodedJwt.sub;
     }
 
-    // Start of the image carousel
-    // tmp disable
-    //<!--        <img src="${img.url}" class="d-block w-100" alt="Image of an apartment" data-bs-toggle="modal" data-bs-target="#fullImageModal" onclick="setFullImageSrc('${img.url}')">-->
     let carouselInnerHtml = advertisement.images.length > 0
         ? advertisement.images.map((img, index) => `
-    <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
-      <img src="${img.url}" class="d-block w-100" alt="Image of an apartment">
-    </div>
-  `).join('')
+      <div class="advertisement-image carousel-item ${index === 0 ? 'active' : ''}">
+        <img
+          src="${img.url}"
+          class="d-block w-100"
+          alt="Thumbnail of apartment"
+          role="button"
+          data-bs-toggle="modal"
+          data-bs-target="#fullImageModal"
+          data-bs-slide-to="${index}"
+        >
+      </div>
+    `).join('')
         : `
     <div class="advertisement-image carousel-item active">
       <img src="../${basePath}/pics/no_image_available.webp" class="d-block w-100" alt="Billede kommer snart">
@@ -45,7 +50,7 @@ export async function loadAdvertisementDetail(advertisement_id) {
   `;
 
 
-
+    // 1) Render the detail view (thumbnails + everything else)
     detail_view.innerHTML = `
 
     <!-- Images -->
@@ -65,21 +70,6 @@ export async function loadAdvertisementDetail(advertisement_id) {
             </div>
         </div>
     </div>
-
-<!-- TODO: Modal tmp disabled -->
-<!-- Modal for Viewing Full-Size Image as a popup -->
-<!--<div class="modal fade" id="fullImageModal" tabindex="-1" aria-labelledby="fullImageModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog modal-fullscreen">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <img src="" alt="Full Size Image" class="w-100"> &lt;!&ndash; Image src will be dynamically set &ndash;&gt;-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 
     <!-- Details -->
@@ -132,33 +122,31 @@ export async function loadAdvertisementDetail(advertisement_id) {
                 <div class="input-group">
                     <input class="form-control" value="${advertisement.rooms}" type="number" id="rooms" name="rooms" required readonly min=1 max="10">
                 </div>
-
-<label class="text-secondary mt-2" for="address">Addresse</label>
-<div class="input-group">
-  <input 
-    class="form-control" 
-    value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}"
-    type="text" 
-    id="address" 
-    name="address" 
-    required 
-    readonly
-  >
-  <!-- Input group addon with text above the map icon -->
-  <span 
-    class="input-group-text" 
-    style="cursor: pointer" 
-    onclick="showView('advertisement_map', new URLSearchParams({id: '${advertisement._id}'}))"
-    aria-label="Vis på kort"
-  >
-    <div class="text-center">
-      <small class="d-block">Kort</small>
-      <i class="bi bi-geo-alt"></i>
-    </div>
-  </span>
-</div>
-
-
+                
+                <label class="text-secondary mt-2" for="address">Addresse</label>
+                <div class="input-group">
+                  <input 
+                    class="form-control" 
+                    value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}"
+                    type="text" 
+                    id="address" 
+                    name="address" 
+                    required 
+                    readonly
+                  >
+                  <!-- Input group addon with text above the map icon -->
+                  <span 
+                    class="input-group-text" 
+                    style="cursor: pointer" 
+                    onclick="showView('advertisement_map', new URLSearchParams({id: '${advertisement._id}'}))"
+                    aria-label="Vis på kort"
+                  >
+                    <div class="text-center">
+                      <small class="d-block">Kort</small>
+                      <i class="bi bi-geo-alt"></i>
+                    </div>
+                  </span>
+                </div>
 
 
                 <label class="text-secondary mt-2" for="construction_year">Byggeår for ejendommen</label>
@@ -248,10 +236,34 @@ export async function loadAdvertisementDetail(advertisement_id) {
         </div>
     </div>
 </div>
-    
-    
         `;
-}
 
-window.setFullImageSrc = setFullImageSrc;
+    // 2 now populate the *full‑screen* carousel inside the modal:
+    // target the modal’s inner carousel container
+    document.querySelector('#fullImageModal .carousel-inner').innerHTML = advertisement.images
+        .map((img, idx) => `
+      <div class="carousel-item ${idx === 0 ? 'active' : ''} h-100">
+        <img
+          src="${img.url}"
+          class="d-block w-100 h-100 object-fit-contain"
+          alt="Full‑size image"
+        >
+      </div>
+    `).join('');
+
+    // 3) Attach “click outside image closes modal”
+    const modalEl     = document.getElementById('fullImageModal');
+    const modalContent = modalEl.querySelector('.modal-content');
+
+    modalContent.addEventListener('click', (e) => {
+        console.log("click")
+        // if the click hit neither the prev/next controls nor the close (X) button…
+        if (
+            !e.target.closest('.carousel-control-prev, .carousel-control-next, .btn-close')
+        ) {
+            // …then hide the modal
+            bootstrap.Modal.getInstance(modalEl).hide();
+        }
+    });
+}
 

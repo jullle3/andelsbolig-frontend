@@ -1,22 +1,30 @@
-.carousel-inner img {
-    max-height: 550px; /* Adjust the height as needed */
-    object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
-    border-radius: 15px; /* Adds rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+/* ─── DETAIL‑VIEW THUMBNAILS ────────────────────────────────────────── */
+#listingImagesCarousel .carousel-inner img {
+    max-height: 550px;               /* constrain thumbnail height */
+    object-fit: cover;               /* crop to fill */
+    border-radius: 15px;             /* rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow */
 }
 
+/* ─── FULL‑SCREEN IMAGE MODAL ──────────────────────────────────────── */
 #fullImageModal .modal-content {
-    background: black;  /* Optional: for a different modal background */
+    background-color: #000;          /* dark backdrop for images */
 }
 
 #fullImageModal .modal-body {
-    padding: 0;  /* Removes padding around the image */
+    padding: 0;                      /* edge‑to‑edge images */
 }
 
-#fullImageModal img {
-    /*height: auto;  !* Ensures the image is not stretched vertically *!*/
-    max-height: 100vh;  /* Ensures the image does not exceed the viewport height */
+/* fullscreen‑carousel images */
+#fullImageModal .carousel-item img {
+    width: 100%;                     /* fill carousel pane */
+    height: 100%;                    /* fill carousel pane */
+    max-height: 100vh;               /* never exceed viewport */
+    object-fit: contain;             /* scale to fit */
+    background: #000;                /* black bars if aspect‑ratio differs */
 }
+
+
 
 /* Assuming no border by default, apply only on large screens */
 .vertical-line {
