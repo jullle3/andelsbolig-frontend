@@ -25,6 +25,35 @@
 }
 
 
+/* Always show full‑opacity controls and give them a bit more click‑area */
+.carousel-control-prev,
+.carousel-control-next {
+    width: auto;            /* let content size it */
+    padding: 1rem;          /* increase touch target */
+    opacity: 1;             /* never fade out */
+}
+
+/* Make the circular arrow backgrounds darker & bigger */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-size: 1.5rem 1.5rem; /* arrow size inside the circle */
+    filter: brightness(2);           /* brighten the white arrow icon */
+    transition: background-color .2s;
+}
+
+/* On hover/focus, deepen the background so users know they can click */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon,
+.carousel-control-prev:focus .carousel-control-prev-icon,
+.carousel-control-next:focus .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
 
 /* Assuming no border by default, apply only on large screens */
 .vertical-line {
