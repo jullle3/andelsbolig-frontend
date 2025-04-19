@@ -4,11 +4,6 @@ import {decodeJwt, displayErrorMessage} from "../utils.js";
 import {isAdvertisementFavorite} from "../advertisement_list/advertisement_list.js";
 import {basePath} from "../config/config.js";
 
-function setFullImageSrc(src) {
-    const modalImage = document.querySelector('#fullImageModal .modal-body img');
-    modalImage.src = src; // Set the source of the modal image to the source of the clicked image
-}
-
 export async function loadAdvertisementDetail(advertisement_id) {
     // Fetch the advertisement
     const response = await authFetch(`/advertisement/${advertisement_id}`);

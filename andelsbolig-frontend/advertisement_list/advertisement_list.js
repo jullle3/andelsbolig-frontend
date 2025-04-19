@@ -78,6 +78,7 @@ export async function sendSearchData(advertisementView, append = false, advertis
         postal_number: $(`#postal-number-${advertisementView}`).val(),
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
+        radius_postal_number: $(`#radius-postalnumber-${advertisementView}`).val(),
         favorites_only: document.getElementById(`favorites-only-${advertisementView}`).checked ? "true" : "",
         sort: sortValue,
         page: page.toString(),
@@ -544,7 +545,7 @@ export function createAnnonceagent(agentId, view) {
 
 function generateSearchComponents(suffix) {
     return `
-<div class="container mt-4 pb-2">
+<div class="container pb-2">
   <div class="row justify-content-center">
     <!-- Container for Search Bar and Advanced Dropdown -->
     <div class="col-12 col-md-8 position-relative">
