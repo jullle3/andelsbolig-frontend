@@ -78,6 +78,7 @@ export async function sendSearchData(advertisementView, append = false, advertis
         postal_number: $(`#postal-number-${advertisementView}`).val(),
         city: $(`#city-${advertisementView}`).val(),
         radius: $(`#radius-${advertisementView}`).val(),
+        radius_postal_number: $(`#radius-postalnumber-${advertisementView}`).val(),
         favorites_only: document.getElementById(`favorites-only-${advertisementView}`).checked ? "true" : "",
         sort: sortValue,
         page: page.toString(),
