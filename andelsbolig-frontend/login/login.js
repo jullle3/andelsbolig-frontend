@@ -135,6 +135,6 @@ export function updateStripePaymentElements() {
     // Connect stripe HTML elements to the user's client reference id. This ensures that the user's payment is correctly associated with their account.
     const decodedJwt = decodeJwt();
     if (decodedJwt) {
-        document.getElementById('stripePricingTable').setAttribute('client-reference-id', decodedJwt.sub);
+        document.getElementById('stripePayment').setAttribute('client-reference-id', decodedJwt.sub);
     }
 }
