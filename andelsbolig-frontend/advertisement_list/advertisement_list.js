@@ -762,8 +762,8 @@ export function generateAdvertisementCard(advertisement, advertisementHTMLId) {
     </p>
     <p class="card-text text-muted">
       <i class="bi bi-geo-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Adresse - ejendommens placering"></i>
-      ${advertisement.address && advertisement.city && advertisement.postal_number
-    ? `${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}`
+      ${advertisement.postal_number && advertisement.postal_name && advertisement.city
+    ? `${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city}`
     : "Ikke angivet"}
     </p>
     

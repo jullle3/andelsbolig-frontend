@@ -118,11 +118,12 @@ export async function loadAdvertisementDetail(advertisement_id) {
                     <input class="form-control" value="${advertisement.rooms}" type="number" id="rooms" name="rooms" required readonly min=1 max="10">
                 </div>
                 
+<!--                value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}"-->
                 <label class="text-secondary mt-2" for="address">Addresse</label>
                 <div class="input-group">
                   <input 
                     class="form-control" 
-                    value="${advertisement.street_name}, ${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city} - ${advertisement.floor} ${advertisement.floor_side}"
+                    value="${advertisement.postal_number} ${advertisement.postal_name}, ${advertisement.city}"
                     type="text" 
                     id="address" 
                     name="address" 
