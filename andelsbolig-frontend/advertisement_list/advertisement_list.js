@@ -545,7 +545,7 @@ export function createAnnonceagent(agentId, view) {
 
 function generateSearchComponents(suffix) {
     return `
-<div class="container mt-4 pb-2">
+<div class="container pb-2">
   <div class="row justify-content-center">
     <!-- Container for Search Bar and Advanced Dropdown -->
     <div class="col-12 col-md-8 position-relative">

@@ -51,7 +51,7 @@
 
 <!-- VIEWS -->
 <div id="root">
-    <div id="advertisement_list" class="view active" data-advertisement-view="list">
+    <div id="advertisement_list" class="view active py-4" data-advertisement-view="list">
         <div class="search-components-container">
             <!--Search bar will be inserted here-->
         </div>
@@ -72,7 +72,7 @@
         </div>
 
 
-        <div class="container py-4 ">
+        <div class="container pt-4 ">
             <div class="row">
                 <div class="col-12 text-center">
                     <button id="next-page-button" class="btn action-button text-white" onclick="sendSearchData('list', true)">
@@ -89,7 +89,7 @@
 
 
 
-    <div id="advertisement_map" class="view" data-advertisement-view="map">
+    <div id="advertisement_map" class="view pt-4" data-advertisement-view="map">
         <div class="search-components-container">
             <!--Search bar will be inserted here-->
         </div>
@@ -114,7 +114,7 @@
     <div id="detail" class="view"></div>
 
     <div id="create" class="view">
-        <div class="container mt-4 pb-2">
+        <div class="container py-4">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Opret & Rediger</h1>
@@ -271,7 +271,7 @@
     </div>
 
     <div id="profile" class="view">
-        <div class="container mt-4 pb-2">
+        <div class="container py-4">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
                     <h1>Min Profil</h1>
@@ -312,7 +312,7 @@
     </div>
 
     <div id="seller_profile" class="view">
-        <div class="container mt-4">
+        <div class="container py-4">
             <div class="row justify-content-center">
                 <div style="max-width: 500px">
 
@@ -348,7 +348,7 @@
 
 
     <div id="successful_redirect" class="view">
-        <div class="container mt-4">
+        <div class="container py-4">
             <div class="row justify-content-center text-center">
                 <img  class="mx-auto d-block img-fluid" style="max-width: 350px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); max-height: 80%;" src="pics/success.webp" alt="Ingen resultater">
             </div>
@@ -356,58 +356,58 @@
     </div>
 
 
-    <div id="faq" class="view">
-        <div class="accordion w-100" id="basicAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"
-                            data-mdb-target="#basicAccordionCollapseOne" aria-expanded="false"
-                            aria-controls="collapseOne">
-                        Spørgsmål #1
-                    </button>
-                </h2>
-                <div id="basicAccordionCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                     data-mdb-parent="#basicAccordion" style="">
-                    <div class="accordion-body">
-                        Svar 1
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"
-                            data-mdb-target="#basicAccordionCollapseTwo" aria-expanded="false"
-                            aria-controls="collapseTwo">
-                        Spørgsmål #2
-                    </button>
-                </h2>
-                <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                     data-mdb-parent="#basicAccordion" style="">
-                    <div class="accordion-body">
-                        Svar 2
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"
-                            data-mdb-target="#basicAccordionCollapseThree" aria-expanded="false"
-                            aria-controls="collapseThree">
-                        Spørgsmål #3
-                    </button>
-                </h2>
-                <div id="basicAccordionCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                     data-mdb-parent="#basicAccordion" style="">
-                    <div class="accordion-body">
-                        Svar 3
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div id="faq" class="view">-->
+<!--        <div class="accordion w-100" id="basicAccordion">-->
+<!--            <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="headingOne">-->
+<!--                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"-->
+<!--                            data-mdb-target="#basicAccordionCollapseOne" aria-expanded="false"-->
+<!--                            aria-controls="collapseOne">-->
+<!--                        Spørgsmål #1-->
+<!--                    </button>-->
+<!--                </h2>-->
+<!--                <div id="basicAccordionCollapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"-->
+<!--                     data-mdb-parent="#basicAccordion" style="">-->
+<!--                    <div class="accordion-body">-->
+<!--                        Svar 1-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="headingTwo">-->
+<!--                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"-->
+<!--                            data-mdb-target="#basicAccordionCollapseTwo" aria-expanded="false"-->
+<!--                            aria-controls="collapseTwo">-->
+<!--                        Spørgsmål #2-->
+<!--                    </button>-->
+<!--                </h2>-->
+<!--                <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"-->
+<!--                     data-mdb-parent="#basicAccordion" style="">-->
+<!--                    <div class="accordion-body">-->
+<!--                        Svar 2-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="accordion-item">-->
+<!--                <h2 class="accordion-header" id="headingThree">-->
+<!--                    <button data-mdb-button-init data-mdb-collapse-init class="accordion-button collapsed" type="button"-->
+<!--                            data-mdb-target="#basicAccordionCollapseThree" aria-expanded="false"-->
+<!--                            aria-controls="collapseThree">-->
+<!--                        Spørgsmål #3-->
+<!--                    </button>-->
+<!--                </h2>-->
+<!--                <div id="basicAccordionCollapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"-->
+<!--                     data-mdb-parent="#basicAccordion" style="">-->
+<!--                    <div class="accordion-body">-->
+<!--                        Svar 3-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!--  Agent View  -->
-    <div class="view container mt-4" id="agent">
+    <div class="view container py-4" id="agent">
         <!-- Title and Button on one line (flex) -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">Annonceagenter</h3>
@@ -432,7 +432,7 @@
     </div>
 
     <!-- Agent edit view -->
-    <div class="view mt-4" id="agent_edit" data-agent-type="edit">
+    <div class="view py-4" id="agent_edit" data-agent-type="edit">
         <div class="d-flex align-items-center">
             <button id="back-arrow-edit-view" class="btn btn-light me-2" aria-label="Go Back">
                 <i class="bi bi-arrow-left"></i>
@@ -443,7 +443,7 @@
     </div>
 
     <!-- Agent create view -->
-    <div class="view mt-4" id="agent_create" data-agent-type="create">
+    <div class="view py-4" id="agent_create" data-agent-type="create">
         <div class="d-flex align-items-center">
             <button id="back-arrow-create-view" class="btn btn-light me-2" aria-label="Go Back">
                 <i class="bi bi-arrow-left"></i>
@@ -455,7 +455,7 @@
 
     <!-- Terms and Conditions View -->
     <div id="terms_and_conditions" class="view" style="display: none;">
-        <div class="container mt-4 pb-4">
+        <div class="container py-4">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <h1>Vilkår og Betingelser</h1>
@@ -514,28 +514,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Confirmation Block (initially hidden) -->
-    <div id="ad-confirmation" class="d-none text-center p-4 border rounded shadow-sm">
-        <svg width="64" height="64" fill="green" class="mb-3">
-<!--            <use xlink:href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/bootstrap-icons.svg#check-circle-fill" />-->
-        </svg>
-        <h4 class="mb-2">Your advertisement is live</h4>
-        <p class="text-muted">You can now view or share your listing.</p>
-
-        <!-- Preview of the ad (simplified) -->
-        <div id="ad-preview" class="border p-3 rounded mb-3 text-start">
-            <h5 id="preview-title">[Title Placeholder]</h5>
-            <p class="mb-1"><strong>Category:</strong> <span id="preview-category"></span></p>
-            <p class="mb-1"><strong>Price:</strong> <span id="preview-price"></span></p>
-        </div>
-
-        <a id="view-ad-btn" class="btn btn-primary me-2" href="#">View Listing</a>
-        <button class="btn btn-outline-secondary" onclick="createAnotherAd()">Create Another</button>
-    </div>
-
-
 </div>
 
 
